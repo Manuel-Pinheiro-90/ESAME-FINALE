@@ -120,7 +120,17 @@ namespace Api_Finale.Service
                 byte[] fileBytes = memoryStream.ToArray();
                 return Convert.ToBase64String(fileBytes);
             }
+       
+        
         }
+
+        public async Task<IEnumerable<Utente>> GetAllUtenti()
+        {
+            return await _context.Utenti.ToListAsync();
+        }
+
+
+
 
 
     }

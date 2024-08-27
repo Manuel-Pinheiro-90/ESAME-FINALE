@@ -16,7 +16,7 @@ namespace Api_Finale.Controllers
         {
             _context = context;
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Personaggi
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Personaggio>>> GetPersonaggi()
@@ -26,7 +26,7 @@ namespace Api_Finale.Controllers
                 .Include(p => p.Evento)
                 .ToListAsync();
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Personaggi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Personaggio>> GetPersonaggio(int id)
@@ -43,7 +43,7 @@ namespace Api_Finale.Controllers
 
             return personaggio;
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // POST: api/Personaggi
         [HttpPost]
         public async Task<ActionResult<Personaggio>> CreatePersonaggio(Personaggio personaggio)
@@ -53,7 +53,7 @@ namespace Api_Finale.Controllers
 
             return CreatedAtAction(nameof(GetPersonaggio), new { id = personaggio.Id }, personaggio);
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // PUT: api/Personaggi/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePersonaggio(int id, Personaggio personaggio)
@@ -83,7 +83,7 @@ namespace Api_Finale.Controllers
 
             return NoContent();
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // DELETE: api/Personaggi/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePersonaggio(int id)

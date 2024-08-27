@@ -16,14 +16,14 @@ namespace Api_Finale.Controllers
         {
             _context = context;
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Eventi
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Evento>>> GetEventi()
         {
             return await _context.Eventi.ToListAsync();
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Eventi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Evento>> GetEvento(int id)
@@ -37,7 +37,7 @@ namespace Api_Finale.Controllers
 
             return evento;
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // POST: api/Eventi
         [HttpPost]
         public async Task<ActionResult<Evento>> CreateEvento([FromForm] Evento evento, IFormFile? file)
@@ -79,7 +79,7 @@ namespace Api_Finale.Controllers
             return File(imageBytes, "image/jpeg");  // Assicurati di specificare il MIME type corretto
         }
 
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // PUT: api/Eventi/5
         [HttpPut("{id}")]
@@ -122,7 +122,7 @@ namespace Api_Finale.Controllers
 
             return NoContent();
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // DELETE: api/Eventi/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvento(int id)

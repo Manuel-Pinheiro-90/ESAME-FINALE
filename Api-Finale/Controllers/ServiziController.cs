@@ -16,14 +16,14 @@ namespace Api_Finale.Controllers
         {
             _context = context;
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Servizi
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Servizio>>> GetServizi()
         {
             return await _context.Servizi.ToListAsync();
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Servizi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Servizio>> GetServizio(int id)
@@ -37,7 +37,7 @@ namespace Api_Finale.Controllers
 
             return servizio;
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // POST: api/Servizi
         [HttpPost]
         public async Task<ActionResult<Servizio>> CreateServizio(Servizio servizio)
@@ -47,7 +47,7 @@ namespace Api_Finale.Controllers
 
             return CreatedAtAction(nameof(GetServizio), new { id = servizio.Id }, servizio);
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // PUT: api/Servizi/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateServizio(int id, Servizio servizio)
@@ -77,7 +77,7 @@ namespace Api_Finale.Controllers
 
             return NoContent();
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // DELETE: api/Servizi/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteServizio(int id)

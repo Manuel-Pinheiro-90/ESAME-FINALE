@@ -19,7 +19,7 @@ namespace Api_Finale.Models
         [Required]
         public decimal Costo { get; set; }
 
-        // Relazione molti-a-molti con Registrazioni tramite tabella associativa
+       
         public List<RegistrazioneServizio> RegistrazioniServizi { get; set; } = [];
     }
 }

@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace Api_Finale.Controllers
 {
@@ -14,61 +18,39 @@ namespace Api_Finale.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        public AuthController(IAuthService authService) 
+        private readonly IConfiguration _configuration;
+        public AuthController(IAuthService authService, IConfiguration configuration) 
         { 
             _authService = authService;
+            _configuration = configuration;
         }
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // POST: api/Auth/Login
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] Utente utente)
+        public IActionResult Login([FromBody] UtenteLoginModel utenteLoginModel)
         {
-            var user = _authService.Login(utente.Nome, utente.PasswordHash);
-            if (user == null)
+            var token = _authService.Login(utenteLoginModel.Username, utenteLoginModel.Password);
+            if (token == null)
             {
                 return Unauthorized(new { Message = "Nome utente o password non validi." });
             }
 
-            // Creazione dei claims per l'utente
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Nome),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-            };
-
-            // Aggiungi i ruoli come claims
-            user.Ruoli.ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role.Nome)));
-
-            // Creazione dell'identità utente e autenticazione tramite cookie (scelta provvisoria??)
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var authProperties = new AuthenticationProperties
-            {
-                IsPersistent = true // Il cookie rimane persistente anche dopo la chiusura del browser
-            };
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-
-            return Ok(new { Message = "Login effettuato con successo." });
+            return Ok(new { Token = token });
         }
+
+
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // POST: api/Auth/Register
         [HttpPost("register")]
         public IActionResult Register([FromBody] Utente utente)
         {
-            // Il servizio AuthService gestisce la codifica della password, l'assegnazione del ruolo e la data di registrazione
             var newUser = _authService.Register(utente);
             return CreatedAtAction(nameof(Login), new { id = newUser.Id }, newUser);
         }
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // POST: api/Auth/Logout
-        [Authorize]
-        [HttpPost("logout")]
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Ok(new { Message = "Logout effettuato con successo." });
-        }
 
         // GET: api/Auth/IsAuthenticated
         [HttpGet("isauthenticated")]
@@ -83,7 +65,7 @@ namespace Api_Finale.Controllers
                 return Unauthorized(new { Message = "Utente non autenticato." });
             }
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Auth/Profile
         [Authorize]
         [HttpGet("profile")]

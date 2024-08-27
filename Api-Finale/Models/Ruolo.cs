@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Api_Finale.Models
 {
@@ -12,7 +13,7 @@ namespace Api_Finale.Models
         [StringLength(50)]
         public required string Nome { get; set; }
 
-        // Relazione molti-a-molti con Utenti
+        [JsonIgnore]
         public List<Utente> Utenti { get; set; } = [];
     }
 }

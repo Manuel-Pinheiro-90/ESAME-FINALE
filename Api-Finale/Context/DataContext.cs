@@ -21,31 +21,31 @@ namespace Api_Finale.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configurazione della chiave composta per RegistrazioneServizio
+           
             modelBuilder.Entity<RegistrazioneServizio>()
                 .HasKey(rs => new { rs.RegistrazioneId, rs.ServizioId });
 
-            // Configurazione delle relazioni Utente -> Ruolo (Many-to-Many)
+            //  relazioni Utente -> Ruolo (Many-to-Many)
             modelBuilder.Entity<Utente>()
                 .HasMany(u => u.Ruoli)
                 .WithMany(r => r.Utenti)
                 .UsingEntity(j => j.ToTable("UtenteRuoli"));
 
-            // Configurazione della relazione Evento -> Documento (One-to-Many)
+            //  relazione Evento -> Documento (One-to-Many)
             modelBuilder.Entity<Evento>()
                 .HasMany(e => e.Documenti)
                 .WithOne(d => d.Evento)
                 .HasForeignKey(d => d.EventoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Configurazione della relazione Evento -> Registrazione (One-to-Many)
+            // relazione Evento -> Registrazione (One-to-Many)
             modelBuilder.Entity<Evento>()
                 .HasMany(e => e.Registrazioni)
                 .WithOne(r => r.Evento)
                 .HasForeignKey(r => r.EventoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Configurazione della relazione Utente -> Registrazione (One-to-Many)
+            // relazione Utente -> Registrazione (One-to-Many)
             modelBuilder.Entity<Utente>()
                 .HasMany(u => u.Registrazioni)
                 .WithOne(r => r.Utente)
@@ -54,28 +54,28 @@ namespace Api_Finale.Context
 
             
 
-            // Configurazione della relazione Utente -> Personaggio (One-to-Many)
+            //relazione Utente -> Personaggio (One-to-Many)
             modelBuilder.Entity<Utente>()
                 .HasMany(u => u.Personaggi)
                .WithOne(p => p.Utente)
                 .HasForeignKey(p => p.UtenteId)
                 .OnDelete(DeleteBehavior.Restrict);  // Evita cicli
 
-            //Configurazione della relazione Personaggio -> Evento (Many-to-One, opzionale)
+            //relazione Personaggio -> Evento (Many-to-One, opzionale)
             modelBuilder.Entity<Personaggio>()
                 .HasOne(p => p.Evento)
                 .WithMany(e => e.Personaggi)
                 .HasForeignKey(p => p.EventoId)
                 .OnDelete(DeleteBehavior.SetNull);  // Evita la cancellazione a cascata
 
-            // Configurazione della relazione Registrazione -> Personaggio (One-to-One, opzionale)
+            // relazione Registrazione -> Personaggio (One-to-One, opzionale)
             modelBuilder.Entity<Registrazione>()
                 .HasOne(r => r.Personaggio)
                 .WithOne()
                 .HasForeignKey<Registrazione>(r => r.PersonaggioId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            // Configurazione della relazione Servizio -> Registrazione (Many-to-Many tramite tabella associativa)
+            // relazione Servizio -> Registrazione (Many-to-Many tramite tabella associativa)
             modelBuilder.Entity<Servizio>()
                 .HasMany(s => s.RegistrazioniServizi)
                 .WithOne(rs => rs.Servizio)

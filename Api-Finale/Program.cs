@@ -1,7 +1,10 @@
 using Api_Finale.Context;
 using Api_Finale.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,15 +12,27 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DataContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("CON")));
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
+// Recupera la chiave segreta dal file di configurazione
+var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
+
+// Configura l'autenticazione JWT
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.LoginPath = "/api/auth/login";  // Percorso di login
-        options.LogoutPath = "/api/auth/logout";  // Percorso di logout
-        options.Cookie.Name = "UserAuthCookie";  // Nome del cookie di autenticazione
-        options.ExpireTimeSpan = TimeSpan.FromDays(7);  // Tempo di scadenza del cookie
-        options.SlidingExpiration = true;  // Rinnovo automatico del cookie
-    });
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,  // imposta a true se vuoi validare l'emittente
+        ValidateAudience = false,  // imposta a true se vuoi validare il pubblico
+        ValidateLifetime = true,  // valida la scadenza del token
+        ClockSkew = TimeSpan.FromMinutes(3)  // elimina la tolleranza della scadenza del token
+    };
+});
 
 // Configure CORS
 builder.Services.AddCors(options =>
@@ -27,9 +42,9 @@ builder.Services.AddCors(options =>
         {
             builder.AllowAnyOrigin()  // ("http://localhost:4200") // Cambia con l'indirizzo del frontend in sviluppo se non funziona
                    .AllowAnyMethod()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader()
-                   .AllowCredentials();
+         
+                   .AllowAnyHeader();
+                  // .AllowCredentials();
         });
 });
 
@@ -38,9 +53,11 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IpasswordEncoder, PasswordEncoder>();
+builder.Services.AddScoped<UtenteService>();
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -56,9 +73,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAllOrigins"); // Usa "AllowSpecificOrigins" se hai specificato un'origine
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

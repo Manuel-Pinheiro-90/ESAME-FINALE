@@ -16,7 +16,7 @@ namespace Api_Finale.Controllers
         {
             _context = context;
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Registrazioni
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Registrazione>>> GetRegistrazioni()
@@ -27,7 +27,7 @@ namespace Api_Finale.Controllers
                 .Include(r => r.Personaggio)
                 .ToListAsync();
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Registrazioni/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Registrazione>> GetRegistrazione(int id)
@@ -45,17 +45,32 @@ namespace Api_Finale.Controllers
 
             return registrazione;
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // POST: api/Registrazioni
         [HttpPost]
-        public async Task<ActionResult<Registrazione>> CreateRegistrazione(Registrazione registrazione)
+        public async Task<ActionResult<Registrazione>> CreateRegistrazione([FromBody]  Registrazione registrazione, [FromQuery] List<int> serviziIds)
         {
             _context.Registrazioni.Add(registrazione);
             await _context.SaveChangesAsync();
 
+            // Associa i servizi selezionati alla registrazione
+            foreach (var servizioId in serviziIds)
+            {
+                var registrazioneServizio = new RegistrazioneServizio
+                {
+                    RegistrazioneId = registrazione.Id,
+                    ServizioId = servizioId
+                };
+                _context.RegistrazioniServizi.Add(registrazioneServizio);
+            }
+            await _context.SaveChangesAsync();
+
+
             return CreatedAtAction(nameof(GetRegistrazione), new { id = registrazione.Id }, registrazione);
         }
 
+
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // PUT: api/Registrazioni/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateRegistrazione(int id, Registrazione registrazione)
@@ -85,7 +100,7 @@ namespace Api_Finale.Controllers
 
             return NoContent();
         }
-
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // DELETE: api/Registrazioni/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRegistrazione(int id)
