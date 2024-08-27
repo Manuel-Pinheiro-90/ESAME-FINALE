@@ -40,12 +40,24 @@ namespace Api_Finale.Controllers
 
         // POST: api/Eventi
         [HttpPost]
-        public async Task<ActionResult<Evento>> CreateEvento(Evento evento)
+        public async Task<ActionResult<Evento>> CreateEvento([FromForm] Evento evento, IFormFile? file)
         {
             if (evento == null)
             {
                 return BadRequest(new { Message = "I dati dell'evento non sono validi." });
             }
+            // Se un'immagine è stata caricata, converti l'immagine in Base64 e salvala nel modello
+            if (file != null && file.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    await file.CopyToAsync(ms);
+                    var fileBytes = ms.ToArray();
+                    evento.ImmagineEvento = Convert.ToBase64String(fileBytes);  // Salva come stringa Base64
+                }
+            }
+
+
 
             _context.Eventi.Add(evento);
             await _context.SaveChangesAsync();
@@ -53,14 +65,42 @@ namespace Api_Finale.Controllers
             return CreatedAtAction(nameof(GetEvento), new { id = evento.Id }, evento);
         }
 
+
+        [HttpGet("{id}/image")]
+        public async Task<IActionResult> GetEventImage(int id)
+        {
+            var evento = await _context.Eventi.FindAsync(id);
+            if (evento == null || string.IsNullOrEmpty(evento.ImmagineEvento))
+            {
+                return NotFound();
+            }
+
+            byte[] imageBytes = Convert.FromBase64String(evento.ImmagineEvento);
+            return File(imageBytes, "image/jpeg");  // Assicurati di specificare il MIME type corretto
+        }
+
+
+
         // PUT: api/Eventi/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEvento(int id, Evento evento)
+        public async Task<IActionResult> UpdateEvento(int id, [FromForm] Evento evento, IFormFile? file)
         {
             if (id != evento.Id)
             {
                 return BadRequest(new { Message = "ID dell'evento non corrisponde." });
             }
+            // Se un'immagine è stata caricata, converti l'immagine in Base64 e salvala nel modello
+            if (file != null && file.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    await file.CopyToAsync(ms);
+                    var fileBytes = ms.ToArray();
+                    evento.ImmagineEvento = Convert.ToBase64String(fileBytes);  // Salva come stringa Base64
+                }
+            }
+
+
 
             _context.Entry(evento).State = EntityState.Modified;
 
@@ -103,7 +143,6 @@ namespace Api_Finale.Controllers
         {
             return _context.Eventi.Any(e => e.Id == id);
         }
-
 
 
     }

@@ -6,13 +6,13 @@ namespace Api_Finale.Service
 {
     public class UtenteService
     {
-
-
         private readonly DataContext _context;
+        private readonly IpasswordEncoder _passwordEncoder;
 
-        public UtenteService(DataContext context)
+        public UtenteService(DataContext context, IpasswordEncoder passwordEncoder)
         {
             _context = context;
+            _passwordEncoder = passwordEncoder;
         }
 
         // Metodo per creare un nuovo utente con validazione
@@ -22,6 +22,22 @@ namespace Api_Finale.Service
             if (await _context.Utenti.AnyAsync(u => u.Email == utente.Email))
             {
                 throw new Exception("Email già in uso.");
+            }
+
+            // Codifica la password
+            utente.PasswordHash = _passwordEncoder.Encode(utente.PasswordHash);
+
+            // Imposta la data di registrazione
+            utente.DataRegistrazione = DateTime.Now;
+
+            // Assegna il ruolo in base al parametro fornito (se nessun ruolo è specificato, assegna il ruolo 'Utente')
+            if (utente.Ruoli == null || !utente.Ruoli.Any())
+            {
+                var userRole = await _context.Ruoli.FirstOrDefaultAsync(r => r.Nome == "Utente");
+                if (userRole != null)
+                {
+                    utente.Ruoli.Add(userRole);
+                }
             }
 
             _context.Utenti.Add(utente);
@@ -41,7 +57,18 @@ namespace Api_Finale.Service
             // Logica di aggiornamento
             existingUser.Nome = utente.Nome;
             existingUser.Email = utente.Email;
-            existingUser.PasswordHash = utente.PasswordHash;
+
+            // Verifica se la password è stata modificata
+            if (!string.IsNullOrEmpty(utente.PasswordHash) && utente.PasswordHash != existingUser.PasswordHash)
+            {
+                existingUser.PasswordHash = _passwordEncoder.Encode(utente.PasswordHash);
+            }
+
+            // Aggiorna l'immagine se fornita
+            if (!string.IsNullOrEmpty(utente.Foto))
+            {
+                existingUser.Foto = utente.Foto;
+            }
 
             await _context.SaveChangesAsync();
             return existingUser;
@@ -83,5 +110,18 @@ namespace Api_Finale.Service
 
             return (utenti, totalRecords);
         }
+
+        // Metodo per convertire un'immagine in stringa Base64
+        public string ConvertImage(IFormFile file)
+        {
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                byte[] fileBytes = memoryStream.ToArray();
+                return Convert.ToBase64String(fileBytes);
+            }
+        }
+
+
     }
 }

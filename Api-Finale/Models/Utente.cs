@@ -22,7 +22,7 @@ namespace Api_Finale.Models
         public required string PasswordHash { get; set; }
 
         [Required]
-        public DateTime DataRegistrazione { get; set; }
+        public DateTime DataRegistrazione { get; set; } = DateTime.Now;
 
 
         [Column(TypeName = "nvarchar(max)")]

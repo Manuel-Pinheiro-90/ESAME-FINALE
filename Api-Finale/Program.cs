@@ -1,4 +1,6 @@
 using Api_Finale.Context;
+using Api_Finale.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,8 +9,35 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DataContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("CON")));
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/api/auth/login";  // Percorso di login
+        options.LogoutPath = "/api/auth/logout";  // Percorso di logout
+        options.Cookie.Name = "UserAuthCookie";  // Nome del cookie di autenticazione
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);  // Tempo di scadenza del cookie
+        options.SlidingExpiration = true;  // Rinnovo automatico del cookie
+    });
+
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()  // ("http://localhost:4200") // Cambia con l'indirizzo del frontend in sviluppo se non funziona
+                   .AllowAnyMethod()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()
+                   .AllowCredentials();
+        });
+});
 
 
+
+builder.Services.AddAuthorization();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IpasswordEncoder, PasswordEncoder>();
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -25,6 +54,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAllOrigins"); // Usa "AllowSpecificOrigins" se hai specificato un'origine
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
