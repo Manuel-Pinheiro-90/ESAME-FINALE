@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Api_Finale.Models
 {
@@ -19,7 +20,8 @@ namespace Api_Finale.Models
         // Relazione con Utente
        [Required]
         public int UtenteId { get; set; }
-       [ForeignKey("UtenteId")]
+        [JsonIgnore]
+        [ForeignKey("UtenteId")]
        public Utente? Utente { get; set; }
 
         // Relazione opzionale con Evento
