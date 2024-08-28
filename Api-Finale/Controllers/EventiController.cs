@@ -1,8 +1,10 @@
 ﻿using Api_Finale.Context;
 using Api_Finale.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Api_Finale.Controllers
 {
@@ -19,26 +21,72 @@ namespace Api_Finale.Controllers
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Eventi
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Evento>>> GetEventi()
+        public async Task<ActionResult<IEnumerable<EventoDTO>>> GetEventi()
         {
-            return await _context.Eventi.ToListAsync();
+            var eventi = await _context.Eventi
+                .Include(e => e.Registrazioni)
+                .ThenInclude(r => r.Utente)  // Includi gli utenti associati alle registrazioni
+                .Include(e => e.Documenti)
+                .Include(e => e.Personaggi)
+                .Select(e => new EventoDTO
+                {
+                    Id = e.Id,
+                    Titolo = e.Titolo,
+                    Descrizione = e.Descrizione,
+                    DataInizio = e.DataInizio,
+                    DataFine = e.DataFine,
+                    Luogo = e.Luogo,
+                    NumeroPartecipantiMax = e.NumeroPartecipantiMax,
+                    ImmagineEvento = e.ImmagineEvento,
+                    NumeroRegistrazioni = e.Registrazioni.Count(),
+                    NumeroDocumenti = e.Documenti.Count(),
+                    NumeroPersonaggi = e.Personaggi.Count(),
+                    // Aggiungi i nomi degli utenti registrati
+                    NomiUtentiRegistrati = e.Registrazioni.Select(r => r.Utente.Nome).ToList()
+                })
+                .ToListAsync();
+
+            return Ok(eventi);
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Eventi/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Evento>> GetEvento(int id)
+        public async Task<ActionResult<EventoDTO>> GetEvento(int id)
         {
-            var evento = await _context.Eventi.FindAsync(id);
+            var evento = await _context.Eventi
+                .Include(e => e.Registrazioni)
+                .ThenInclude(r => r.Utente)  // Includi gli utenti associati alle registrazioni
+                .Include(e => e.Documenti)
+                .Include(e => e.Personaggi)
+                .Where(e => e.Id == id)
+                .Select(e => new EventoDTO
+                {
+                    Id = e.Id,
+                    Titolo = e.Titolo,
+                    Descrizione = e.Descrizione,
+                    DataInizio = e.DataInizio,
+                    DataFine = e.DataFine,
+                    Luogo = e.Luogo,
+                    NumeroPartecipantiMax = e.NumeroPartecipantiMax,
+                    ImmagineEvento = e.ImmagineEvento,
+                    NumeroRegistrazioni = e.Registrazioni.Count(),
+                    NumeroDocumenti = e.Documenti.Count(),
+                    NumeroPersonaggi = e.Personaggi.Count(),
+                    // Aggiungi i nomi degli utenti registrati
+                    NomiUtentiRegistrati = e.Registrazioni.Select(r => r.Utente.Nome).ToList()
+                })
+                .FirstOrDefaultAsync();
 
             if (evento == null)
             {
                 return NotFound(new { Message = "Evento non trovato." });
             }
 
-            return evento;
+            return Ok(evento);
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // POST: api/Eventi
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Evento>> CreateEvento([FromForm] Evento evento, IFormFile? file)
         {
@@ -82,6 +130,7 @@ namespace Api_Finale.Controllers
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // PUT: api/Eventi/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEvento(int id, [FromForm] Evento evento, IFormFile? file)
         {
@@ -124,6 +173,7 @@ namespace Api_Finale.Controllers
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // DELETE: api/Eventi/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvento(int id)
         {

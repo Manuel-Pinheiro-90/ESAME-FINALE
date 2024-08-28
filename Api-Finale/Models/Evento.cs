@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Api_Finale.Models
 {
@@ -32,7 +33,8 @@ namespace Api_Finale.Models
         [Column(TypeName = "nvarchar(max)")]
         public string? ImmagineEvento { get; set; }
 
-        // Relazioni con altre tabelle
+        
+        
         public List<Registrazione> Registrazioni { get; set; } = [];
         public List<Documento> Documenti { get; set; } = [];
         public List<Personaggio> Personaggi { get; set; } = [];

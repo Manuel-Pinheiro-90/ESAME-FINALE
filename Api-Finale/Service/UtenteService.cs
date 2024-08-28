@@ -92,7 +92,8 @@ namespace Api_Finale.Service
         {
             var utente = await _context.Utenti
                 .Include(u=> u.Ruoli)
-                .Include(u => u.Registrazioni) 
+                .Include(u => u.Registrazioni)
+                 .ThenInclude(r => r.Evento) // Include le informazioni sugli eventi nelle registrazioni
                 .Include(u => u.Personaggi)  
                 .FirstOrDefaultAsync(u => u.Id == id);
 
@@ -105,7 +106,7 @@ namespace Api_Finale.Service
         }
 
         // Metodo per ottenere tutti gli utenti con paginazione
-        public async Task<(IEnumerable<Utente>, int)> GetUtenti(int pageNumber, int pageSize)
+       /* public async Task<(IEnumerable<Utente>, int)> GetUtenti(int pageNumber, int pageSize)
         {
             var totalRecords = await _context.Utenti.CountAsync();
             var utenti = await _context.Utenti
@@ -114,7 +115,7 @@ namespace Api_Finale.Service
                 .ToListAsync();
 
             return (utenti, totalRecords);
-        }
+        }*/
 
         // Metodo per convertire un'immagine in stringa Base64
         public string ConvertImage(IFormFile file)

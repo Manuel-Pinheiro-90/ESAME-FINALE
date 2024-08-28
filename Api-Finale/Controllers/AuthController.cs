@@ -106,8 +106,30 @@ namespace Api_Finale.Controllers
                 Name = utente.Nome,
                 Email = utente.Email,
                 Foto = utente.Foto, // Includi la foto
-                Registrazioni = utente.Registrazioni,  
-                Personaggi = utente.Personaggi,  
+                Registrazioni = utente.Registrazioni.Select(r => new
+                {
+                    r.Id,
+                    r.DataRegistrazione,
+                    r.CostoTotale,
+                    Evento = new
+                    {
+                        r.Evento.Id,
+                        r.Evento.Titolo,
+                        r.Evento.DataInizio,
+                        r.Evento.DataFine,
+                        r.Evento.Luogo
+                    }
+                }).ToList(),
+
+
+
+
+                Personaggi = utente.Personaggi.Select(p => new
+                {
+                    p.Id,
+                    p.Nome,
+                    p.Descrizione
+                }).ToList(),
                 Roles = utente.Ruoli.Select(r => r.Nome).ToList()
             });
 

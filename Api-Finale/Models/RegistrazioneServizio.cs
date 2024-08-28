@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Api_Finale.Models
 {
@@ -6,6 +7,7 @@ namespace Api_Finale.Models
     {
         [Key]
         public int RegistrazioneId { get; set; }
+        [JsonIgnore]
         public Registrazione Registrazione { get; set; }
 
         [Key]

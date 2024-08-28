@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Text.Json.Serialization;
 
 namespace Api_Finale.Models
 {
@@ -33,6 +34,7 @@ namespace Api_Finale.Models
 
         
         public List<Evento> EventiCreati { get; set; } = [];
+        [JsonIgnore]
         public List<Registrazione> Registrazioni { get; set; } = [];
         public List<Personaggio> Personaggi { get; set; } = [];
 

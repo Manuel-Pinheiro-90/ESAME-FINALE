@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Api_Finale.Models
 {
@@ -23,6 +24,7 @@ namespace Api_Finale.Models
         [Required]
         public int EventoId { get; set; }
         [ForeignKey("EventoId")]
+        [JsonIgnore]
         public Evento Evento { get; set; }
 
         // Relazione opzionale con Personaggio
@@ -31,6 +33,7 @@ namespace Api_Finale.Models
         public Personaggio Personaggio { get; set; }
 
         // Relazione molti-a-molti con Servizi tramite tabella associativa
+       
         public List<RegistrazioneServizio> RegistrazioniServizi { get; set; } = [];
     }
 }
