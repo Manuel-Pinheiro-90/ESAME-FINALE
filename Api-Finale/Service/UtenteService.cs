@@ -90,7 +90,12 @@ namespace Api_Finale.Service
         // Metodo per ottenere un utente per ID
         public async Task<Utente> GetUtente(int id)
         {
-            var utente = await _context.Utenti.FindAsync(id);
+            var utente = await _context.Utenti
+                .Include(u=> u.Ruoli)
+                .Include(u => u.Registrazioni) 
+                .Include(u => u.Personaggi)  
+                .FirstOrDefaultAsync(u => u.Id == id);
+
             if (utente == null)
             {
                 throw new Exception("Utente non trovato.");

@@ -19,10 +19,12 @@ namespace Api_Finale.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IConfiguration _configuration;
-        public AuthController(IAuthService authService, IConfiguration configuration) 
+        private readonly UtenteService _utenteService;
+        public AuthController(IAuthService authService, IConfiguration configuration, UtenteService utenteService) 
         { 
             _authService = authService;
             _configuration = configuration;
+            _utenteService = utenteService;
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -67,7 +69,7 @@ namespace Api_Finale.Controllers
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Auth/Profile
-        [Authorize]
+        /*[Authorize]
         [HttpGet("profile")]
         public IActionResult Profile()
         {
@@ -78,8 +80,40 @@ namespace Api_Finale.Controllers
                 Email = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
                 Roles = userClaims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList()
             });
-        }
+        }*/
+        [Authorize]
+        [HttpGet("profile")]
+        public async Task<IActionResult> Profile()
+        {
+            var userId = User.Claims.FirstOrDefault(c=> c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                 return Unauthorized(new { Message = "Utente non autenticato" });
 
+
+            }
+            // Recupera l'utente dal database
+            var utente = await _utenteService.GetUtente(int.Parse(userId));
+
+            if (utente == null)
+            {
+                return NotFound(new { Message = "Utente non trovato." });
+            }
+
+            // Restituisci i dettagli completi dell'utente, inclusa la foto
+            return Ok(new
+            {
+                Name = utente.Nome,
+                Email = utente.Email,
+                Foto = utente.Foto, // Includi la foto
+                Registrazioni = utente.Registrazioni,  
+                Personaggi = utente.Personaggi,  
+                Roles = utente.Ruoli.Select(r => r.Nome).ToList()
+            });
+
+
+
+        }
 
 
 
