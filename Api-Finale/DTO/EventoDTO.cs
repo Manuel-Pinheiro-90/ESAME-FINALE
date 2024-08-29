@@ -1,4 +1,4 @@
-﻿namespace Api_Finale.Models
+﻿namespace Api_Finale.DTO
 {
     public class EventoDTO
     {

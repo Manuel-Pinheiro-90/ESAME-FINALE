@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-
+using Api_Finale.DTO;
 namespace Api_Finale.Controllers
 {
     [Route("api/[controller]")]

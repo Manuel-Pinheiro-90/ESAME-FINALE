@@ -1,4 +1,5 @@
 ﻿using Api_Finale.Context;
+using Api_Finale.DTO;
 using Api_Finale.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,19 +22,26 @@ namespace Api_Finale.Controllers
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Personaggi
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Personaggio>>> GetPersonaggi()
+        public async Task<ActionResult<IEnumerable<PersonaggioDTO>>> GetPersonaggi()
         {
-            return await _context.Personaggi
-                .Include(p => p.Utente)
-                .Include(p => p.Evento)
+            var personaggi = await _context.Personaggi
+                .Select(p => new PersonaggioDTO
+                {
+                    Id = p.Id,
+                    Nome = p.Nome,
+                    Descrizione = p.Descrizione
+                })
                 .ToListAsync();
+
+            return Ok(personaggi);
         }
 
 
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         [Authorize]
         [HttpGet("personaggi")]
-        public async Task<ActionResult<IEnumerable<Personaggio>>> GetPersonaggiLog()
+       
+        public async Task<ActionResult<IEnumerable<PersonaggioDTO>>> GetPersonaggiLog()
         {
             // Ottieni l'ID dell'utente dal token JWT
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -45,8 +53,12 @@ namespace Api_Finale.Controllers
             // Filtra i personaggi in base all'utente loggato
             var personaggi = await _context.Personaggi
                 .Where(p => p.UtenteId == int.Parse(userId))
-                .Include(p => p.Utente)
-                .Include(p => p.Evento)
+                .Select(p => new PersonaggioDTO
+                {
+                    Id = p.Id,
+                    Nome = p.Nome,
+                    Descrizione = p.Descrizione
+                })
                 .ToListAsync();
 
             return Ok(personaggi);
@@ -54,7 +66,7 @@ namespace Api_Finale.Controllers
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         [Authorize]
         [HttpGet("personaggio/{id}")]
-        public async Task<ActionResult<Personaggio>> GetPersonaggioLog(int id)
+        public async Task<ActionResult<PersonaggioDTO>> GetPersonaggioLog(int id)
         {
             // Ottieni l'ID dell'utente dal token JWT
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -64,9 +76,14 @@ namespace Api_Finale.Controllers
             }
 
             var personaggio = await _context.Personaggi
-                .Include(p => p.Utente)
-                .Include(p => p.Evento)
-                .FirstOrDefaultAsync(p => p.Id == id && p.UtenteId == int.Parse(userId));  // Verifica che l'utente loggato sia il proprietario
+                .Where(p => p.Id == id && p.UtenteId == int.Parse(userId))
+                .Select(p => new PersonaggioDTO
+                {
+                    Id = p.Id,
+                    Nome = p.Nome,
+                    Descrizione = p.Descrizione
+                })
+                .FirstOrDefaultAsync();
 
             if (personaggio == null)
             {
@@ -81,29 +98,35 @@ namespace Api_Finale.Controllers
 
 
 
-
-
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Personaggi/5
+        
         [HttpGet("{id}")]
-        public async Task<ActionResult<Personaggio>> GetPersonaggio(int id)
+        public async Task<ActionResult<PersonaggioDTO>> GetPersonaggio(int id)
         {
             var personaggio = await _context.Personaggi
-                .Include(p => p.Utente)
-                .Include(p => p.Evento)
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .Where(p => p.Id == id)
+                .Select(p => new PersonaggioDTO
+                {
+                    Id = p.Id,
+                    Nome = p.Nome,
+                    Descrizione = p.Descrizione
+                })
+                .FirstOrDefaultAsync();
 
             if (personaggio == null)
             {
                 return NotFound(new { Message = "Personaggio non trovato." });
             }
 
-            return personaggio;
+            return Ok(personaggio);
         }
+
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // POST: api/Personaggi
         [HttpPost]
-        public async Task<ActionResult<Personaggio>> CreatePersonaggio([FromBody] Personaggio personaggio)
+        
+        public async Task<ActionResult<PersonaggioDTO>> CreatePersonaggio([FromBody] PersonaggioDTO personaggioDto)
         {
             // Recupera l'ID dell'utente autenticato dal token JWT
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -112,25 +135,47 @@ namespace Api_Finale.Controllers
                 return Unauthorized(new { Message = "Utente non autenticato." });
             }
 
-            // Associa l'utente autenticato al personaggio
-            personaggio.UtenteId = int.Parse(userId);
+            var personaggio = new Personaggio
+            {
+                Nome = personaggioDto.Nome,
+                Descrizione = personaggioDto.Descrizione,
+                UtenteId = int.Parse(userId)
+            };
 
             _context.Personaggi.Add(personaggio);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetPersonaggio), new { id = personaggio.Id }, personaggio);
-        }
+            // Aggiorna il DTO con l'ID generato dal database
+            personaggioDto.Id = personaggio.Id;
 
+            return CreatedAtAction(nameof(GetPersonaggio), new { id = personaggio.Id }, personaggioDto);
+        }
 
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // PUT: api/Personaggi/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePersonaggio(int id, Personaggio personaggio)
+        public async Task<IActionResult> UpdatePersonaggio(int id, PersonaggioDTO personaggioDto)
         {
-            if (id != personaggio.Id)
+            if (id != personaggioDto.Id)
             {
                 return BadRequest(new { Message = "ID del personaggio non corrisponde." });
             }
+
+            var personaggio = await _context.Personaggi.FindAsync(id);
+            if (personaggio == null)
+            {
+                return NotFound(new { Message = "Personaggio non trovato." });
+            }
+
+            // Verifica che l'utente sia il proprietario del personaggio
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null || personaggio.UtenteId != int.Parse(userId))
+            {
+                return Unauthorized(new { Message = "Non sei autorizzato a modificare questo personaggio." });
+            }
+
+            personaggio.Nome = personaggioDto.Nome;
+            personaggio.Descrizione = personaggioDto.Descrizione;
 
             _context.Entry(personaggio).State = EntityState.Modified;
 

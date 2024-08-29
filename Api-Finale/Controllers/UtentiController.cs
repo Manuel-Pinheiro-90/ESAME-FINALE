@@ -1,4 +1,5 @@
-﻿using Api_Finale.Models;
+﻿using Api_Finale.DTO;
+using Api_Finale.Models;
 using Api_Finale.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,21 +22,48 @@ namespace Api_Finale.Controllers
         // GET: api/Utenti?pageNumber=1&pageSize=10
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Utente>>> GetUtenti()
+        public async Task<ActionResult<IEnumerable<UtenteDettagliatoDTO>>> GetUtenti()
         {
             var utenti = await _utenteService.GetAllUtenti();
-            return Ok(utenti);
+            var utentiDTO = utenti.Select(u => new UtenteDettagliatoDTO
+            {
+                Id = u.Id,
+                Nome = u.Nome,
+                Email = u.Email,
+                Ruoli = u.Ruoli.Select(r => new RuoloDTO { Id = r.Id, Nome = r.Nome }).ToList(),
+                Personaggi = u.Personaggi.Select(p => new PersonaggioDTO
+                {
+                    Id = p.Id,
+                    Nome = p.Nome,
+                    Descrizione = p.Descrizione
+                }).ToList()
+            }).ToList();
+
+            return Ok(utentiDTO);
         }
+
 
         // GET: api/Utenti/5
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Utente>> GetUtente(int id)
+        public async Task<ActionResult<UtenteDettagliatoDTO>> GetUtente(int id)
         {
             try
             {
                 var utente = await _utenteService.GetUtente(id);
-                return Ok(utente);
+
+                // Mappa l'entità Utente al DTO UtenteDettagliatoDTO
+                var utenteDTO = new UtenteDettagliatoDTO
+                {
+                    Id = utente.Id,
+                    Nome = utente.Nome,
+                    Email = utente.Email,
+                    Ruoli = utente.Ruoli.Select(r => new RuoloDTO { Id = r.Id, Nome = r.Nome }).ToList(),
+                    Personaggi = utente.Personaggi.Select(p => new PersonaggioDTO { Id = p.Id, Nome = p.Nome, Descrizione = p.Descrizione }).ToList()
+                };
+
+                // Restituisci il DTO al posto dell'entità
+                return Ok(utenteDTO);
             }
             catch (Exception ex)
             {

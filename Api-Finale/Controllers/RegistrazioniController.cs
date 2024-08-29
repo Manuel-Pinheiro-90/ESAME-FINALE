@@ -4,7 +4,8 @@ using Api_Finale.Context;
 using Api_Finale.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-
+using Api_Finale.DTO;
+using Api_Finale.DTO.Api_Finale.DTO;
 
 namespace Api_Finale.Controllers
 {
@@ -21,18 +22,119 @@ namespace Api_Finale.Controllers
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Registrazioni
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Registrazione>>> GetRegistrazioni()
+        public async Task<ActionResult<IEnumerable<RegistrazioneDettagliDTO>>> GetRegistrazioni()
         {
-            return await _context.Registrazioni
+            var registrazioni = await _context.Registrazioni
                 .Include(r => r.Evento)
                 .Include(r => r.Utente)
                 .Include(r => r.Personaggio)
+                .Include(r => r.RegistrazioniServizi)
+                    .ThenInclude(rs => rs.Servizio)
+                .Select(r => new RegistrazioneDettagliDTO
+                {
+                    Id = r.Id,
+                    DataRegistrazione = r.DataRegistrazione,
+                    CostoTotale = r.CostoTotale + r.RegistrazioniServizi.Sum(rs => rs.Servizio.Costo),
+                    Utente = new UtenteDTO
+                    {
+                        Id = r.Utente.Id,
+                        Nome = r.Utente.Nome,
+                        Email = r.Utente.Email
+                    },
+                    Evento = new EventoDTO
+                    {
+                        Id = r.Evento.Id,
+                        Titolo = r.Evento.Titolo,
+                        Descrizione = r.Evento.Descrizione,
+                        DataInizio = r.Evento.DataInizio,
+                        DataFine = r.Evento.DataFine,
+                        Luogo = r.Evento.Luogo,
+                        NumeroPartecipantiMax = r.Evento.NumeroPartecipantiMax,
+                        ImmagineEvento = r.Evento.ImmagineEvento
+                    },
+                    Personaggio = r.Personaggio != null ? new PersonaggioDTO
+                    {
+                        Id = r.Personaggio.Id,
+                        Nome = r.Personaggio.Nome,
+                        Descrizione = r.Personaggio.Descrizione
+                    } : null,
+                    Servizi = r.RegistrazioniServizi.Select(rs => new ServizioDTO
+                    {
+                        Id = rs.Servizio.Id,
+                        Nome = rs.Servizio.Nome,
+                        Descrizione = rs.Servizio.Descrizione,
+                        Costo = rs.Servizio.Costo
+                    }).ToList()
+                })
                 .ToListAsync();
+
+            return Ok(registrazioni);
         }
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        [Authorize]
+        [HttpGet("MieRegistrazioni")]
+        public async Task<ActionResult<IEnumerable<RegistrazioneDettagliDTO>>> GetMieRegistrazioni()
+        {
+            // Recupera l'ID dell'utente autenticato dal token JWT
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized(new { Message = "Utente non autenticato." });
+            }
+
+            var registrazioni = await _context.Registrazioni
+                .Include(r => r.Evento)
+                .Include(r => r.Utente)
+                .Include(r => r.Personaggio)
+                .Include(r => r.RegistrazioniServizi)
+                    .ThenInclude(rs => rs.Servizio)
+                .Where(r => r.UtenteId == int.Parse(userId))  // Filtra per l'utente loggato
+                .Select(r => new RegistrazioneDettagliDTO
+                {
+                    Id = r.Id,
+                    DataRegistrazione = r.DataRegistrazione,
+                    CostoTotale = r.CostoTotale + r.RegistrazioniServizi.Sum(rs => rs.Servizio.Costo),
+                    Utente = new UtenteDTO
+                    {
+                        Id = r.Utente.Id,
+                        Nome = r.Utente.Nome,
+                        Email = r.Utente.Email
+                    },
+                    Evento = new EventoDTO
+                    {
+                        Id = r.Evento.Id,
+                        Titolo = r.Evento.Titolo,
+                        Descrizione = r.Evento.Descrizione,
+                        DataInizio = r.Evento.DataInizio,
+                        DataFine = r.Evento.DataFine,
+                        Luogo = r.Evento.Luogo,
+                        NumeroPartecipantiMax = r.Evento.NumeroPartecipantiMax,
+                        ImmagineEvento = r.Evento.ImmagineEvento
+                    },
+                    Personaggio = r.Personaggio != null ? new PersonaggioDTO
+                    {
+                        Id = r.Personaggio.Id,
+                        Nome = r.Personaggio.Nome,
+                        Descrizione = r.Personaggio.Descrizione
+                    } : null,
+                    Servizi = r.RegistrazioniServizi.Select(rs => new ServizioDTO
+                    {
+                        Id = rs.Servizio.Id,
+                        Nome = rs.Servizio.Nome,
+                        Descrizione = rs.Servizio.Descrizione,
+                        Costo = rs.Servizio.Costo
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            return Ok(registrazioni);
+        }
+
+
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Registrazioni/5
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetRegistrazione(int id)
+        public async Task<ActionResult<RegistrazioneDettagliDTO>> GetRegistrazione(int id)
         {
             var registrazione = await _context.Registrazioni
                 .Include(r => r.Utente)
@@ -40,6 +142,42 @@ namespace Api_Finale.Controllers
                 .Include(r => r.RegistrazioniServizi)
                     .ThenInclude(rs => rs.Servizio)
                 .Include(r => r.Evento)
+                .Select(r => new RegistrazioneDettagliDTO
+                {
+                    Id = r.Id,
+                    DataRegistrazione = r.DataRegistrazione,
+                    CostoTotale = r.CostoTotale + r.RegistrazioniServizi.Sum(rs => rs.Servizio.Costo),
+                    Utente = new UtenteDTO
+                    {
+                        Id = r.Utente.Id,
+                        Nome = r.Utente.Nome,
+                        Email = r.Utente.Email
+                    },
+                    Evento = new EventoDTO
+                    {
+                        Id = r.Evento.Id,
+                        Titolo = r.Evento.Titolo,
+                        Descrizione = r.Evento.Descrizione,
+                        DataInizio = r.Evento.DataInizio,
+                        DataFine = r.Evento.DataFine,
+                        Luogo = r.Evento.Luogo,
+                        NumeroPartecipantiMax = r.Evento.NumeroPartecipantiMax,
+                        ImmagineEvento = r.Evento.ImmagineEvento
+                    },
+                    Personaggio = r.Personaggio != null ? new PersonaggioDTO
+                    {
+                        Id = r.Personaggio.Id,
+                        Nome = r.Personaggio.Nome,
+                        Descrizione = r.Personaggio.Descrizione
+                    } : null,
+                    Servizi = r.RegistrazioniServizi.Select(rs => new ServizioDTO
+                    {
+                        Id = rs.Servizio.Id,
+                        Nome = rs.Servizio.Nome,
+                        Descrizione = rs.Servizio.Descrizione,
+                        Costo = rs.Servizio.Costo
+                    }).ToList()
+                })
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (registrazione == null)
@@ -47,89 +185,111 @@ namespace Api_Finale.Controllers
                 return NotFound(new { Message = "Registrazione non trovata." });
             }
 
-            // Seleziona solo i campi necessari per evitare cicli di riferimento
-            return Ok(new
-            {
-                registrazione.Id,
-                registrazione.DataRegistrazione,
-                registrazione.CostoTotale,
-                Utente = new
-                {
-                    registrazione.Utente.Id,
-                    registrazione.Utente.Nome,
-                    registrazione.Utente.Email
-                },
-                Evento = new
-                {
-                    registrazione.Evento.Id,
-                    registrazione.Evento.Titolo,
-                    registrazione.Evento.DataInizio,
-                    registrazione.Evento.Luogo
-                },
-                Personaggio = registrazione.Personaggio != null ? new
-                {
-                    registrazione.Personaggio.Id,
-                    registrazione.Personaggio.Nome,
-                    registrazione.Personaggio.Descrizione
-                } : null,
-                Servizi = registrazione.RegistrazioniServizi.Select(rs => new
-                {
-                    rs.Servizio.Id,
-                    rs.Servizio.Nome,
-                    rs.Servizio.Costo
-                }).ToList()
-            });
+            return Ok(registrazione);
         }
+
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // POST: api/Registrazioni
         [Authorize]
         [HttpPost]
-public async Task<ActionResult<Registrazione>> CreateRegistrazione([FromBody] RegistrazioneDTO registrazioneDto)
-{
-    // Recupera l'ID dell'utente autenticato dal token JWT
-    var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-    if (userId == null)
-    {
-        return Unauthorized(new { Message = "Utente non autenticato." });
-    }
-
-    // Crea una nuova registrazione associata all'utente autenticato
-    var registrazione = new Registrazione
-    {
-        DataRegistrazione = registrazioneDto.DataRegistrazione,
-        CostoTotale = registrazioneDto.CostoTotale,
-        UtenteId = int.Parse(userId),  // Imposta l'ID utente automaticamente
-        EventoId = registrazioneDto.EventoId,
-        PersonaggioId = registrazioneDto.PersonaggioId
-    };
-
-    _context.Registrazioni.Add(registrazione);
-    await _context.SaveChangesAsync();
-
-    // Associa i servizi selezionati alla registrazione
-    foreach (var servizioId in registrazioneDto.ServiziIds)
-    {
-        var registrazioneServizio = new RegistrazioneServizio
+        public async Task<ActionResult<RegistrazioneDettagliDTO>> CreateRegistrazione([FromBody] RegistrazioneDTO registrazioneDto)
         {
-            RegistrazioneId = registrazione.Id,
-            ServizioId = servizioId
-        };
-        _context.RegistrazioniServizi.Add(registrazioneServizio);
-    }
-    await _context.SaveChangesAsync();
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized(new { Message = "Utente non autenticato." });
+            }
 
-    return CreatedAtAction(nameof(GetRegistrazione), new { id = registrazione.Id }, registrazione);
-}
+            var registrazione = new Registrazione
+            {
+                DataRegistrazione = registrazioneDto.DataRegistrazione,
+                CostoTotale = registrazioneDto.CostoTotale,
+                UtenteId = int.Parse(userId),
+                EventoId = registrazioneDto.EventoId,
+                PersonaggioId = registrazioneDto.PersonaggioId
+            };
 
+            _context.Registrazioni.Add(registrazione);
+            await _context.SaveChangesAsync();
+
+            foreach (var servizioId in registrazioneDto.ServiziIds)
+            {
+                var registrazioneServizio = new RegistrazioneServizio
+                {
+                    RegistrazioneId = registrazione.Id,
+                    ServizioId = servizioId
+                };
+                _context.RegistrazioniServizi.Add(registrazioneServizio);
+            }
+            await _context.SaveChangesAsync();
+
+            var registrazioneDettagliDTO = await _context.Registrazioni
+                .Include(r => r.Utente)
+                .Include(r => r.Personaggio)
+                .Include(r => r.RegistrazioniServizi)
+                    .ThenInclude(rs => rs.Servizio)
+                .Include(r => r.Evento)
+                .Where(r => r.Id == registrazione.Id)
+                .Select(r => new RegistrazioneDettagliDTO
+                {
+                    Id = r.Id,
+                    DataRegistrazione = r.DataRegistrazione,
+                    CostoTotale = r.CostoTotale + r.RegistrazioniServizi.Sum(rs => rs.Servizio.Costo),
+                    Utente = new UtenteDTO
+                    {
+                        Id = r.Utente.Id,
+                        Nome = r.Utente.Nome,
+                        Email = r.Utente.Email
+                    },
+                    Evento = new EventoDTO
+                    {
+                        Id = r.Evento.Id,
+                        Titolo = r.Evento.Titolo,
+                        Descrizione = r.Evento.Descrizione,
+                        DataInizio = r.Evento.DataInizio,
+                        DataFine = r.Evento.DataFine,
+                        Luogo = r.Evento.Luogo,
+                        NumeroPartecipantiMax = r.Evento.NumeroPartecipantiMax,
+                        ImmagineEvento = r.Evento.ImmagineEvento
+                    },
+                    Personaggio = r.Personaggio != null ? new PersonaggioDTO
+                    {
+                        Id = r.Personaggio.Id,
+                        Nome = r.Personaggio.Nome,
+                        Descrizione = r.Personaggio.Descrizione
+                    } : null,
+                    Servizi = r.RegistrazioniServizi.Select(rs => new ServizioDTO
+                    {
+                        Id = rs.Servizio.Id,
+                        Nome = rs.Servizio.Nome,
+                        Descrizione = rs.Servizio.Descrizione,
+                        Costo = rs.Servizio.Costo
+                    }).ToList()
+                })
+                .FirstOrDefaultAsync();
+
+            return CreatedAtAction(nameof(GetRegistrazione), new { id = registrazione.Id }, registrazioneDettagliDTO);
+        }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // PUT: api/Registrazioni/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRegistrazione(int id, Registrazione registrazione)
+        public async Task<IActionResult> UpdateRegistrazione(int id, [FromBody] RegistrazioneDTO registrazioneDto)
         {
-            if (id != registrazione.Id)
+            if (id != registrazioneDto.Id)
             {
                 return BadRequest(new { Message = "ID della registrazione non corrisponde." });
             }
+
+            var registrazione = await _context.Registrazioni.FindAsync(id);
+            if (registrazione == null)
+            {
+                return NotFound(new { Message = "Registrazione non trovata." });
+            }
+
+            registrazione.DataRegistrazione = registrazioneDto.DataRegistrazione;
+            registrazione.CostoTotale = registrazioneDto.CostoTotale;
+            registrazione.EventoId = registrazioneDto.EventoId;
+            registrazione.PersonaggioId = registrazioneDto.PersonaggioId;
 
             _context.Entry(registrazione).State = EntityState.Modified;
 
@@ -151,6 +311,8 @@ public async Task<ActionResult<Registrazione>> CreateRegistrazione([FromBody] Re
 
             return NoContent();
         }
+
+
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // DELETE: api/Registrazioni/5
         [HttpDelete("{id}")]

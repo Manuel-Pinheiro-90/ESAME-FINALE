@@ -14,7 +14,7 @@ namespace Api_Finale.Service
             _context = context;
             _passwordEncoder = passwordEncoder;
         }
-
+        // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Metodo per creare un nuovo utente con validazione
         public async Task<Utente> CreateUtente(Utente utente)
         {
@@ -44,7 +44,7 @@ namespace Api_Finale.Service
             await _context.SaveChangesAsync();
             return utente;
         }
-
+        // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Metodo per aggiornare un utente
         public async Task<Utente> UpdateUtente(int id, Utente utente)
         {
@@ -73,7 +73,7 @@ namespace Api_Finale.Service
             await _context.SaveChangesAsync();
             return existingUser;
         }
-
+        // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Metodo per eliminare un utente
         public async Task DeleteUtente(int id)
         {
@@ -86,14 +86,13 @@ namespace Api_Finale.Service
             _context.Utenti.Remove(utente);
             await _context.SaveChangesAsync();
         }
-
+        // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Metodo per ottenere un utente per ID
         public async Task<Utente> GetUtente(int id)
         {
             var utente = await _context.Utenti
                 .Include(u=> u.Ruoli)
-                .Include(u => u.Registrazioni)
-                 .ThenInclude(r => r.Evento) // Include le informazioni sugli eventi nelle registrazioni
+                
                 .Include(u => u.Personaggi)  
                 .FirstOrDefaultAsync(u => u.Id == id);
 
@@ -104,18 +103,14 @@ namespace Api_Finale.Service
 
             return utente;
         }
-
-        // Metodo per ottenere tutti gli utenti con paginazione
-       /* public async Task<(IEnumerable<Utente>, int)> GetUtenti(int pageNumber, int pageSize)
+        public async Task<List<Utente>> GetAllUtenti()
         {
-            var totalRecords = await _context.Utenti.CountAsync();
-            var utenti = await _context.Utenti
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
+            return await _context.Utenti
+                .Include(u => u.Ruoli) 
+                .Include(u => u.Personaggi) 
                 .ToListAsync();
+        }
 
-            return (utenti, totalRecords);
-        }*/
 
         // Metodo per convertire un'immagine in stringa Base64
         public string ConvertImage(IFormFile file)
@@ -130,11 +125,7 @@ namespace Api_Finale.Service
         
         }
 
-        public async Task<IEnumerable<Utente>> GetAllUtenti()
-        {
-            return await _context.Utenti.ToListAsync();
-        }
-
+        
 
 
 

@@ -20,7 +20,7 @@ namespace Api_Finale.Models
         // Relazione con Utente
        [Required]
         public int UtenteId { get; set; }
-        [JsonIgnore] //risolvi 
+        //risolvi 
         [ForeignKey("UtenteId")]
        public Utente? Utente { get; set; }
 
