@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Api_Finale.DTO;
+using Api_Finale.Service;
 namespace Api_Finale.Controllers
 {
     [Route("api/[controller]")]
@@ -13,10 +14,12 @@ namespace Api_Finale.Controllers
     public class EventiController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly UtenteService _utenteService;
 
-        public EventiController(DataContext context)
+        public EventiController(DataContext context, UtenteService utenteService)
         {
             _context = context;
+            _utenteService = utenteService;
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Eventi
@@ -88,29 +91,45 @@ namespace Api_Finale.Controllers
         // POST: api/Eventi
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<ActionResult<Evento>> CreateEvento([FromForm] Evento evento, IFormFile? file)
+        public async Task<ActionResult<Evento>> CreateEvento([FromForm] EventoCreateDTO eventoDTO)
         {
-            if (evento == null)
+            if (eventoDTO == null)
             {
                 return BadRequest(new { Message = "I dati dell'evento non sono validi." });
             }
+
+            var evento = new Evento
+            {
+                Titolo = eventoDTO.Titolo,
+                Descrizione = eventoDTO.Descrizione,
+                DataInizio = eventoDTO.DataInizio,
+                DataFine = eventoDTO.DataFine,
+                Luogo = eventoDTO.Luogo,
+                NumeroPartecipantiMax = eventoDTO.NumeroPartecipantiMax
+
+
+
+            };
             // Se un'immagine è stata caricata, converti l'immagine in Base64 e salvala nel modello
-            if (file != null && file.Length > 0)
+            if (eventoDTO.ImmagineFile != null && eventoDTO.ImmagineFile.Length > 0)
             {
                 using (var ms = new MemoryStream())
                 {
-                    await file.CopyToAsync(ms);
+                    await eventoDTO.ImmagineFile.CopyToAsync(ms);
                     var fileBytes = ms.ToArray();
                     evento.ImmagineEvento = Convert.ToBase64String(fileBytes);  // Salva come stringa Base64
                 }
             }
 
-
-
+            // Salva l'evento nel database
             _context.Eventi.Add(evento);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetEvento), new { id = evento.Id }, evento);
+
+
+
+
         }
 
 
@@ -124,7 +143,26 @@ namespace Api_Finale.Controllers
             }
 
             byte[] imageBytes = Convert.FromBase64String(evento.ImmagineEvento);
-            return File(imageBytes, "image/jpeg");  // Assicurati di specificare il MIME type corretto
+            // Determina il MIME type corretto in base al prefisso della stringa Base64
+            string mimeType;
+            if (evento.ImmagineEvento.StartsWith("/9j/")) // JPEG
+            {
+                mimeType = "image/jpeg";
+            }
+            else if (evento.ImmagineEvento.StartsWith("iVBORw0KGgo")) // PNG
+            {
+                mimeType = "image/png";
+            }
+            else if (evento.ImmagineEvento.StartsWith("R0lGOD")) // GIF
+            {
+                mimeType = "image/gif";
+            }
+            else
+            {
+                mimeType = "application/octet-stream"; // MIME type generico
+            }
+
+            return File(imageBytes, mimeType);
         }
 
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,24 +170,31 @@ namespace Api_Finale.Controllers
         // PUT: api/Eventi/5
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEvento(int id, [FromForm] Evento evento, IFormFile? file)
+        public async Task<IActionResult> UpdateEvento(int id, [FromForm] EventoCreateDTO eventoDto)
         {
-            if (id != evento.Id)
+            var evento = await _context.Eventi.FindAsync(id);
+            if (evento == null)
             {
-                return BadRequest(new { Message = "ID dell'evento non corrisponde." });
+                return NotFound(new { Message = "Evento non trovato." });
             }
-            // Se un'immagine è stata caricata, converti l'immagine in Base64 e salvala nel modello
-            if (file != null && file.Length > 0)
+
+            evento.Titolo = eventoDto.Titolo;
+            evento.Descrizione = eventoDto.Descrizione;
+            evento.DataInizio = eventoDto.DataInizio;
+            evento.DataFine = eventoDto.DataFine;
+            evento.Luogo = eventoDto.Luogo;
+            evento.NumeroPartecipantiMax = eventoDto.NumeroPartecipantiMax;
+
+            // Gestione dell'immagine
+            if (eventoDto.ImmagineFile != null && eventoDto.ImmagineFile.Length > 0)
             {
                 using (var ms = new MemoryStream())
                 {
-                    await file.CopyToAsync(ms);
+                    await eventoDto.ImmagineFile.CopyToAsync(ms);
                     var fileBytes = ms.ToArray();
-                    evento.ImmagineEvento = Convert.ToBase64String(fileBytes);  // Salva come stringa Base64
+                    evento.ImmagineEvento = Convert.ToBase64String(fileBytes);
                 }
             }
-
-
 
             _context.Entry(evento).State = EntityState.Modified;
 
