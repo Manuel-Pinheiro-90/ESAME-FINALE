@@ -6,7 +6,9 @@
             public int Id { get; set; }
             public string Nome { get; set; }
             public string Email { get; set; }
-            public List<RuoloDTO> Ruoli { get; set; }
+        public string Foto { get; set; }
+
+        public List<RuoloDTO> Ruoli { get; set; }
             public List<PersonaggioDTO> Personaggi { get; set; }
         
     }

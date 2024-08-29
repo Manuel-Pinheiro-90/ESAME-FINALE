@@ -30,6 +30,7 @@ namespace Api_Finale.Controllers
                 Id = u.Id,
                 Nome = u.Nome,
                 Email = u.Email,
+                Foto = u.Foto,
                 Ruoli = u.Ruoli.Select(r => new RuoloDTO { Id = r.Id, Nome = r.Nome }).ToList(),
                 Personaggi = u.Personaggi.Select(p => new PersonaggioDTO
                 {
@@ -58,6 +59,7 @@ namespace Api_Finale.Controllers
                     Id = utente.Id,
                     Nome = utente.Nome,
                     Email = utente.Email,
+                    Foto = utente.Foto,
                     Ruoli = utente.Ruoli.Select(r => new RuoloDTO { Id = r.Id, Nome = r.Nome }).ToList(),
                     Personaggi = utente.Personaggi.Select(p => new PersonaggioDTO { Id = p.Id, Nome = p.Nome, Descrizione = p.Descrizione }).ToList()
                 };
@@ -74,14 +76,21 @@ namespace Api_Finale.Controllers
         // POST: api/Utenti
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<ActionResult<Utente>> CreateUtente([FromForm] Utente utente, [FromForm] IFormFile? file)
+        public async Task<ActionResult<Utente>> CreateUtente([FromForm] UtenteInputDTO utenteDto)
         {
             try
             {
-                // Gestione dell'immagine, se fornita
-                if (file != null && file.Length > 0)
+                var utente = new Utente
                 {
-                    utente.Foto = _utenteService.ConvertImage(file);
+                    Nome = utenteDto.Nome,
+                    Email = utenteDto.Email,
+                    PasswordHash = utenteDto.Password // Assumendo che la password venga hashata nel service
+                };
+
+                // Gestione dell'immagine, se fornita
+                if (utenteDto.Foto != null && utenteDto.Foto.Length > 0)
+                {
+                    utente.Foto = _utenteService.ConvertImage(utenteDto.Foto);
                 }
 
                 var createdUtente = await _utenteService.CreateUtente(utente);
@@ -96,14 +105,22 @@ namespace Api_Finale.Controllers
         // PUT: api/Utenti/5
         [Authorize(Roles = "Admin,Utente")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUtente(int id, [FromForm] Utente utente, [FromForm] IFormFile? file)
+        public async Task<IActionResult> UpdateUtente(int id, [FromForm] UtenteInputDTO utenteDto)
         {
             try
             {
-                // Gestione dell'immagine, se fornita
-                if (file != null && file.Length > 0)
+                var utente = new Utente
                 {
-                    utente.Foto = _utenteService.ConvertImage(file);
+                    Id = id,
+                    Nome = utenteDto.Nome,
+                    Email = utenteDto.Email,
+                    PasswordHash = utenteDto.Password // Assumendo che la password venga hashata nel service
+                };
+
+                // Gestione dell'immagine, se fornita
+                if (utenteDto.Foto != null && utenteDto.Foto.Length > 0)
+                {
+                    utente.Foto = _utenteService.ConvertImage(utenteDto.Foto);
                 }
 
                 var updatedUtente = await _utenteService.UpdateUtente(id, utente);
