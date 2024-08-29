@@ -7,7 +7,7 @@ namespace Api_Finale.Models
     {
         [Key]
         public int RegistrazioneId { get; set; }
-        [JsonIgnore]
+        
         public Registrazione Registrazione { get; set; }
 
         [Key]

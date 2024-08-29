@@ -13,7 +13,7 @@ namespace Api_Finale.Models
         [StringLength(50)]
         public required string Nome { get; set; }
 
-        [JsonIgnore]
+        
         public List<Utente> Utenti { get; set; } = [];
     }
 }

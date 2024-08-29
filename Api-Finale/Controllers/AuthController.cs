@@ -69,18 +69,7 @@ namespace Api_Finale.Controllers
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // GET: api/Auth/Profile
-        /*[Authorize]
-        [HttpGet("profile")]
-        public IActionResult Profile()
-        {
-            var userClaims = User.Claims;
-            return Ok(new
-            {
-                Name = User.Identity.Name,
-                Email = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
-                Roles = userClaims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList()
-            });
-        }*/
+      
         [Authorize]
         [HttpGet("profile")]
         public async Task<IActionResult> Profile()

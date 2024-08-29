@@ -151,7 +151,7 @@ namespace Api_Finale.Controllers
         // PUT: api/Utenti/profile
         [Authorize]
         [HttpPut("profile")]
-        public async Task<IActionResult> UpdateProfile([FromForm] Utente updatedUtente, IFormFile? file)
+        public async Task<IActionResult> UpdateProfile([FromForm] UtenteInputDTO profileDto)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
@@ -168,13 +168,13 @@ namespace Api_Finale.Controllers
             }
 
             // Aggiorna i campi
-            utente.Nome = updatedUtente.Nome;
-            utente.Email = updatedUtente.Email;
+            utente.Nome = profileDto.Nome;
+            utente.Email = profileDto.Email;
 
             // Gestisci la foto profilo se presente
-            if (file != null && file.Length > 0)
+            if (profileDto.Foto != null && profileDto.Foto.Length > 0)
             {
-                utente.Foto = _utenteService.ConvertImage(file);
+                utente.Foto = _utenteService.ConvertImage(profileDto.Foto);
             }
 
             var updatedUser = await _utenteService.UpdateUtente(utente.Id, utente);

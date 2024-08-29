@@ -50,7 +50,7 @@ namespace Api_Finale.Context
                 .HasMany(u => u.Registrazioni)
                 .WithOne(r => r.Utente)
                 .HasForeignKey(r => r.UtenteId)
-                .OnDelete(DeleteBehavior.Restrict);  // Evita cicli
+                .OnDelete(DeleteBehavior.Restrict);  
 
             
 
@@ -59,7 +59,7 @@ namespace Api_Finale.Context
                 .HasMany(u => u.Personaggi)
                .WithOne(p => p.Utente)
                 .HasForeignKey(p => p.UtenteId)
-                .OnDelete(DeleteBehavior.Restrict);  // Evita cicli
+                .OnDelete(DeleteBehavior.Restrict); 
 
             //relazione Personaggio -> Evento (Many-to-One, opzionale)
             modelBuilder.Entity<Personaggio>()

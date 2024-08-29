@@ -24,7 +24,7 @@ namespace Api_Finale.Models
         [Required]
         public int EventoId { get; set; }
         [ForeignKey("EventoId")]
-        [JsonIgnore]
+        
         public Evento Evento { get; set; }
 
         // Relazione opzionale con Personaggio

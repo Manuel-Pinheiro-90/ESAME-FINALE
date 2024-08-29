@@ -34,7 +34,7 @@ namespace Api_Finale.Models
 
         
         public List<Evento> EventiCreati { get; set; } = [];
-        [JsonIgnore]
+       
         public List<Registrazione> Registrazioni { get; set; } = [];
         public List<Personaggio> Personaggi { get; set; } = [];
 
