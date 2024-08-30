@@ -1,0 +1,83 @@
+<div class="container mt-5">
+  <h2>{{ isEditMode ? "Modifica Evento" : "Crea un Nuovo Evento" }}</h2>
+  <form [formGroup]="eventForm" (ngSubmit)="saveEvent()">
+    <div class="mb-3">
+      <label for="titolo" class="form-label">Titolo</label>
+      <input
+        type="text"
+        id="titolo"
+        class="form-control"
+        formControlName="titolo"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="descrizione" class="form-label">Descrizione</label>
+      <textarea
+        id="descrizione"
+        class="form-control"
+        formControlName="descrizione"
+      ></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="dataInizio" class="form-label">Data Inizio</label>
+      <input
+        type="date"
+        id="dataInizio"
+        class="form-control"
+        formControlName="dataInizio"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="dataFine" class="form-label">Data Fine</label>
+      <input
+        type="date"
+        id="dataFine"
+        class="form-control"
+        formControlName="dataFine"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="luogo" class="form-label">Luogo</label>
+      <input
+        type="text"
+        id="luogo"
+        class="form-control"
+        formControlName="luogo"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="numeroPartecipantiMax" class="form-label"
+        >Numero Partecipanti Max</label
+      >
+      <input
+        type="number"
+        id="numeroPartecipantiMax"
+        class="form-control"
+        formControlName="numeroPartecipantiMax"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="immagineFile" class="form-label">Immagine Evento</label>
+      <input
+        type="file"
+        id="immagineFile"
+        class="form-control"
+        (change)="onFileChange($event)"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="eventForm.invalid"
+    >
+      {{ isEditMode ? "Aggiorna Evento" : "Crea Evento" }}
+    </button>
+  </form>
+</div>

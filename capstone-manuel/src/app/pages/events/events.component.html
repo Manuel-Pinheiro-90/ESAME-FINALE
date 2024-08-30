@@ -1,0 +1,39 @@
+<h1>banana</h1>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let evento of eventi">
+      <div class="card mb-4">
+        <img
+          [src]="'data:image/jpeg;base64,' + evento.immagineEvento"
+          class="card-img-top"
+          alt="{{ evento.titolo }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ evento.titolo }}</h5>
+          <p class="card-text">{{ evento.descrizione }}</p>
+          <p class="card-text">
+            <small class="text-muted">{{ evento.luogo }}</small>
+          </p>
+          <p class="card-text">
+            <small class="text-muted"
+              >{{ evento.dataInizio | date : "short" }} -
+              {{ evento.dataFine | date : "short" }}</small
+            >
+          </p>
+          <p>utenti registrati</p>
+          <p class="card-text">{{ evento.nomiUtentiRegistrati }}</p>
+          <p>numero registrazioni</p>
+          <p class="card-text">{{ evento.numeroRegistrazioni }}</p>
+          <p>numero massimo partecipanti</p>
+          <p class="card-text">{{ evento.numeroPartecipantiMax }}</p>
+          <a href="#" class="btn btn-primary">Registrati</a>
+          <button (click)="deleteEvent(evento.id!)">Cancella</button>
+          <a [routerLink]="['/events/edit', evento.id]">Modifica</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a routerLink="/events/new">Aggiungi Nuovo Evento</a>

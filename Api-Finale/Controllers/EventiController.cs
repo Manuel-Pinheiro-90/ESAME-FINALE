@@ -89,7 +89,7 @@ namespace Api_Finale.Controllers
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // POST: api/Eventi
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Evento>> CreateEvento([FromForm] EventoCreateDTO eventoDTO)
         {
@@ -168,7 +168,7 @@ namespace Api_Finale.Controllers
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // PUT: api/Eventi/5
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEvento(int id, [FromForm] EventoCreateDTO eventoDto)
         {
@@ -218,7 +218,7 @@ namespace Api_Finale.Controllers
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // DELETE: api/Eventi/5
-        [Authorize(Roles = "Admin")]
+      //[Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvento(int id)
         {
