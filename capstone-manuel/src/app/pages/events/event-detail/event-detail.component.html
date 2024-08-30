@@ -1,0 +1,38 @@
+<div class="container mt-5" *ngIf="evento">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card mb-4">
+        <img
+          [src]="'data:image/jpeg;base64,' + evento.immagineEvento"
+          class="card-img-top"
+          alt="{{ evento.titolo }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ evento.titolo }}</h5>
+          <p class="card-text">{{ evento.descrizione }}</p>
+          <p class="card-text"><strong>Luogo:</strong> {{ evento.luogo }}</p>
+          <p class="card-text">
+            <strong>Data Inizio:</strong>
+            {{ evento.dataInizio | date : "short" }}
+          </p>
+          <p class="card-text">
+            <strong>Data Fine:</strong> {{ evento.dataFine | date : "short" }}
+          </p>
+          <p class="card-text">
+            <strong>Numero di partecipanti massimo:</strong>
+            {{ evento.numeroPartecipantiMax }}
+          </p>
+          <p class="card-text">
+            <strong>Utenti registrati:</strong> {{ evento.numeroRegistrazioni }}
+          </p>
+          <ul>
+            <li *ngFor="let utente of evento.nomiUtentiRegistrati">
+              {{ utente }}
+            </li>
+          </ul>
+          <a href="#" class="btn btn-primary">Registrati</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
