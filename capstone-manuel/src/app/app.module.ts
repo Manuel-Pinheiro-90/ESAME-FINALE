@@ -7,8 +7,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './main-component/navbar/navbar.component';
 import { FooterComponent } from './main-component/footer/footer.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthInterceptor } from './pages/auth/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, FooterComponent],
@@ -21,7 +22,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
     HttpClientModule,
   ],
-  providers: [],
+
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

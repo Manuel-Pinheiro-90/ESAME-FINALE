@@ -15,13 +15,16 @@ namespace Api_Finale.Service
         private readonly IpasswordEncoder _passwordEncoder;
         private readonly string _jwtSecret;  // La chiave segreta per firmare i token
         private readonly int _jwtLifespan;   // La durata del token in minuti
-
+        private readonly string _JwtIssuer;
+        private readonly string _JwtAudience;
         public AuthService(DataContext context, IpasswordEncoder passwordEncoder, IConfiguration configuration)
         {
             _context = context;
             _passwordEncoder = passwordEncoder;
             _jwtSecret = configuration["Jwt:Key"];
             _jwtLifespan = int.Parse(configuration["JwtSettings:TokenLifespan"]);
+            _JwtIssuer = configuration["Jwt:Issuer"];
+            _JwtAudience = configuration["Jwt:Audience"]!;
         }
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public string Login(string username, string password)
@@ -36,23 +39,9 @@ namespace Api_Finale.Service
 
             // Genera il token JWT
             return GenerateJwtToken(utente);
-        }
-        // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public Utente Register(Utente utente)
-        {
-            utente.PasswordHash = _passwordEncoder.Encode(utente.PasswordHash);
-            utente.DataRegistrazione = DateTime.Now;
 
-            var userRole = _context.Ruoli.FirstOrDefault(r => r.Nome == "Utente");
-            if (userRole != null)
-            {
-                utente.Ruoli.Add(userRole);
-            }
-
-            _context.Utenti.Add(utente);
-            _context.SaveChanges();
-            return utente;
         }
+
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private string GenerateJwtToken(Utente utente)
         {
@@ -69,8 +58,8 @@ namespace Api_Finale.Service
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: null,
-                audience: null,
+                issuer: _JwtIssuer,
+                audience: "prova.it",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(_jwtLifespan),
                 signingCredentials: creds
@@ -78,6 +67,42 @@ namespace Api_Finale.Service
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+
+        // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public Utente Register(Utente utente)
+        {
+            utente.PasswordHash = _passwordEncoder.Encode(utente.PasswordHash);
+            utente.DataRegistrazione = DateTime.Now;
+
+            var userRole = _context.Ruoli.FirstOrDefault(r => r.Nome == "Utente");
+            if (userRole != null)
+            {
+                utente.Ruoli.Add(userRole);
+            }
+
+            _context.Utenti.Add(utente);
+            _context.SaveChanges();
+
+            var utenteproizione = _context.Utenti
+                .Where(u => u.Id == utente.Id)
+            .Select(u => new Utente
+            {
+                Id = u.Id,
+                Nome = u.Nome,
+                PasswordHash = u.PasswordHash,
+                Email = u.Email,
+
+                DataRegistrazione = u.DataRegistrazione
+
+
+            })
+            .FirstOrDefault();
+            return utenteproizione;
+
+        }
+       
+        
 
 
     }

@@ -1,1 +1,33 @@
-<p>register works!</p>
+<div class="container">
+  <h1 class="text-center m-5 text-light">Registrati</h1>
+
+  <form>
+    <input
+      type="text"
+      name="nome"
+      [(ngModel)]="newUser.Nome"
+      placeholder="Il tuo User name"
+      class="form-control"
+    />
+
+    <input
+      type="email"
+      name="email"
+      [(ngModel)]="newUser.Email"
+      placeholder="email"
+      class="form-control mt-3"
+    />
+
+    <input
+      type="password"
+      name="password"
+      [(ngModel)]="newUser.PasswordHash"
+      placeholder="password"
+      class="form-control mt-3"
+    />
+
+    <button (click)="register()" class="btn btn-primary mt-3">
+      Registrati
+    </button>
+  </form>
+</div>

@@ -89,7 +89,7 @@ namespace Api_Finale.Controllers
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // POST: api/Eventi
-        //[Authorize(Roles = "Admin")]
+      [Authorize]
         [HttpPost]
         public async Task<ActionResult<Evento>> CreateEvento([FromForm] EventoCreateDTO eventoDTO)
         {

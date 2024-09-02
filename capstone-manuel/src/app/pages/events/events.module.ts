@@ -7,18 +7,13 @@ import { EventFormComponent } from './event-form/event-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 
-
 @NgModule({
-  declarations: [
-    EventsComponent,
-    EventFormComponent,
-    EventDetailComponent
-  ],
+  declarations: [EventsComponent, EventFormComponent, EventDetailComponent],
   imports: [
     CommonModule,
     EventsRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-  ]
+  ],
 })
-export class EventsModule { }
+export class EventsModule {}

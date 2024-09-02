@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,12 +15,16 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("CON")));
 
 // Recupera la chiave segreta dal file di configurazione
 var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
+var audience = builder.Configuration["Jwt:Audience"]!;
+var issuer = builder.Configuration["Jwt:Issuer"]!;
+
 
 // Configura l'autenticazione JWT
 builder.Services.AddAuthentication(options =>
-{
+{   options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
 })
 .AddJwtBearer(options =>
 {
@@ -27,10 +32,15 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,  // imposta a true se vuoi validare l'emittente
-        ValidateAudience = false,  // imposta a true se vuoi validare il pubblico
-        ValidateLifetime = true,  // valida la scadenza del token
-        ClockSkew = TimeSpan.FromMinutes(3)  // elimina la tolleranza della scadenza del token
+        ValidateIssuer = true,  // imposta a true se vuoi validare l'emittente
+        ValidateAudience = true,
+        ValidIssuer = issuer,  
+        ValidAudience = audience,
+        ValidateLifetime = true,
+        // valida la scadenza del token
+       
+      ClockSkew = TimeSpan.FromMinutes(3),  // elimina la tolleranza della scadenza del token
+      RoleClaimType = ClaimTypes.Role
     };
 });
 

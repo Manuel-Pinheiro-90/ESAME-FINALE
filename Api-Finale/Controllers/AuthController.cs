@@ -10,6 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Api_Finale.DTO;
+using Api_Finale.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api_Finale.Controllers
 {
@@ -20,25 +23,60 @@ namespace Api_Finale.Controllers
         private readonly IAuthService _authService;
         private readonly IConfiguration _configuration;
         private readonly UtenteService _utenteService;
-        public AuthController(IAuthService authService, IConfiguration configuration, UtenteService utenteService) 
+        private readonly DataContext _dataContext;
+
+
+        public AuthController(IAuthService authService, IConfiguration configuration, UtenteService utenteService, DataContext dataContext) 
         { 
             _authService = authService;
             _configuration = configuration;
             _utenteService = utenteService;
+            _dataContext = dataContext;
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // POST: api/Auth/Login
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UtenteLoginModel utenteLoginModel)
+        public async Task <IActionResult> Login([FromBody] UtenteLoginModel utenteLoginModel)
         {
+           
             var token = _authService.Login(utenteLoginModel.Username, utenteLoginModel.Password);
             if (token == null)
+
             {
                 return Unauthorized(new { Message = "Nome utente o password non validi." });
             }
 
-            return Ok(new { Token = token });
+            var utente = await _dataContext.Utenti.Include (u => u.Ruoli)
+                .Where(u => u.Nome == utenteLoginModel.Username ).FirstOrDefaultAsync();
+            
+            if (utente == null)
+            {
+                return NotFound(new { Message = "Utente non trovato." });
+            }
+
+            var ruoliDto = utente.Ruoli.Select(r => new RuoloDTO
+            {
+                Id = r.Id,
+                Nome = r.Nome,
+            }).ToList();
+
+
+
+            return Ok(new LoginResponseModel 
+            {
+                Token = token,
+                Utente = new UtenteTokenDTO
+            {
+
+
+             Id = utente.Id,
+             Email = utente.Email,
+             Nome = utente.Nome,
+             Ruoli = ruoliDto
+
+            }
+            });
         }
 
 
