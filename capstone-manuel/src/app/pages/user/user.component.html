@@ -1,0 +1,51 @@
+<div
+  *ngIf="user"
+  class="card"
+  style="width: 18rem; margin: auto; text-align: center"
+>
+  <div class="card-body">
+    <h2 class="card-title">Profilo Utente</h2>
+    <p class="card-text"><strong>Nome:</strong> {{ user.name }}</p>
+    <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+
+    <div *ngIf="user.foto" style="margin-bottom: 1rem">
+      <p><strong>Foto Profilo:</strong></p>
+      <img
+        [src]="'data:image/jpeg;base64,' + user.foto"
+        alt="Foto profilo di {{ user.name }}"
+        class="img-thumbnail"
+        style="width: 150px; height: 150px; object-fit: cover"
+      />
+    </div>
+
+    <div *ngIf="user.roles && user.roles.length > 0">
+      <p><strong>Ruoli:</strong></p>
+      <ul class="list-unstyled">
+        <li *ngFor="let ruolo of user.roles">{{ ruolo }}</li>
+      </ul>
+    </div>
+
+    <div *ngIf="user.personaggi && user.personaggi.length > 0">
+      <p><strong>Personaggi:</strong></p>
+      <ul class="list-unstyled">
+        <li *ngFor="let personaggio of user.personaggi">
+          <strong>{{ personaggio.nome }}</strong
+          >: {{ personaggio.descrizione }}
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="user.registrazioni && user.registrazioni.length > 0">
+      <p><strong>Registrazioni:</strong></p>
+      <!-- Mostra i dati delle registrazioni se presenti -->
+    </div>
+
+    <a class="btn btn-primary" [routerLink]="['editProfile']"
+      >Modifica Profilo</a
+    >
+  </div>
+</div>
+
+<div *ngIf="!user">
+  <p>Nessun dato utente disponibile.</p>
+</div>

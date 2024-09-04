@@ -167,18 +167,20 @@ namespace Api_Finale.Controllers
                 return NotFound(new { Message = "Utente non trovato." });
             }
 
-            // Aggiorna i campi
+           
             utente.Nome = profileDto.Nome;
             utente.Email = profileDto.Email;
 
-            // Gestisci la foto profilo se presente
+            
             if (profileDto.Foto != null && profileDto.Foto.Length > 0)
             {
                 utente.Foto = _utenteService.ConvertImage(profileDto.Foto);
             }
 
             var updatedUser = await _utenteService.UpdateUtente(utente.Id, utente);
+            
             return Ok(new { Message = "Profilo aggiornato con successo.", updatedUser });
+            //crea una select per evitare cicili
         }
     }
 }

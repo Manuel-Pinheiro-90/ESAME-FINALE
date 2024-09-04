@@ -218,7 +218,7 @@ namespace Api_Finale.Controllers
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // DELETE: api/Eventi/5
-      //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvento(int id)
         {

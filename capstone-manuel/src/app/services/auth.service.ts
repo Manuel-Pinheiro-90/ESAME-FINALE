@@ -30,6 +30,7 @@ export class AuthService {
 
   private registerUrl = 'https://localhost:7236/api/Auth/register';
   private loginUrl = 'https://localhost:7236/api/Auth/login';
+
   register(newUser: Partial<IUser>): Observable<IAuthResponse> {
     return this.http.post<IAuthResponse>(this.registerUrl, newUser);
   }
@@ -37,8 +38,9 @@ export class AuthService {
   login(authData: IAuthData): Observable<IAuthResponse> {
     return this.http.post<IAuthResponse>(this.loginUrl, authData).pipe(
       tap((data) => {
-        this.authSubject.next(data.user);
+        this.authSubject.next(data.utente);
         localStorage.setItem('accessData', JSON.stringify(data));
+        console.log('Utente loggato:', data.utente);
       })
     );
   }
@@ -72,8 +74,9 @@ export class AuthService {
 
     if (!accessData) return;
     if (this.jwtHelper.isTokenExpired(accessData.token)) return;
-    this.authSubject.next(accessData.user);
+    this.authSubject.next(accessData.utente);
     this.autoLogout();
     console.log(accessData.token);
+    console.log('Utente ripristinato dal localStorage:', accessData.utente);
   }
 }
