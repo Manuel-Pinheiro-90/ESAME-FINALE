@@ -29,11 +29,6 @@ export class UserComponent implements OnInit {
     this.userService.getProfile().subscribe({
       next: (user: IUserProfile) => {
         this.user = user;
-        console.log('Utente loggato:', this.user); // Logga l'oggetto
-        console.log(
-          'Dati completi utente:',
-          JSON.stringify(this.user, null, 2)
-        );
       },
       error: (err) => {
         console.error("Errore nel recuperare i dati completi dell'utente", err);
@@ -41,3 +36,4 @@ export class UserComponent implements OnInit {
     });
   }
 }
+//
