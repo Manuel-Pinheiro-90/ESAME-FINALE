@@ -92,7 +92,11 @@ namespace Api_Finale.Service
         {
             var utente = await _context.Utenti
                 .Include(u=> u.Ruoli)
-                
+                .Include(u=> u.Registrazioni) ///////modifica 
+                .ThenInclude(r => r.Evento)
+                .Include(u => u.Registrazioni)
+            .ThenInclude(r => r.RegistrazioniServizi)  // Include la relazione tra registrazione e servizi
+                .ThenInclude(rs => rs.Servizio)
                 .Include(u => u.Personaggi)  
                 .FirstOrDefaultAsync(u => u.Id == id);
 

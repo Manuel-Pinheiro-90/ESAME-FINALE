@@ -144,8 +144,15 @@ namespace Api_Finale.Controllers
                         r.Evento.Titolo,
                         r.Evento.DataInizio,
                         r.Evento.DataFine,
-                        r.Evento.Luogo
-                    }
+                        r.Evento.Luogo,
+                    },
+                Servizi = r.RegistrazioniServizi.Select(rs => new
+                {
+                    rs.Servizio.Id,
+                    rs.Servizio.Nome,
+                    rs.Servizio.Descrizione,
+                    rs.Servizio.Costo
+                }).ToList()
                 }).ToList(),
 
 

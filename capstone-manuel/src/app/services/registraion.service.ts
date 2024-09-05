@@ -19,4 +19,9 @@ export class RegistraionService {
       registrazione
     );
   }
+
+  /////////////////////////////////////////////////////
+  deleteRegistrazione(registrazioneId: number): Observable<void> {
+    return this.http.delete<void>(`${this.RegUrl}/${registrazioneId}`);
+  }
 }

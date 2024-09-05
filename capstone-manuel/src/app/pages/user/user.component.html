@@ -35,9 +35,50 @@
       </ul>
     </div>
 
-    <div *ngIf="user.registrazioni && user.registrazioni.length > 0">
-      <p><strong>Registrazioni:</strong></p>
-      <!-- Mostra i dati delle registrazioni se presenti -->
+    <div
+      *ngIf="user.registrazioni && user.registrazioni.length > 0"
+      style="margin-top: 2rem"
+    >
+      <h3>Eventi a cui {{ user.name }} è iscritto</h3>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let registrazione of user.registrazioni"
+        >
+          <strong>{{ registrazione.evento.titolo }}</strong
+          ><br />
+          <small>Inizio: {{ registrazione.evento.dataInizio | date }}</small
+          ><br />
+          <small>Fine: {{ registrazione.evento.dataFine | date }}</small
+          ><br />
+          <small>Luogo: {{ registrazione.evento.luogo }}</small
+          ><br />
+          <small
+            >Costo Totale: {{ registrazione.costoTotale | currency }}</small
+          >
+          <div
+            *ngIf="registrazione.servizi && registrazione.servizi.length > 0"
+            style="margin-top: 1rem"
+          >
+            <h4>Servizi associati:</h4>
+            <ul>
+              <li *ngFor="let servizio of registrazione.servizi">
+                <strong>{{ servizio.nome }}</strong
+                >: {{ servizio.descrizione }} (Costo:
+                {{ servizio.costo | currency }})
+              </li>
+            </ul>
+          </div>
+          <button
+            class=""
+            btn
+            btn-danger
+            (click)="deleteRegistrazione(registrazione.id)"
+          >
+            Elimina
+          </button>
+        </li>
+      </ul>
     </div>
 
     <a class="btn btn-primary" [routerLink]="['editProfile']"

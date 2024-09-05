@@ -41,7 +41,7 @@ export class RegistrationFormComponent implements OnInit {
 
     // Inizializza il form
     this.registrazioneForm = this.fb.group({
-      personaggioId: [null], // Campo opzionale per il personaggio
+      personaggioId: [''], // Campo opzionale per il personaggio
       serviziIds: [[]], // Campo opzionale per i servizi
       costoTotale: [0, Validators.required], // Costo obbligatorio
     });
@@ -82,14 +82,19 @@ export class RegistrationFormComponent implements OnInit {
     }
 
     const registrazione: IRegistrazioneCreate = {
-      id: 0, // L'ID viene gestito dal backend, quindi lo lasciamo a 0
+      id: 0,
       dataRegistrazione: new Date().toISOString(), // Data corrente
-      eventoId: this.eventoId, // ID dell'evento catturato dalla route
-      personaggioId: this.registrazioneForm.get('personaggioId')?.value, // Personaggio opzionale
+      eventoId: this.eventoId,
+
       serviziIds: this.registrazioneForm.get('serviziIds')?.value ?? [], // Servizi selezionati
       costoTotale: this.registrazioneForm.get('costoTotale')?.value, // Costo totale
     };
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    if (this.registrazioneForm.get('personaggioId')?.value) {
+      registrazione.personaggioId =
+        this.registrazioneForm.get('personaggioId')?.value; // Personaggio selezionato se presente
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     console.log('Dati inviati al backend:', registrazione);
 
     this.registrazionesvc.createRegistration(registrazione).subscribe({

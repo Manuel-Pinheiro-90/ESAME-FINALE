@@ -36,13 +36,15 @@
     <!-- Inserimento Costo Totale -->
     <div class="mb-3">
       <label for="costoTotale" class="form-label">Costo Totale</label>
-      <input
-        type="number"
+      <select
         id="costoTotale"
         class="form-control"
         formControlName="costoTotale"
         required
-      />
+      >
+        <option [value]="30">Prezzo per belli (€30)</option>
+        <option [value]="50">Prezzo per brutti (€50)</option>
+      </select>
     </div>
 
     <!-- Pulsante di submit -->

@@ -5,6 +5,7 @@ import { IUser } from '../../interface/i-user';
 import { UserService } from '../../services/user.service';
 import { IUtenteDTO } from '../../interface/iutente-dto';
 import { IUserProfile } from '../../interface/i-user-profile';
+import { RegistraionService } from '../../services/registraion.service';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +18,7 @@ export class UserComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-
+    private Regsvc: RegistraionService,
     private authService: AuthService
   ) {}
 
@@ -34,6 +35,23 @@ export class UserComponent implements OnInit {
         console.error("Errore nel recuperare i dati completi dell'utente", err);
       },
     });
+  }
+  //////////////////////////////////////////////////////
+  deleteRegistrazione(registrazioneId: number): void {
+    if (confirm('sei sicuro di  voler eliminare questa registrazione?')) {
+      this.Regsvc.deleteRegistrazione(registrazioneId).subscribe({
+        next: () => {
+          this.getUserProfile();
+          alert('Registrazione eliminata con successo');
+        },
+        error: (err) => {
+          console.error(
+            "Errore durante l'eliminazione della registrazione:",
+            err
+          );
+        },
+      });
+    }
   }
 }
 //

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { iEvento } from '../interface/ievento';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IEventoCreate } from '../interface/ievento-create';
 import { FormBuilder } from '@angular/forms';
 
@@ -9,11 +9,21 @@ import { FormBuilder } from '@angular/forms';
   providedIn: 'root',
 })
 export class EventService {
-  private baseUrl = 'https://localhost:7236/api/eventi';
-  constructor(private http: HttpClient) {}
+  event: iEvento[] = []; //
 
-  getEvents(): Observable<iEvento[]> {
-    return this.http.get<iEvento[]>(`${this.baseUrl}`);
+  private eventSubject = new BehaviorSubject<iEvento[]>([]); //
+  event$ = this.eventSubject.asObservable(); //
+
+  private baseUrl = 'https://localhost:7236/api/eventi';
+  constructor(private http: HttpClient) {
+    this.getEvents();
+  } //
+
+  getEvents() {
+    return this.http.get<iEvento[]>(`${this.baseUrl}`).subscribe((data) => {
+      this.event = data;
+      this.eventSubject.next(data);
+    });
   }
 
   getEvent(id: number): Observable<iEvento> {
