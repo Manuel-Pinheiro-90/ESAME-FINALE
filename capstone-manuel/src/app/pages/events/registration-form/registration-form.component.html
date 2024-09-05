@@ -1,0 +1,57 @@
+<div class="container mt-5">
+  <h2>Registrazione Evento</h2>
+  <form [formGroup]="registrazioneForm" (ngSubmit)="onSubmit()">
+    <!-- Selezione Personaggio -->
+    <div class="mb-3">
+      <label for="personaggioId" class="form-label"
+        >Personaggio (Opzionale)</label
+      >
+      <select
+        id="personaggioId"
+        class="form-control"
+        formControlName="personaggioId"
+      >
+        <option value="">Seleziona un personaggio</option>
+        <option *ngFor="let personaggio of personaggi" [value]="personaggio.id">
+          {{ personaggio.nome }} - {{ personaggio.descrizione }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Selezione Servizi -->
+    <div class="mb-3">
+      <label for="serviziIds" class="form-label">Servizi Opzionali</label>
+      <select
+        id="serviziIds"
+        class="form-control"
+        formControlName="serviziIds"
+        multiple
+      >
+        <option *ngFor="let servizio of servizi" [value]="servizio.id">
+          {{ servizio.nome }} - {{ servizio.costo | currency : "EUR" }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Inserimento Costo Totale -->
+    <div class="mb-3">
+      <label for="costoTotale" class="form-label">Costo Totale</label>
+      <input
+        type="number"
+        id="costoTotale"
+        class="form-control"
+        formControlName="costoTotale"
+        required
+      />
+    </div>
+
+    <!-- Pulsante di submit -->
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="registrazioneForm.invalid"
+    >
+      Invia Registrazione
+    </button>
+  </form>
+</div>

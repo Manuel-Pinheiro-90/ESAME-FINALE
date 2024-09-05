@@ -23,7 +23,9 @@
           <p>numero registrazioni</p>
           <p class="card-text">{{ evento.numeroRegistrazioni }}</p>
 
-          <a href="#" class="btn btn-primary">Registrati</a>
+          <a [routerLink]="['registrazione', evento.id]" class="btn btn-primary"
+            >Registrati</a
+          >
           <button (click)="deleteEvent(evento.id!)">Cancella</button>
           <a [routerLink]="['/events/edit', evento.id]">Modifica</a>
           <a [routerLink]="['events', evento.id]" class="btn btn-info"

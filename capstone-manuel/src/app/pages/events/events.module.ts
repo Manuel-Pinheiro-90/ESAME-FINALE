@@ -6,9 +6,10 @@ import { EventsComponent } from './events.component';
 import { EventFormComponent } from './event-form/event-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventDetailComponent } from './event-detail/event-detail.component';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
 
 @NgModule({
-  declarations: [EventsComponent, EventFormComponent, EventDetailComponent],
+  declarations: [EventsComponent, EventFormComponent, EventDetailComponent, RegistrationFormComponent],
   imports: [
     CommonModule,
     EventsRoutingModule,

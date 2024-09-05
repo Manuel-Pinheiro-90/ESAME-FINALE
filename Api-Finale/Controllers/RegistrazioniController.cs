@@ -202,7 +202,7 @@ namespace Api_Finale.Controllers
 
             var registrazione = new Registrazione
             {
-                DataRegistrazione = registrazioneDto.DataRegistrazione,
+                DataRegistrazione = DateTime.Now, ///ho modificato questo controllare se funziona
                 CostoTotale = registrazioneDto.CostoTotale,
                 UtenteId = int.Parse(userId),
                 EventoId = registrazioneDto.EventoId,
