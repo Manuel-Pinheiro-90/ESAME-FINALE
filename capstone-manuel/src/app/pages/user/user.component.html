@@ -54,7 +54,7 @@
           <small>Luogo: {{ registrazione.evento.luogo }}</small
           ><br />
           <small
-            >Costo Totale: {{ registrazione.costoTotale | currency }}</small
+            >Costo Biglietto: {{ registrazione.costoTotale | currency }}</small
           >
           <div
             *ngIf="registrazione.servizi && registrazione.servizi.length > 0"
@@ -88,5 +88,5 @@
 </div>
 
 <div *ngIf="!user">
-  <p>Nessun dato utente disponibile.</p>
+  <p>Caricamento...</p>
 </div>

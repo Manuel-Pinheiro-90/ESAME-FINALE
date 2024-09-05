@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { IUtenteDTO } from '../../interface/iutente-dto';
 import { AuthService } from '../../services/auth.service';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-navbar',
