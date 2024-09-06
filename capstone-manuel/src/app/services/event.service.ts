@@ -16,14 +16,14 @@ export class EventService {
 
   private baseUrl = 'https://localhost:7236/api/eventi';
   constructor(private http: HttpClient) {
-    this.getEvents();
-  } //
-
-  getEvents() {
-    return this.http.get<iEvento[]>(`${this.baseUrl}`).subscribe((data) => {
+    this.getEvents().subscribe((data) => {
       this.event = data;
       this.eventSubject.next(data);
     });
+  } //
+
+  getEvents() {
+    return this.http.get<iEvento[]>(`${this.baseUrl}`);
   }
 
   getEvent(id: number): Observable<iEvento> {

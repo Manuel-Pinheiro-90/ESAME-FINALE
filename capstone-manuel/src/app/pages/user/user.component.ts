@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { IUtenteDTO } from '../../interface/iutente-dto';
 import { IUserProfile } from '../../interface/i-user-profile';
 import { RegistraionService } from '../../services/registraion.service';
+import { PgService } from '../../services/pg.service';
 
 @Component({
   selector: 'app-user',
@@ -19,6 +20,7 @@ export class UserComponent implements OnInit {
   constructor(
     private userService: UserService,
     private Regsvc: RegistraionService,
+    private pgService: PgService,
     private authService: AuthService
   ) {}
 
@@ -36,6 +38,23 @@ export class UserComponent implements OnInit {
       },
     });
   }
+  deletePersonaggio(personaggio: number): void {
+    this.pgService.deletePersonaggio(personaggio).subscribe({
+      next: () => {
+        this.getUserProfile();
+        alert('Personaggio eliminato con successo');
+        if (this.user) {
+          this.user.personaggi = this.user.personaggi.filter(
+            (p) => p.id !== personaggio
+          );
+        }
+      },
+      error: (err) => {
+        console.error("Errore durante l'eliminazione del personaggio:", err);
+      },
+    });
+  }
+
   //////////////////////////////////////////////////////
   deleteRegistrazione(registrazioneId: number): void {
     if (confirm('sei sicuro di  voler eliminare questa registrazione?')) {

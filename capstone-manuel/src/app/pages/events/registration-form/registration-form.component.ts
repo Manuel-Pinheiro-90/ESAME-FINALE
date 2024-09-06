@@ -87,7 +87,7 @@ export class RegistrationFormComponent implements OnInit {
       eventoId: this.eventoId,
 
       serviziIds: this.registrazioneForm.get('serviziIds')?.value ?? [], // Servizi selezionati
-      costoTotale: this.registrazioneForm.get('costoTotale')?.value, // Costo totale
+      costoTotale: this.registrazioneForm.get('costoTotale')?.value,
     };
     ////////////////////////////////////////////////////////////////////////////////////////////////
     if (this.registrazioneForm.get('personaggioId')?.value) {
@@ -100,7 +100,11 @@ export class RegistrationFormComponent implements OnInit {
     this.registrazionesvc.createRegistration(registrazione).subscribe({
       next: () => {
         console.log('Registrazione avvenuta con successo');
-        this.router.navigate(['/events']); // Reindirizza alla pagina degli eventi
+        this.router
+          .navigateByUrl('/events', { skipLocationChange: true }) //
+          .then(() => {
+            this.router.navigate(['/events']); // Reindirizza alla pagina degli eventi
+          });
       },
       error: (err) => {
         console.error('Errore durante la registrazione:', err);

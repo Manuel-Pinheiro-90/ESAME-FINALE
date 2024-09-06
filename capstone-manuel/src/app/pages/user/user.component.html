@@ -1,7 +1,7 @@
 <div
   *ngIf="user"
-  class="card"
-  style="width: 18rem; margin: auto; text-align: center"
+  class="card mx-auto"
+  style="max-width: 80%; margin: auto; text-align: center"
 >
   <div class="card-body">
     <h2 class="card-title">Profilo Utente</h2>
@@ -31,8 +31,21 @@
         <li *ngFor="let personaggio of user.personaggi">
           <strong>{{ personaggio.nome }}</strong
           >: {{ personaggio.descrizione }}
+          <button
+            class="btn btn-danger btn-sm ml-2"
+            (click)="deletePersonaggio(personaggio.id)"
+          >
+            Elimina
+          </button>
         </li>
       </ul>
+    </div>
+
+    <div style="margin-top: 2rem">
+      <!-- Aggiungi un pulsante per la creazione di un nuovo personaggio -->
+      <a routerLink="/user/create-personaggio" class="btn btn-primary">
+        Crea un nuovo personaggio
+      </a>
     </div>
 
     <div
@@ -56,6 +69,7 @@
           <small
             >Costo Biglietto: {{ registrazione.costoTotale | currency }}</small
           >
+
           <div
             *ngIf="registrazione.servizi && registrazione.servizi.length > 0"
             style="margin-top: 1rem"
@@ -69,10 +83,9 @@
               </li>
             </ul>
           </div>
+
           <button
-            class=""
-            btn
-            btn-danger
+            class="btn btn-danger"
             (click)="deleteRegistrazione(registrazione.id)"
           >
             Elimina

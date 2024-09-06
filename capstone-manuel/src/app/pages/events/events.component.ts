@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../services/event.service';
 import { iEvento } from '../../interface/ievento';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-events',
@@ -9,13 +11,25 @@ import { iEvento } from '../../interface/ievento';
 })
 export class EventsComponent implements OnInit {
   eventi: iEvento[] = [];
+  routerSubscription!: Subscription;
 
-  constructor(private eventService: EventService) {}
+  constructor(private eventService: EventService, private router: Router) {}
   ngOnInit(): void {
-    this.eventService.event$.subscribe(
-      //
+    this.loadEvents();
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd && event.url === '/events') {
+        this.loadEvents(); // Ricarica gli eventi quando torni sulla pagina degli eventi
+      }
+    });
+  }
+
+  loadEvents(): void {
+    this.eventService.getEvents().subscribe(
       (data) => {
         this.eventi = data;
+      },
+      (error) => {
+        console.error('Errore nel caricamento degli eventi', error);
       }
     );
   }
@@ -30,6 +44,13 @@ export class EventsComponent implements OnInit {
           console.error('error', error);
         }
       );
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe per evitare memory leak
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
     }
   }
 }
