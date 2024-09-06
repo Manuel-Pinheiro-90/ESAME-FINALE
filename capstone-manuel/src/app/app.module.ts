@@ -10,9 +10,10 @@ import { FooterComponent } from './main-component/footer/footer.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './pages/auth/auth.interceptor';
+import { Page404Component } from './pages/page404/page404.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, FooterComponent],
+  declarations: [AppComponent, NavbarComponent, FooterComponent, Page404Component],
   imports: [
     BrowserModule,
     AppRoutingModule,

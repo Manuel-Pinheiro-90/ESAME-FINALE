@@ -30,7 +30,11 @@
               {{ utente }}
             </li>
           </ul>
-          <a href="#" class="btn btn-primary">Registrati</a>
+          <a
+            [routerLink]="['../registrazione', evento.id]"
+            class="btn btn-primary"
+            >Registrati</a
+          >
         </div>
       </div>
     </div>

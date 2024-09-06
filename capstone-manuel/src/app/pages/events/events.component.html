@@ -38,7 +38,7 @@
           >
           <button (click)="deleteEvent(evento.id!)">Cancella</button>
           <a [routerLink]="['/events/edit', evento.id]">Modifica</a>
-          <a [routerLink]="['events', evento.id]" class="btn btn-info"
+          <a [routerLink]="['detail', evento.id]" class="btn btn-info"
             >Visualizza Dettagli</a
           >
         </div>

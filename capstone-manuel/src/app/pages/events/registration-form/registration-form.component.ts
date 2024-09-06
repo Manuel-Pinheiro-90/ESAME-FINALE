@@ -43,7 +43,7 @@ export class RegistrationFormComponent implements OnInit {
     this.registrazioneForm = this.fb.group({
       personaggioId: [''], // Campo opzionale per il personaggio
       serviziIds: [[]], // Campo opzionale per i servizi
-      costoTotale: [0, Validators.required], // Costo obbligatorio
+      costoTotale: [30, Validators.required], // Costo obbligatorio
     });
 
     // Carica personaggi e servizi
