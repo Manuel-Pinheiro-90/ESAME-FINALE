@@ -1,6 +1,7 @@
+import { IPersonaggioDTO } from './../interface/i-personaggio-dto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IPersonaggioDTO } from '../interface/i-personaggio-dto';
+
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -22,5 +23,9 @@ export class PgService {
     personaggio: IPersonaggioDTO
   ): Observable<IPersonaggioDTO> {
     return this.http.post<IPersonaggioDTO>(this.pgUrl, personaggio);
+  }
+
+  getAllPersonaggi(): Observable<IPersonaggioDTO[]> {
+    return this.http.get<IPersonaggioDTO[]>(this.pgUrl);
   }
 }

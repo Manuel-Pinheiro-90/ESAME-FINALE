@@ -1,0 +1,8 @@
+<div class="container mt-5">
+  <h2>Lista di tutti i personaggi</h2>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let personaggio of personaggi">
+      <strong>{{ personaggio.nome }}</strong> - {{ personaggio.descrizione }}
+    </li>
+  </ul>
+</div>

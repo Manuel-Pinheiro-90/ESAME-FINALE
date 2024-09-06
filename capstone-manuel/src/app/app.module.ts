@@ -11,9 +11,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './pages/auth/auth.interceptor';
 import { Page404Component } from './pages/page404/page404.component';
+import { CharactersListComponent } from './pages/characters-list/characters-list.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, FooterComponent, Page404Component],
+  declarations: [AppComponent, NavbarComponent, FooterComponent, Page404Component, CharactersListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
