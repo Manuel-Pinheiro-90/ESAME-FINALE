@@ -1,1 +1,42 @@
-<p>register-detail works!</p>
+<div *ngIf="registrazione">
+  <h2>Dettagli della Registrazione</h2>
+  <p>
+    <strong>Data di Registrazione:</strong>
+    {{ registrazione.dataRegistrazione | date }}
+  </p>
+  <p>
+    <strong>Costo Biglietto:</strong> {{ registrazione.costoTotale | currency }}
+  </p>
+
+  <h3>Evento</h3>
+  <p><strong>Titolo:</strong> {{ registrazione.evento.titolo }}</p>
+  <p><strong>Descrizione:</strong> {{ registrazione.evento.descrizione }}</p>
+  <p>
+    <strong>Data Inizio:</strong> {{ registrazione.evento.dataInizio | date }}
+  </p>
+  <p><strong>Data Fine:</strong> {{ registrazione.evento.dataFine | date }}</p>
+  <p><strong>Luogo:</strong> {{ registrazione.evento.luogo }}</p>
+
+  <h3>Personaggio</h3>
+  <div *ngIf="registrazione.personaggio">
+    <p><strong>Nome:</strong> {{ registrazione.personaggio.nome }}</p>
+    <p>
+      <strong>Descrizione:</strong> {{ registrazione.personaggio.descrizione }}
+    </p>
+  </div>
+
+  <div *ngIf="registrazione.servizi && registrazione.servizi.length > 0">
+    <h4>Servizi associati:</h4>
+    <ul>
+      <li *ngFor="let servizio of registrazione.servizi">
+        <strong>{{ servizio.nome }}</strong
+        >: {{ servizio.descrizione }} (Costo: {{ servizio.costo | currency }})
+      </li>
+    </ul>
+  </div>
+  <h3>Totale con Servizi: {{ totaleConServizi | currency }}</h3>
+</div>
+
+<div *ngIf="!registrazione">
+  <p>Caricamento in corso...</p>
+</div>

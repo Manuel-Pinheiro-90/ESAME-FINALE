@@ -9,7 +9,12 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 
 @NgModule({
-  declarations: [EventsComponent, EventFormComponent, EventDetailComponent, RegistrationFormComponent],
+  declarations: [
+    EventsComponent,
+    EventFormComponent,
+    EventDetailComponent,
+    RegistrationFormComponent,
+  ],
   imports: [
     CommonModule,
     EventsRoutingModule,

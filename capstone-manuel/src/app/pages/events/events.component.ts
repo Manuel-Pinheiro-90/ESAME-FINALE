@@ -11,7 +11,9 @@ import { Subscription } from 'rxjs';
 })
 export class EventsComponent implements OnInit {
   eventi: iEvento[] = [];
+  filteredEvents: iEvento[] = []; //
   routerSubscription!: Subscription;
+  searchTerm: string = ''; //
 
   constructor(private eventService: EventService, private router: Router) {}
   ngOnInit(): void {
@@ -27,6 +29,7 @@ export class EventsComponent implements OnInit {
     this.eventService.getEvents().subscribe(
       (data) => {
         this.eventi = data;
+        this.filteredEvents = data; //
       },
       (error) => {
         console.error('Errore nel caricamento degli eventi', error);
@@ -44,6 +47,18 @@ export class EventsComponent implements OnInit {
           console.error('error', error);
         }
       );
+    }
+  }
+
+  filterEvents(): void {
+    if (this.searchTerm) {
+      this.filteredEvents = this.eventi.filter((evento) =>
+        evento.titolo
+          .toLowerCase()
+          .includes(this.searchTerm.toLocaleLowerCase())
+      ); //
+    } else {
+      this.filteredEvents = [...this.eventi];
     }
   }
 

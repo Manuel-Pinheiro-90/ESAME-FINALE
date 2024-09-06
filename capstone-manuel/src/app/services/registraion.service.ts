@@ -24,4 +24,8 @@ export class RegistraionService {
   deleteRegistrazione(registrazioneId: number): Observable<void> {
     return this.http.delete<void>(`${this.RegUrl}/${registrazioneId}`);
   }
+
+  getRegistrazione(id: number): Observable<IRegistrazioneDettagliDTO> {
+    return this.http.get<IRegistrazioneDettagliDTO>(`${this.RegUrl}/${id}`);
+  }
 }

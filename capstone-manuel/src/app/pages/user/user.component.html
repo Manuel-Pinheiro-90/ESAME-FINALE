@@ -83,7 +83,12 @@
               </li>
             </ul>
           </div>
-
+          <a
+            [routerLink]="['registrazioni', registrazione.id]"
+            class="btn btn-info btn-sm ml-2"
+          >
+            Dettagli
+          </a>
           <button
             class="btn btn-danger"
             (click)="deleteRegistrazione(registrazione.id)"

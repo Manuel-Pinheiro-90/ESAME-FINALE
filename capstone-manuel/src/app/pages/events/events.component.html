@@ -1,6 +1,16 @@
 <div class="container mt-5">
+  <div class="search-bar">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Cerca per titolo..."
+      [(ngModel)]="searchTerm"
+      (input)="filterEvents()"
+    />
+  </div>
+
   <div class="row">
-    <div class="col-md-4" *ngFor="let evento of eventi">
+    <div class="col-md-4" *ngFor="let evento of filteredEvents">
       <div class="card mb-4">
         <img
           [src]="'data:image/jpeg;base64,' + evento.immagineEvento"
