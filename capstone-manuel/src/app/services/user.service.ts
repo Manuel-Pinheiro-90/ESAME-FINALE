@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { IUserProfile } from '../interface/i-user-profile';
 import { IUserProfileUpdate } from '../interface/i-user-profile-update';
+import { IUtenteDettagliatoDTO } from '../interface/i-utente-dettagliato-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +12,17 @@ import { IUserProfileUpdate } from '../interface/i-user-profile-update';
 export class UserService {
   private userApiUrl = 'https://localhost:7236/api/Auth/profile';
   private updateUrl = 'https://localhost:7236/api/Utenti/profile';
+  private utentiUrl = 'https://localhost:7236/api/utenti';
   constructor(private http: HttpClient) {}
 
   getProfile(): Observable<IUserProfile> {
     return this.http.get<IUserProfile>(this.userApiUrl).pipe(
       tap((user) => console.log('Dati profilo utente recuperati:', user)) // Log della risposta API
     );
+  }
+
+  getAllUtenti(): Observable<IUtenteDettagliatoDTO[]> {
+    return this.http.get<IUtenteDettagliatoDTO[]>(`${this.utentiUrl}`);
   }
 
   updateProfile(
@@ -38,5 +44,9 @@ export class UserService {
       formData.append('foto', file);
     }
     return this.http.put<IUserProfileUpdate>(`${this.updateUrl}`, formData);
+  }
+
+  deleteUtente(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.utentiUrl}/${id}`);
   }
 }

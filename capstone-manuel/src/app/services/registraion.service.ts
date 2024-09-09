@@ -25,6 +25,10 @@ export class RegistraionService {
     return this.http.delete<void>(`${this.RegUrl}/${registrazioneId}`);
   }
 
+  getAllRegistrazioni(): Observable<IRegistrazioneDettagliDTO[]> {
+    return this.http.get<IRegistrazioneDettagliDTO[]>(`${this.RegUrl}`);
+  }
+
   getRegistrazione(id: number): Observable<IRegistrazioneDettagliDTO> {
     return this.http.get<IRegistrazioneDettagliDTO>(`${this.RegUrl}/${id}`);
   }

@@ -1,1 +1,38 @@
-<p>admin works!</p>
+<div class="container">
+  <h2>Lista degli Utenti</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Ruoli</th>
+        <th>Personaggi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let utente of utenti">
+        <td>{{ utente.id }}</td>
+        <td>{{ utente.nome }}</td>
+        <td>{{ utente.email }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let ruolo of utente.ruoli">{{ ruolo.nome }}</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let personaggio of utente.personaggi">
+              {{ personaggio.nome }}
+            </li>
+          </ul>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteUser(utente.id)">
+            Elimina
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
