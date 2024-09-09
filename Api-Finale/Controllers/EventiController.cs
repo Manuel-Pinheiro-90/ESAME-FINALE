@@ -105,8 +105,8 @@ namespace Api_Finale.Controllers
                 DataInizio = eventoDTO.DataInizio,
                 DataFine = eventoDTO.DataFine,
                 Luogo = eventoDTO.Luogo,
-                NumeroPartecipantiMax = eventoDTO.NumeroPartecipantiMax
-
+                NumeroPartecipantiMax = eventoDTO.NumeroPartecipantiMax,
+                 ImmagineEvento = null//
 
 
             };

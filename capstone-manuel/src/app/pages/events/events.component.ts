@@ -42,6 +42,7 @@ export class EventsComponent implements OnInit {
       this.eventService.deleteEvent(id).subscribe(
         () => {
           this.eventi = this.eventi.filter((e) => e.id !== id);
+          this.filteredEvents = this.filteredEvents.filter((e) => e.id !== id);
         },
         (error) => {
           console.error('error', error);

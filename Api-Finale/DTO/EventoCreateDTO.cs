@@ -9,6 +9,6 @@
         public string Luogo { get; set; }
         public int NumeroPartecipantiMax { get; set; }
 
-        public IFormFile ImmagineFile { get; set; }
+        public IFormFile? ImmagineFile { get; set; }
     }
 }

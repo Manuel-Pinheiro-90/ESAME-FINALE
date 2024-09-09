@@ -27,7 +27,6 @@ export class RegisterDetailComponent implements OnInit {
     this.registrazioneService.getRegistrazione(id).subscribe({
       next: (data) => {
         this.registrazione = data;
-        this.calcolaTotaleConServizi();
       },
       error: (err) => {
         console.error(
@@ -36,13 +35,5 @@ export class RegisterDetailComponent implements OnInit {
         );
       },
     });
-  }
-
-  calcolaTotaleConServizi(): void {
-    const costoServizi = this.registrazione.servizi.reduce(
-      (total, servizio) => total + servizio.costo,
-      0
-    );
-    this.totaleConServizi = this.registrazione.costoTotale + costoServizi;
   }
 }

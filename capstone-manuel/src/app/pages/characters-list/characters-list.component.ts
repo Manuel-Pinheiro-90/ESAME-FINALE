@@ -27,4 +27,16 @@ export class CharactersListComponent implements OnInit {
       },
     });
   }
+
+  deletePersonaggio(id: number): void {
+    this.pgService.deletePersonaggio(id).subscribe({
+      next: () => {
+        this.personaggi = this.personaggi.filter((p) => p.id! == id);
+        console.log('Personaggio eliminato con successo');
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error("Errore durante l'eliminazione del personaggio:", err);
+      },
+    });
+  }
 }

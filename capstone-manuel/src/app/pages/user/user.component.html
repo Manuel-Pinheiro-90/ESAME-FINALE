@@ -8,10 +8,14 @@
     <p class="card-text"><strong>Nome:</strong> {{ user.name }}</p>
     <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
 
-    <div *ngIf="user.foto" style="margin-bottom: 1rem">
+    <div style="margin-bottom: 1rem">
       <p><strong>Foto Profilo:</strong></p>
       <img
-        [src]="'data:image/jpeg;base64,' + user.foto"
+        [src]="
+          user.foto
+            ? 'data:image/jpeg;base64,' + user.foto
+            : 'assets/img/avatar.jpg'
+        "
         alt="Foto profilo di {{ user.name }}"
         class="img-thumbnail"
         style="width: 150px; height: 150px; object-fit: cover"

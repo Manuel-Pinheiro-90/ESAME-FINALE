@@ -5,5 +5,5 @@ export interface IEventoCreate {
   dataFine: Date;
   luogo: string;
   numeroPartecipantiMax: number;
-  immagineFile: File;
+  immagineFile: File | null; //
 }

@@ -101,36 +101,102 @@ namespace Api_Finale.Controllers
                 return BadRequest(new { Message = ex.Message });
             }
         }
-
-        // PUT: api/Utenti/5
         [Authorize(Roles = "Admin,Utente")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUtente(int id, [FromForm] UtenteInputDTO utenteDto)
         {
             try
             {
-                var utente = new Utente
+                // Recupera l'utente esistente dal database
+                var existingUser = await _utenteService.GetUtente(id);
+                if (existingUser == null)
                 {
-                    Id = id,
-                    Nome = utenteDto.Nome,
-                    Email = utenteDto.Email,
-                    PasswordHash = utenteDto.Password // Assumendo che la password venga hashata nel service
-                };
+                    return NotFound(new { Message = "Utente non trovato." });
+                }
+
+                // Aggiorna il nome e l'email solo se sono forniti e validi
+                if (!string.IsNullOrWhiteSpace(utenteDto.Nome))
+                {
+                    existingUser.Nome = utenteDto.Nome;
+                }
+                if (!string.IsNullOrWhiteSpace(utenteDto.Email))
+                {
+                    existingUser.Email = utenteDto.Email;
+                }
+
+                // Se la password è stata fornita e non è vuota, aggiorna la password (hashata nel service)
+                if (!string.IsNullOrWhiteSpace(utenteDto.Password))
+                {
+                    existingUser.PasswordHash = utenteDto.Password; // Assumi che il service esegua l'hash
+                }
 
                 // Gestione dell'immagine, se fornita
                 if (utenteDto.Foto != null && utenteDto.Foto.Length > 0)
                 {
-                    utente.Foto = _utenteService.ConvertImage(utenteDto.Foto);
+                    existingUser.Foto = _utenteService.ConvertImage(utenteDto.Foto);
                 }
 
-                var updatedUtente = await _utenteService.UpdateUtente(id, utente);
-                return Ok(updatedUtente);
+                // Aggiorna l'utente nel database
+                var updatedUtente = await _utenteService.UpdateUtente(id, existingUser);
+
+                return Ok(new { Message = "Utente aggiornato con successo.", updatedUtente });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Message = ex.Message });
+                // Log dell'errore, se necessario, e ritorna un messaggio di errore più utile
+                return BadRequest(new { Message = "Si è verificato un errore durante l'aggiornamento dell'utente.", Dettagli = ex.Message });
             }
         }
+
+        // PUT: api/Utenti/5
+        /* [Authorize(Roles = "Admin,Utente")]
+         [HttpPut("{id}")]
+         public async Task<IActionResult> UpdateUtente(int id, [FromForm] UtenteInputDTO utenteDto)
+         {
+             try
+             {
+                 // Recupera l'utente esistente dal database
+                 var existingUser = await _utenteService.GetUtente(id);
+                 if (existingUser == null)
+                 {
+                     return NotFound(new { Message = "Utente non trovato." });
+                 }
+
+                 // Aggiorna il nome e l'email
+                 existingUser.Nome = utenteDto.Nome;
+                 existingUser.Email = utenteDto.Email;
+
+                 // Se la password è stata fornita e non è vuota, aggiorna la password
+                 if (!string.IsNullOrWhiteSpace(utenteDto.Password))
+                 {
+                     existingUser.PasswordHash = utenteDto.Password; // Assumi che il service esegua il hash
+                 }
+
+
+                 /* try
+                  {
+                      var utente = new Utente
+                      {
+                          Id = id,
+                          Nome = utenteDto.Nome,
+                          Email = utenteDto.Email,
+                          PasswordHash = utenteDto.Password // Assumendo che la password venga hashata nel service
+                      }; */
+
+        // Gestione dell'immagine, se fornita
+        /*   if (utenteDto.Foto != null && utenteDto.Foto.Length > 0)
+           {
+               existingUser.Foto = _utenteService.ConvertImage(utenteDto.Foto);
+           }
+
+           var updatedUtente = await _utenteService.UpdateUtente(id, existingUser);
+           return Ok(updatedUtente);
+       }
+       catch (Exception ex)
+       {
+           return BadRequest(new { Message = ex.Message });
+       }
+   }*/
 
         // DELETE: api/Utenti/5
         [Authorize(Roles = "Admin")]
@@ -147,8 +213,6 @@ namespace Api_Finale.Controllers
                 return NotFound(new { Message = ex.Message });
             }
         }
-
-        // PUT: api/Utenti/profile
         [Authorize]
         [HttpPut("profile")]
         public async Task<IActionResult> UpdateProfile([FromForm] UtenteInputDTO profileDto)
@@ -167,20 +231,67 @@ namespace Api_Finale.Controllers
                 return NotFound(new { Message = "Utente non trovato." });
             }
 
-           
-            utente.Nome = profileDto.Nome;
-            utente.Email = profileDto.Email;
+            // Aggiorna i campi solo se validi
+            if (!string.IsNullOrWhiteSpace(profileDto.Nome))
+            {
+                utente.Nome = profileDto.Nome;
+            }
 
-            
+            if (!string.IsNullOrWhiteSpace(profileDto.Email))
+            {
+                utente.Email = profileDto.Email;
+            }
+
+            // Gestione dell'immagine opzionale
             if (profileDto.Foto != null && profileDto.Foto.Length > 0)
             {
                 utente.Foto = _utenteService.ConvertImage(profileDto.Foto);
             }
 
+            // Aggiorna il profilo nel database
             var updatedUser = await _utenteService.UpdateUtente(utente.Id, utente);
-            
+
             return Ok(new { Message = "Profilo aggiornato con successo.", updatedUser });
-            //crea una select per evitare cicili
         }
+
+
+
+
+
+        // PUT: api/Utenti/profile
+        /* [Authorize]
+         [HttpPut("profile")]
+         public async Task<IActionResult> UpdateProfile([FromForm] UtenteInputDTO profileDto)
+         {
+             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+             if (userId == null)
+             {
+                 return Unauthorized(new { Message = "Utente non autenticato." });
+             }
+
+             var utente = await _utenteService.GetUtente(int.Parse(userId));
+
+             if (utente == null)
+             {
+                 return NotFound(new { Message = "Utente non trovato." });
+             }
+
+
+             utente.Nome = profileDto.Nome;
+             utente.Email = profileDto.Email;
+
+
+             if (profileDto.Foto != null && profileDto.Foto.Length > 0)
+             {
+                 utente.Foto = _utenteService.ConvertImage(profileDto.Foto);
+             }
+
+             var updatedUser = await _utenteService.UpdateUtente(utente.Id, utente);
+
+             return Ok(new { Message = "Profilo aggiornato con successo.", updatedUser });
+             //crea una select per evitare cicili
+         }
+     }*/
     }
 }

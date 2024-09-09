@@ -53,18 +53,9 @@ export class EditUserComponent implements OnInit {
 
   // Funzione per salvare i dati del profilo
   saveProfile(): void {
-    console.log('Funzione saveProfile chiamata');
-
-    // Log dello stato del form e degli errori
-    console.log('Stato del form:', this.profileForm.status);
-    console.log('Errori del form:', this.profileForm.errors);
-
     if (this.profileForm.invalid) {
       console.error('Il form non è valido.');
-      console.log(
-        'Contenuto dei controlli del form:',
-        this.profileForm.controls
-      );
+
       return;
     }
 
@@ -76,9 +67,7 @@ export class EditUserComponent implements OnInit {
       Foto: this.selectedFile,
     };
 
-    const fileToUpload: File | undefined = this.selectedFile
-      ? this.selectedFile
-      : undefined;
+    const fileToUpload: File | undefined = this.selectedFile || undefined;
 
     // Log per verificare il file selezionato
     if (fileToUpload) {
@@ -95,6 +84,7 @@ export class EditUserComponent implements OnInit {
       },
       error: (err) => {
         console.error("Errore durante l'aggiornamento del profilo:", err);
+        this.router.navigate(['/user']);
       },
     });
   }

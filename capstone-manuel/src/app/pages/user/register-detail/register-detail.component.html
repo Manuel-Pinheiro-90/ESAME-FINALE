@@ -5,7 +5,8 @@
     {{ registrazione.dataRegistrazione | date }}
   </p>
   <p>
-    <strong>Costo Biglietto:</strong> {{ registrazione.costoTotale | currency }}
+    <strong>Spesa totale da saldare:</strong>
+    {{ registrazione.costoTotale | currency }}
   </p>
 
   <h3>Evento</h3>
@@ -34,7 +35,6 @@
       </li>
     </ul>
   </div>
-  <h3>Totale con Servizi: {{ totaleConServizi | currency }}</h3>
 </div>
 
 <div *ngIf="!registrazione">

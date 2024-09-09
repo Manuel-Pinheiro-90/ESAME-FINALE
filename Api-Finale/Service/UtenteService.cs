@@ -76,7 +76,13 @@ namespace Api_Finale.Service
         // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Metodo per eliminare un utente
         public async Task DeleteUtente(int id)
-        {
+        {var registrazioni = await _context.Registrazioni.Where(r => r.UtenteId == id).ToListAsync();
+            if(registrazioni.Any())
+            
+            {
+                _context.Registrazioni.RemoveRange(registrazioni);
+            }
+
             var utente = await _context.Utenti.FindAsync(id);
             if (utente == null)
             {

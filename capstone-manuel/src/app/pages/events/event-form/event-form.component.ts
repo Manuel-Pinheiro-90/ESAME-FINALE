@@ -75,7 +75,7 @@ export class EventFormComponent implements OnInit {
       dataFine: new Date(this.eventForm.get('dataFine')?.value),
       luogo: this.eventForm.get('luogo')?.value,
       numeroPartecipantiMax: this.eventForm.get('numeroPartecipantiMax')?.value,
-      immagineFile: this.selectedFile!,
+      immagineFile: this.selectedFile || null,
     };
 
     if (this.isEditMode && this.eventId) {
@@ -84,7 +84,7 @@ export class EventFormComponent implements OnInit {
       });
     } else {
       this.EventService.createEvent(event).subscribe(() => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/events']);
       });
     }
   }

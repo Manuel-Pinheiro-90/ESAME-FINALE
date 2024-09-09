@@ -58,7 +58,11 @@ export class EventService {
       'NumeroPartecipantiMax',
       event.numeroPartecipantiMax.toString()
     );
-    formData.append('ImmagineFile', event.immagineFile);
+    if (event.immagineFile) {
+      //
+      formData.append('ImmagineFile', event.immagineFile);
+    }
+    //
     return this.http.put<iEvento>(`${this.baseUrl}/${id}`, formData);
   }
 

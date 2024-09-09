@@ -32,6 +32,7 @@ export class UserComponent implements OnInit {
     this.userService.getProfile().subscribe({
       next: (user: IUserProfile) => {
         this.user = user;
+        console.log('Foto utente:', this.user?.foto);
       },
       error: (err) => {
         console.error("Errore nel recuperare i dati completi dell'utente", err);
