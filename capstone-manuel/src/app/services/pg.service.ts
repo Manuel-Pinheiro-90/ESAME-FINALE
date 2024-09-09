@@ -25,6 +25,10 @@ export class PgService {
     return this.http.post<IPersonaggioDTO>(this.pgUrl, personaggio);
   }
 
+  getPersonaggio(id: number): Observable<IPersonaggioDTO> {
+    return this.http.get<IPersonaggioDTO>(`${this.pgUrl}/${id}`);
+  }
+
   getAllPersonaggi(): Observable<IPersonaggioDTO[]> {
     return this.http.get<IPersonaggioDTO[]>(this.pgUrl);
   }

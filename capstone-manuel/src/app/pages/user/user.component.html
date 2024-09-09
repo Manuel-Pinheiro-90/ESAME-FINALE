@@ -33,14 +33,18 @@
       <p><strong>Personaggi:</strong></p>
       <ul class="list-unstyled">
         <li *ngFor="let personaggio of user.personaggi">
-          <strong>{{ personaggio.nome }}</strong
-          >: {{ personaggio.descrizione }}
+          <strong>{{ personaggio.nome }}</strong>
           <button
             class="btn btn-danger btn-sm ml-2"
             (click)="deletePersonaggio(personaggio.id)"
           >
             Elimina
           </button>
+          <a
+            [routerLink]="['personaggio', personaggio.id]"
+            class="btn btn-info btn-sm ml-2"
+            >Dettagli</a
+          >
         </li>
       </ul>
     </div>

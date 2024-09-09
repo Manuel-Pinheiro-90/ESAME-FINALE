@@ -1,0 +1,11 @@
+<div *ngIf="personaggio" class="container mt-5">
+  <h2>Dettagli del Personaggio: {{ personaggio.nome }}</h2>
+  <p><strong>Descrizione:</strong> {{ personaggio.descrizione }}</p>
+
+  <!-- Aggiungi eventuali altri dettagli del personaggio qui -->
+  <a routerLink="/user" class="btn btn-primary">Torna al profilo</a>
+</div>
+
+<div *ngIf="!personaggio">
+  <p>Caricamento dettagli del personaggio...</p>
+</div>

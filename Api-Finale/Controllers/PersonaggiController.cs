@@ -198,6 +198,7 @@ namespace Api_Finale.Controllers
             return NoContent();
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePersonaggio(int id)
         {
@@ -209,11 +210,18 @@ namespace Api_Finale.Controllers
             }
 
             // Trova il personaggio da eliminare
-            var personaggio = await _context.Personaggi.FirstOrDefaultAsync(p => p.Id == id && p.UtenteId == int.Parse(userId));
+            var personaggio = await _context.Personaggi.FirstOrDefaultAsync(p => p.Id == id);
 
             if (personaggio == null)
             {
-                return NotFound(new { Message = "Personaggio non trovato o non autorizzato." });
+                return NotFound(new { Message = "Personaggio non trovato." });
+            }
+
+            // Controlla se l'utente loggato è l'admin o il proprietario del personaggio
+            var isAdmin = User.IsInRole("Admin"); // Verifica se l'utente ha il ruolo "Admin"
+            if (!isAdmin && personaggio.UtenteId != int.Parse(userId))
+            {
+                return Unauthorized(new { Message = "Non sei autorizzato a eliminare questo personaggio." });
             }
 
             // Rimuovi il personaggio dal contesto

@@ -1,16 +1,38 @@
-<div class="container mt-5">
-  <h2>Lista di tutti i personaggi</h2>
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let personaggio of personaggi">
-      <div>
-        <strong>{{ personaggio.nome }}</strong> - {{ personaggio.descrizione }}
-      </div>
-      <button
-        class="btn btn-danger"
-        (click)="deletePersonaggio(personaggio.id)"
-      >
-        Elimina
-      </button>
-    </li>
-  </ul>
-</div>
+<ul class="list-group">
+  <li
+    class="list-group-item d-flex justify-content-between align-items-center"
+    *ngFor="let personaggio of personaggi"
+  >
+    <div>
+      <strong>{{ personaggio.nome }}</strong>
+    </div>
+
+    <!-- Pulsante per mostrare/nascondere la descrizione -->
+    <button
+      class="btn btn-secondary"
+      (click)="toggleDescription(personaggio.id)"
+    >
+      {{
+        descriptionVisible[personaggio.id]
+          ? "Nascondi Descrizione"
+          : "Mostra Descrizione"
+      }}
+    </button>
+
+    <!-- Pulsante di eliminazione -->
+    <button
+      class="btn btn-danger ml-2"
+      (click)="deletePersonaggio(personaggio.id)"
+    >
+      Elimina
+    </button>
+
+    <!-- Descrizione visibile solo al click -->
+    <div
+      *ngIf="descriptionVisible[personaggio.id]"
+      class="description-container mt-2"
+    >
+      <p>{{ personaggio.descrizione }}</p>
+    </div>
+  </li>
+</ul>

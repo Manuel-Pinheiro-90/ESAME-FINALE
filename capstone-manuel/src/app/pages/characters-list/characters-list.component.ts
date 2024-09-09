@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { PgService } from '../../services/pg.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { IUtenteDTO } from '../../interface/iutente-dto';
 
 @Component({
   selector: 'app-characters-list',
@@ -11,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class CharactersListComponent implements OnInit {
   personaggi: IPersonaggioDTO[] = [];
-
+  descriptionVisible: { [key: number]: boolean } = {};
   constructor(private pgService: PgService) {}
 
   ngOnInit(): void {
@@ -21,22 +22,36 @@ export class CharactersListComponent implements OnInit {
     this.pgService.getAllPersonaggi().subscribe({
       next: (personaggi: IPersonaggioDTO[]) => {
         this.personaggi = personaggi;
+        this.personaggi.forEach((p) => {
+          //
+          this.descriptionVisible[p.id] = false;
+        }); //
       },
       error: (err: HttpErrorResponse) => {
         console.error('Errore nel recuperare i personaggi:', err);
       },
     });
   }
+  toggleDescription(personaggioId: number): void {
+    this.descriptionVisible[personaggioId] =
+      !this.descriptionVisible[personaggioId];
+  }
 
   deletePersonaggio(id: number): void {
-    this.pgService.deletePersonaggio(id).subscribe({
-      next: () => {
-        this.personaggi = this.personaggi.filter((p) => p.id! == id);
-        console.log('Personaggio eliminato con successo');
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error("Errore durante l'eliminazione del personaggio:", err);
-      },
-    });
+    console.log('ID del personaggio da cancellare:', id);
+    if (confirm('Sei sicuro di voler eliminare questo personaggio?')) {
+      this.pgService.deletePersonaggio(id).subscribe({
+        next: () => {
+          this.personaggi = this.personaggi.filter((p) => p.id !== id);
+          console.log('Personaggio eliminato con successo');
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error(
+            'Errore durante la cancellazione del personaggio:',
+            err
+          );
+        },
+      });
+    }
   }
 }
