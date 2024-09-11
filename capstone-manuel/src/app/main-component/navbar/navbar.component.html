@@ -21,14 +21,19 @@
           <a class="nav-link" href="" routerLink="/events">event</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="" routerLink="/user">user</a>
+          <a class="nav-link" *ngIf="user" routerLink="/user">user</a>
         </li>
-        <li><a routerLink="/auth" routerLinkActive="active">Login</a></li>
+        <li>
+          <a routerLink="/auth" *ngIf="!user" routerLinkActive="active"
+            >Login</a
+          >
+        </li>
         <!---------------------------------------------------------------------------------------------------------->
         <li
           class="nav-item dropdown"
           (mouseenter)="openDropdown()"
           (mouseleave)="closeDropdown()"
+          *ngIf="isAdmin"
         >
           <a
             class="nav-link dropdown-toggle"

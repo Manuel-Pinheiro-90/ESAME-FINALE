@@ -89,7 +89,7 @@ namespace Api_Finale.Controllers
         }
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // POST: api/Eventi
-      [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Evento>> CreateEvento([FromForm] EventoCreateDTO eventoDTO)
         {
@@ -169,6 +169,7 @@ namespace Api_Finale.Controllers
 
         // PUT: api/Eventi/5
         //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEvento(int id, [FromForm] EventoCreateDTO eventoDto)
         {

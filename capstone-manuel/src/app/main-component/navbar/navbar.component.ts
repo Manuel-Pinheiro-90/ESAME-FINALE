@@ -12,8 +12,8 @@ import { EventService } from '../../services/event.service';
 export class NavbarComponent {
   user: IUtenteDTO | null = null;
   isDropdownOpen: boolean = false;
-
-  constructor(private authService: AuthService, private router: Router) {}
+  isAdmin: boolean = false;
+  constructor(public authService: AuthService, private router: Router) {}
 
   openDropdown() {
     this.isDropdownOpen = true;
@@ -27,6 +27,9 @@ export class NavbarComponent {
     this.authService.user$.subscribe((utente) => {
       this.user = utente;
       console.log('Utente ricevuto nella navbar:', this.user);
+      this.isAdmin = this.authService.hasRole('Admin');
+      console.log('Ruoli utente:', this.authService.getRolesFromStorage());
+      console.log('È Admin:', this.isAdmin);
     });
   }
 

@@ -41,6 +41,9 @@ export class AuthService {
         this.authSubject.next(data.utente);
         localStorage.setItem('accessData', JSON.stringify(data));
         console.log('Utente loggato:', data.utente);
+        this.router.navigate(['/']).then(() => {
+          window.location.reload(); // Questo forza il refresh della navbar
+        });
       })
     );
   }
@@ -93,5 +96,10 @@ export class AuthService {
     const roles = this.getRolesFromStorage();
     console.log('Ruoli utente dal localStorage:', roles);
     return roles.includes(role);
+  }
+
+  isAdmin(): boolean {
+    const roles = this.getRolesFromStorage();
+    return roles.includes('Admin');
   }
 }

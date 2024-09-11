@@ -1,32 +1,85 @@
 <div class="container">
   <h1 class="text-center m-5 text-light">Registrati</h1>
 
-  <form>
-    <input
-      type="text"
-      name="nome"
-      [(ngModel)]="newUser.Nome"
-      placeholder="Il tuo User name"
-      class="form-control"
-    />
+  <form #registerForm="ngForm" (ngSubmit)="register()">
+    <!-- Nome Utente -->
+    <div class="form-group">
+      <input
+        type="text"
+        name="nome"
+        [(ngModel)]="newUser.Nome"
+        #nome="ngModel"
+        placeholder="Il tuo User name"
+        class="form-control"
+        required
+      />
+      <div *ngIf="nome.invalid && nome.touched" class="text-danger">
+        Il nome è obbligatorio.
+      </div>
+    </div>
 
-    <input
-      type="email"
-      name="email"
-      [(ngModel)]="newUser.Email"
-      placeholder="email"
-      class="form-control mt-3"
-    />
+    <!-- Email -->
+    <div class="form-group">
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="newUser.Email"
+        #email="ngModel"
+        placeholder="Email"
+        class="form-control mt-3"
+        required
+        email
+      />
+      <div *ngIf="email.invalid && email.touched" class="text-danger">
+        Inserisci un'email valida.
+      </div>
+    </div>
 
-    <input
-      type="password"
-      name="password"
-      [(ngModel)]="newUser.PasswordHash"
-      placeholder="password"
-      class="form-control mt-3"
-    />
+    <!-- Password -->
+    <div class="form-group">
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="newUser.PasswordHash"
+        #password="ngModel"
+        placeholder="Password"
+        class="form-control mt-3"
+        required
+        minlength="6"
+      />
+      <div *ngIf="password.invalid && password.touched" class="text-danger">
+        La password deve avere almeno 6 caratteri.
+      </div>
+    </div>
 
-    <button (click)="register()" class="btn btn-primary mt-3">
+    <!-- Conferma Password -->
+    <div class="form-group">
+      <input
+        type="password"
+        name="confirmPassword"
+        [(ngModel)]="confirmPassword"
+        #confirmPasswordInput="ngModel"
+        placeholder="Conferma Password"
+        class="form-control mt-3"
+        required
+        [ngClass]="{
+          'is-invalid': passwordMismatch && confirmPasswordInput.touched
+        }"
+      />
+      <div
+        *ngIf="passwordMismatch && confirmPasswordInput.touched"
+        class="text-danger"
+      >
+        Le password non corrispondono.
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="btn btn-primary mt-3"
+      [disabled]="registerForm.invalid || passwordMismatch"
+    >
       Registrati
     </button>
   </form>
