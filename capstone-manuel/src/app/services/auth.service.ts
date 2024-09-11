@@ -51,7 +51,7 @@ export class AuthService {
   logout(): void {
     this.authSubject.next(null);
     localStorage.removeItem('accessData');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 
   autoLogout(): void {
