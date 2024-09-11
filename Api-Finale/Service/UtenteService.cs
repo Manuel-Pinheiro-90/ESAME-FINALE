@@ -135,8 +135,16 @@ namespace Api_Finale.Service
         
         }
 
-        
+        ////////////////////////////////////////////////////
+        public async Task<Ruolo> GetRuoloByName(string nome)
+        {
+            return await _context.Ruoli.FirstOrDefaultAsync(r => r.Nome == nome);
+        }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
 
 
 

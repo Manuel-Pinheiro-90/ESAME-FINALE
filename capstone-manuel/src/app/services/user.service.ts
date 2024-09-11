@@ -46,6 +46,26 @@ export class UserService {
     return this.http.put<IUserProfileUpdate>(`${this.updateUrl}`, formData);
   }
 
+  aggiungiRuolo(id: number, ruoloNome: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.utentiUrl}/${id}/aggiungi-ruolo`,
+      JSON.stringify(ruoloNome), // Assicurati di inviare la stringa come JSON
+      {
+        headers: { 'Content-Type': 'application/json' }, // Imposta il Content-Type su JSON
+      }
+    );
+  }
+
+  rimuoviRuolo(id: number, ruoloNome: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.utentiUrl}/${id}/rimuovi-ruolo`,
+      JSON.stringify(ruoloNome), // Assicurati di inviare il nome del ruolo come stringa
+      {
+        headers: { 'Content-Type': 'application/json' }, // Imposta il Content-Type su JSON
+      }
+    );
+  }
+
   deleteUtente(id: number): Observable<void> {
     return this.http.delete<void>(`${this.utentiUrl}/${id}`);
   }

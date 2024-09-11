@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { PgService } from '../../services/pg.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IUtenteDTO } from '../../interface/iutente-dto';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-characters-list',
@@ -18,6 +19,7 @@ export class CharactersListComponent implements OnInit {
   ngOnInit(): void {
     this.loadPersonaggi();
   }
+
   loadPersonaggi(): void {
     this.pgService.getAllPersonaggi().subscribe({
       next: (personaggi: IPersonaggioDTO[]) => {

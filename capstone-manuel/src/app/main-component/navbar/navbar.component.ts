@@ -12,6 +12,7 @@ import { EventService } from '../../services/event.service';
 export class NavbarComponent {
   user: IUtenteDTO | null = null;
   isDropdownOpen: boolean = false;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   openDropdown() {

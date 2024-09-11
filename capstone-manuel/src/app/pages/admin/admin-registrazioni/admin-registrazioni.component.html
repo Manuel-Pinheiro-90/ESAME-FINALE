@@ -21,6 +21,14 @@
         <td>{{ registrazione.dataRegistrazione | date : "short" }}</td>
         <td>{{ registrazione.costoTotale | currency }}</td>
         <td>{{ registrazione.personaggio?.nome || "N/A" }}</td>
+        <td>
+          <button
+            class="btn btn-danger"
+            (click)="deleteRegistrazione(registrazione.id)"
+          >
+            Elimina
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

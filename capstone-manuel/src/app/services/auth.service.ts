@@ -79,4 +79,19 @@ export class AuthService {
     console.log(accessData.token);
     console.log('Utente ripristinato dal localStorage:', accessData.utente);
   }
+
+  ///////////////////////////////////////////////////////////////
+
+  getRolesFromStorage(): string[] {
+    const accessDataJson = localStorage.getItem('accessData');
+    if (!accessDataJson) return [];
+    const accessData: IAuthResponse = JSON.parse(accessDataJson);
+    return accessData?.utente?.ruoli.map((role) => role.nome) || [];
+  }
+
+  hasRole(role: string): boolean {
+    const roles = this.getRolesFromStorage();
+    console.log('Ruoli utente dal localStorage:', roles);
+    return roles.includes(role);
+  }
 }

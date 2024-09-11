@@ -26,4 +26,20 @@ export class AdminRegistrazioniComponent implements OnInit {
       },
     });
   }
+  deleteRegistrazione(id: number): void {
+    if (confirm('Sei sicuro di voler eliminare questa registrazione?')) {
+      this.registrationService.deleteRegistrazione(id).subscribe({
+        next: () => {
+          this.registrazioni = this.registrazioni.filter((r) => r.id !== id);
+          alert('Registrazione eliminata con successo.');
+        },
+        error: (err) => {
+          console.error(
+            'Errore durante la cancellazione della registrazione:',
+            err
+          );
+        },
+      });
+    }
+  }
 }

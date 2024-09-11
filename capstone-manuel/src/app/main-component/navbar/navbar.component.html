@@ -23,7 +23,7 @@
         <li class="nav-item">
           <a class="nav-link" href="" routerLink="/user">user</a>
         </li>
-
+        <li><a routerLink="/auth" routerLinkActive="active">Login</a></li>
         <!---------------------------------------------------------------------------------------------------------->
         <li
           class="nav-item dropdown"
@@ -70,7 +70,9 @@
       <div *ngIf="!user">
         <span>Nessun utente loggato</span>
       </div>
-      <button class="btn btn-outline-danger" (click)="logout()">Log out</button>
+      <button class="btn btn-outline-danger" *ngIf="user" (click)="logout()">
+        Log out
+      </button>
     </div>
   </div>
 </nav>

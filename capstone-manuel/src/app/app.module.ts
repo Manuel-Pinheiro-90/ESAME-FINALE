@@ -12,9 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './pages/auth/auth.interceptor';
 import { Page404Component } from './pages/page404/page404.component';
 import { CharactersListComponent } from './pages/characters-list/characters-list.component';
+import { NotAuthorizedComponent } from './pages/not-authorized/not-authorized.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, FooterComponent, Page404Component, CharactersListComponent],
+  declarations: [AppComponent, NavbarComponent, FooterComponent, Page404Component, CharactersListComponent, NotAuthorizedComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

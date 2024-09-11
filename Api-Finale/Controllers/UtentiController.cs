@@ -148,55 +148,7 @@ namespace Api_Finale.Controllers
             }
         }
 
-        // PUT: api/Utenti/5
-        /* [Authorize(Roles = "Admin,Utente")]
-         [HttpPut("{id}")]
-         public async Task<IActionResult> UpdateUtente(int id, [FromForm] UtenteInputDTO utenteDto)
-         {
-             try
-             {
-                 // Recupera l'utente esistente dal database
-                 var existingUser = await _utenteService.GetUtente(id);
-                 if (existingUser == null)
-                 {
-                     return NotFound(new { Message = "Utente non trovato." });
-                 }
-
-                 // Aggiorna il nome e l'email
-                 existingUser.Nome = utenteDto.Nome;
-                 existingUser.Email = utenteDto.Email;
-
-                 // Se la password è stata fornita e non è vuota, aggiorna la password
-                 if (!string.IsNullOrWhiteSpace(utenteDto.Password))
-                 {
-                     existingUser.PasswordHash = utenteDto.Password; // Assumi che il service esegua il hash
-                 }
-
-
-                 /* try
-                  {
-                      var utente = new Utente
-                      {
-                          Id = id,
-                          Nome = utenteDto.Nome,
-                          Email = utenteDto.Email,
-                          PasswordHash = utenteDto.Password // Assumendo che la password venga hashata nel service
-                      }; */
-
-        // Gestione dell'immagine, se fornita
-        /*   if (utenteDto.Foto != null && utenteDto.Foto.Length > 0)
-           {
-               existingUser.Foto = _utenteService.ConvertImage(utenteDto.Foto);
-           }
-
-           var updatedUtente = await _utenteService.UpdateUtente(id, existingUser);
-           return Ok(updatedUtente);
-       }
-       catch (Exception ex)
-       {
-           return BadRequest(new { Message = ex.Message });
-       }
-   }*/
+        
 
         // DELETE: api/Utenti/5
         [Authorize(Roles = "Admin")]
@@ -254,44 +206,76 @@ namespace Api_Finale.Controllers
             return Ok(new { Message = "Profilo aggiornato con successo.", updatedUser });
         }
 
+        /// ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("{id}/aggiungi-ruolo")]
+        public async Task<IActionResult> AggiungiRuolo(int id, [FromBody] string ruoloNome)
+        {
+            if (string.IsNullOrWhiteSpace(ruoloNome))
+            {
+                return BadRequest(new { Message = "Il nome del ruolo non può essere vuoto." });
+            }
+
+            var utente = await _utenteService.GetUtente(id);
+            if (utente == null)
+            {
+                return NotFound(new { Message = "Utente non trovato." });
+            }
+
+            var ruolo = await _utenteService.GetRuoloByName(ruoloNome);
+            if (ruolo == null)
+            {
+                return NotFound(new { Message = "Ruolo non trovato." });
+            }
+
+            if (utente.Ruoli.Any(r => r.Nome == ruoloNome))
+            {
+                return BadRequest(new { Message = "L'utente ha già questo ruolo." });
+            }
+
+            utente.Ruoli.Add(ruolo);
+            await _utenteService.SaveChangesAsync();
+
+            return Ok(new { Message = "Ruolo aggiunto con successo." });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("{id}/rimuovi-ruolo")]
+        public async Task<IActionResult> RimuoviRuolo(int id, [FromBody] string ruoloNome)
+        {
+            if (string.IsNullOrWhiteSpace(ruoloNome))
+            {
+                return BadRequest(new { Message = "Il nome del ruolo non può essere vuoto." });
+            }
+
+            var utente = await _utenteService.GetUtente(id);
+            if (utente == null)
+            {
+                return NotFound(new { Message = "Utente non trovato." });
+            }
+
+            var ruolo = utente.Ruoli.FirstOrDefault(r => r.Nome == ruoloNome);
+            if (ruolo == null)
+            {
+                return NotFound(new { Message = "Ruolo non trovato nell'utente." });
+            }
+
+            utente.Ruoli.Remove(ruolo);
+            await _utenteService.SaveChangesAsync();
+
+            return Ok(new { Message = "Ruolo rimosso con successo." });
+        }
 
 
 
 
-        // PUT: api/Utenti/profile
-        /* [Authorize]
-         [HttpPut("profile")]
-         public async Task<IActionResult> UpdateProfile([FromForm] UtenteInputDTO profileDto)
-         {
-             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-
-             if (userId == null)
-             {
-                 return Unauthorized(new { Message = "Utente non autenticato." });
-             }
-
-             var utente = await _utenteService.GetUtente(int.Parse(userId));
-
-             if (utente == null)
-             {
-                 return NotFound(new { Message = "Utente non trovato." });
-             }
 
 
-             utente.Nome = profileDto.Nome;
-             utente.Email = profileDto.Email;
 
 
-             if (profileDto.Foto != null && profileDto.Foto.Length > 0)
-             {
-                 utente.Foto = _utenteService.ConvertImage(profileDto.Foto);
-             }
 
-             var updatedUser = await _utenteService.UpdateUtente(utente.Id, utente);
 
-             return Ok(new { Message = "Profilo aggiornato con successo.", updatedUser });
-             //crea una select per evitare cicili
-         }
-     }*/
     }
+
 }

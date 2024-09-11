@@ -17,7 +17,15 @@
         <td>{{ utente.email }}</td>
         <td>
           <ul>
-            <li *ngFor="let ruolo of utente.ruoli">{{ ruolo.nome }}</li>
+            <li *ngFor="let ruolo of utente.ruoli">
+              {{ ruolo.nome }}
+              <button
+                class="btn btn-warning btn-sm ms-2"
+                (click)="rimuoviRuolo(utente.id, ruolo.nome)"
+              >
+                Rimuovi
+              </button>
+            </li>
           </ul>
         </td>
         <td>
@@ -26,6 +34,23 @@
               {{ personaggio.nome }}
             </li>
           </ul>
+        </td>
+        <td>
+          <select
+            [(ngModel)]="ruoliDaAggiungere[utente.id]"
+            class="form-control"
+          >
+            <option value="" disabled>Seleziona un ruolo</option>
+            <option *ngFor="let ruolo of ruoliDisponibili" [value]="ruolo">
+              {{ ruolo }}
+            </option>
+          </select>
+          <button
+            class="btn btn-primary mt-2"
+            (click)="aggiungiRuolo(utente.id)"
+          >
+            Aggiungi Ruolo
+          </button>
         </td>
         <td>
           <button class="btn btn-danger" (click)="deleteUser(utente.id)">
