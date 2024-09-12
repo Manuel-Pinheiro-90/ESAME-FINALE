@@ -101,7 +101,7 @@ namespace Api_Finale.Controllers
                 return BadRequest(new { Message = ex.Message });
             }
         }
-        [Authorize(Roles = "Admin,Utente")]
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUtente(int id, [FromForm] UtenteInputDTO utenteDto)
         {

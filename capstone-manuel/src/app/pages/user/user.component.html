@@ -4,31 +4,41 @@
   style="max-width: 80%; margin: auto; text-align: center"
 >
   <div class="card-body">
+    <!-------------------------------------------------------------------------------------------->
     <h2 class="card-title">Profilo Utente</h2>
-    <p class="card-text"><strong>Nome:</strong> {{ user.name }}</p>
-    <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+    <div class="container mb-5">
+      <div class="row">
+        <div class="col mb-2">
+          <p><strong>Foto Profilo:</strong></p>
+          <img
+            [src]="
+              user.foto
+                ? 'data:image/jpeg;base64,' + user.foto
+                : 'assets/img/avatar.jpg'
+            "
+            alt="Foto profilo di {{ user.name }}"
+            class="img-thumbnail"
+            style="width: 150px; height: 150px; object-fit: cover"
+          />
+        </div>
 
-    <div style="margin-bottom: 1rem">
-      <p><strong>Foto Profilo:</strong></p>
-      <img
-        [src]="
-          user.foto
-            ? 'data:image/jpeg;base64,' + user.foto
-            : 'assets/img/avatar.jpg'
-        "
-        alt="Foto profilo di {{ user.name }}"
-        class="img-thumbnail"
-        style="width: 150px; height: 150px; object-fit: cover"
-      />
+        <div class="col">
+          <p class="card-text"><strong>Nome:</strong> {{ user.name }}</p>
+          <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+
+          <div *ngIf="user.roles && user.roles.length > 0">
+            <p class="card-text"><strong>Ruoli:</strong></p>
+            <ul class="card-text">
+              <li *ngFor="let ruolo of user.roles">{{ ruolo }}</li>
+            </ul>
+          </div>
+          <a class="btn btn-primary" [routerLink]="['editProfile']">
+            Modifica Profilo
+          </a>
+        </div>
+      </div>
     </div>
-
-    <div *ngIf="user.roles && user.roles.length > 0">
-      <p><strong>Ruoli:</strong></p>
-      <ul class="list-unstyled">
-        <li *ngFor="let ruolo of user.roles">{{ ruolo }}</li>
-      </ul>
-    </div>
-
+    <!-------------------------------------------------------------------------------------------->
     <div *ngIf="user.personaggi && user.personaggi.length > 0">
       <p><strong>Personaggi:</strong></p>
       <ul class="list-unstyled">
@@ -50,7 +60,6 @@
     </div>
 
     <div style="margin-top: 2rem">
-      <!-- Aggiungi un pulsante per la creazione di un nuovo personaggio -->
       <a routerLink="/user/create-personaggio" class="btn btn-primary">
         Crea un nuovo personaggio
       </a>
@@ -106,10 +115,6 @@
         </li>
       </ul>
     </div>
-
-    <a class="btn btn-primary" [routerLink]="['editProfile']"
-      >Modifica Profilo</a
-    >
   </div>
 </div>
 
