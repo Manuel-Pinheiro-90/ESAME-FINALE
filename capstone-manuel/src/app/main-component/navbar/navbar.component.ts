@@ -13,6 +13,7 @@ export class NavbarComponent {
   user: IUtenteDTO | null = null;
   isDropdownOpen: boolean = false;
   isAdmin: boolean = false;
+  isCollapsed: boolean = true;
   constructor(public authService: AuthService, private router: Router) {}
 
   openDropdown() {
@@ -36,5 +37,9 @@ export class NavbarComponent {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/home']);
+  }
+
+  toggleCollapse() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }

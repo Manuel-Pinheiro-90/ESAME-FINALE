@@ -1,34 +1,57 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+<nav id="sfondo" class="navbar navbar-expand-lg position-sticky top-0 z-3">
+  <div class="container justify-content-around">
+    <!-- Logo -->
+    <a class="" routerLink="/">
+      <img
+        class="cla1"
+        src="/assets/img/Logo SITO LARP HUB.png"
+        alt="Logo del sito LARP HUB"
+      />
+    </a>
+
+    <!-- Collapsing per versione  Mobile -->
     <button
+      (click)="toggleCollapse()"
+      [attr.aria-expanded]="!isCollapsed"
+      aria-controls="navbarSupportedContent"
       class="navbar-toggler"
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
+      [ngClass]="{ 'menu-open': !isCollapsed }"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+    <!-- Collapsible Navbar Content -->
+    <div
+      class="collapse navbar-collapse"
+      [ngClass]="{ show: !isCollapsed }"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 fs-2 fw-bold">
+        <!-- Home -->
         <li class="nav-item">
-          <a class="nav-link active" routerLink="home" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="" routerLink="/events">event</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="user" routerLink="/user">user</a>
-        </li>
-        <li>
-          <a routerLink="/auth" *ngIf="!user" routerLinkActive="active"
-            >Login</a
+          <a
+            class="nav-link"
+            routerLink="home"
+            routerLinkActive="active-link"
+            aria-label="Vai alla pagina Home"
+            >Home</a
           >
         </li>
-        <!---------------------------------------------------------------------------------------------------------->
+
+        <!-- Events -->
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/events"
+            routerLinkActive="active-link"
+            aria-label="Vai alla pagina degli eventi"
+            >Eventi</a
+          >
+        </li>
+
+        <!-- Admin Dropdown (shown only if the user is Admin) -->
         <li
           class="nav-item dropdown"
           (mouseenter)="openDropdown()"
@@ -39,45 +62,77 @@
             class="nav-link dropdown-toggle"
             href="#"
             role="button"
-            data-bs-toggle="dropdown"
             aria-expanded="false"
+            aria-label="Menu Admin"
           >
             Dropdown
           </a>
           <ul class="dropdown-menu" [class.show]="isDropdownOpen">
             <li>
-              <a class="nav-link" routerLink="/admin" routerLinkActive="active"
+              <a
+                class="dropdown-item"
+                routerLink="/admin"
+                routerLinkActive="active-link"
+                aria-label="Vai alla pagina Admin"
                 >Admin</a
               >
             </li>
             <li>
               <a
-                class="nav-link"
+                class="dropdown-item"
                 routerLink="/admin/registrazioni"
-                routerLinkActive="active"
+                routerLinkActive="active-link"
+                aria-label="Vai alla pagina delle registrazioni"
                 >Registrazioni</a
               >
             </li>
             <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </li>
           </ul>
-        </li>
-        <!---------------------------------------------------------------------------------------------------------->
-
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </li>
       </ul>
 
-      <div *ngIf="user" class="navbar-text ms-auto">
-        <span>Benvenuto, {{ user.nome }}!</span>
+      <!-- User Info and Logout Button / Login Link -->
+      <div class="d-flex align-items-center ms-auto">
+        <!-- User Info -->
+        <div class="navbar-text me-3" *ngIf="user">
+          <span>Benvenuto, {{ user.nome }}!</span>
+        </div>
+
+        <!-- User Link or Login Link -->
+        <div class="nav-item" *ngIf="user">
+          <a
+            class="nav-link"
+            routerLink="/user"
+            routerLinkActive="active-link"
+            aria-label="Vai al profilo utente"
+            >Profilo</a
+          >
+        </div>
+
+        <!-- Logout Button -->
+        <button
+          class="btn btn-outline-danger mx-3"
+          *ngIf="user"
+          (click)="logout()"
+          aria-label="Logout"
+        >
+          Log out
+        </button>
+
+        <!-- Login Link -->
+        <div class="nav-item" *ngIf="!user">
+          <a
+            class="nav-link"
+            routerLink="/auth"
+            routerLinkActive="active-link"
+            aria-label="Vai alla pagina di login"
+            >Login</a
+          >
+        </div>
       </div>
-      <div *ngIf="!user">
-        <span>Nessun utente loggato</span>
-      </div>
-      <button class="btn btn-outline-danger" *ngIf="user" (click)="logout()">
-        Log out
-      </button>
     </div>
   </div>
 </nav>

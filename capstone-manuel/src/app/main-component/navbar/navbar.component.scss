@@ -1,7 +1,112 @@
-.dropdown-menu {
-  display: none;
+#sfondo {
+  background: linear-gradient(180deg, rgba(25, 26, 40, 1) 15%, rgba(16, 17, 26, 1) 78%);
+  font-size: 1.5em;
 }
 
-.dropdown-menu.show {
-  display: block;
+/* Logo and Profile Image */
+.cla1,
+.imgP {
+  width: 50px;
+  height: 50px;
+}
+
+.imgP {
+  border-radius: 50%;
+}
+
+/* Border Customization */
+.myBorder {
+  border-color: #51566b !important;
+}
+
+/* Navbar Toggler Styling */
+.navbar-toggler {
+  outline: none;
+  box-shadow: none;
+  border-color: rgba(14, 106, 216, 1) !important;
+
+  &.menu-open {
+    border-color: rgb(87, 160, 250) !important;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(14, 106, 216, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+  display: none;
+  background: linear-gradient(135deg,  #11121B 30%, rgba(75, 62, 223, 0.8) 90%);
+  border: none;
+
+  &.show {
+    display: block;
+  }
+
+  .dropdown-item {
+    color: white;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &:focus {
+      background-color: transparent;
+    }
+  }
+}
+
+
+#dropdownMenuButton,
+#dropdownMenuButtonLogin,
+#dropdownMenuButtonUser,
+.clickable {
+  cursor: pointer;
+}
+
+/* Navbar Links  e bottoni */
+.navbar-nav .nav-link,
+.btn-outline-danger,
+button,
+.nav-item .nav-link { /* Aggiorno il selettore per includere i link di login e profilo */
+  color: white; /* Colore uniforme per link e pulsanti */
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Transizione uniforme */
+}
+
+/* Hover effect  */
+.navbar-nav .nav-link:hover,
+.btn-outline-danger:hover,
+button:hover,
+.nav-item .nav-link:hover { /* Hover per i link di login e profilo */
+  color: rgba(87, 160, 250, 1); /* Colore per l'effetto hover (azzurro chiaro) */
+  background-color: transparent; /* Lo sfondo dei bottoni rimane trasparente */
+}
+
+/* Testo utente loggato */
+.navbar-text {
+  color: #f1f1f1; /* Colore chiaro per il testo dell'utente loggato */
+  font-weight: bold; /* Testo più visibile */
+}
+
+/* Miglioramento del pulsante di Logout */
+.btn-outline-danger {
+  color: white; /* Assicurati che i bottoni abbiano il colore bianco */
+  border-color: white; /* Colore del bordo coerente */
+}
+
+.btn-outline-danger:hover {
+  background-color: rgba(87, 160, 250, 1); /* Sfondo azzurro in hover */
+  color: white; /* Testo bianco in hover */
+}
+
+/* Consistent Spacing for Navbar Items */
+.d-flex.align-items-center .nav-link {
+  margin-left: 15px; /* Aggiunta di spazio tra i link all'interno di d-flex */
+}
+
+/* Effetto hover su tutti i bottoni */
+button {
+  transition: all 0.3s ease;
 }

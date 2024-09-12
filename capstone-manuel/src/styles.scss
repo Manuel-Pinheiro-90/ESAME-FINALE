@@ -2,3 +2,14 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+body{
+
+background-image: url('/assets/img/sfondo-2.png');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+height: 100vh;
+margin: 0;
+}
