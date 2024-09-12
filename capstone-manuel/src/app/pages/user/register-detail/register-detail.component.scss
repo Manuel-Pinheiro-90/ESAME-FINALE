@@ -1,0 +1,58 @@
+/* Stile per il contenitore centrale */
+.card {
+  max-width: 50em;
+  margin: 2rem auto;
+  background: linear-gradient(
+    180deg,
+    rgba(27, 28, 43, 1.61) 19%,
+    rgba(42, 47, 88, 0.61) 77%
+  );
+  border-radius: 10px;
+  color: white;
+}
+
+/* Titolo principale */
+.card-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 25%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Sezioni principali */
+.registration-section, .event-section, .character-section, .services-section {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1.5rem;
+}
+
+/* Testo delle informazioni */
+p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+/* Stile per i servizi */
+.services-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.services-section ul li {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #30333d;
+  padding: 0.5rem;
+}
+
+/* Effetto hover sui servizi */
+.services-section ul li:hover {
+  background-color: #1a1b22;
+}
+
+

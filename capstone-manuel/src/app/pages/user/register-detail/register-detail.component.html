@@ -1,42 +1,73 @@
-<div *ngIf="registrazione">
-  <h2>Dettagli della Registrazione</h2>
-  <p>
-    <strong>Data di Registrazione:</strong>
-    {{ registrazione.dataRegistrazione | date }}
-  </p>
-  <p>
-    <strong>Spesa totale da saldare:</strong>
-    {{ registrazione.costoTotale | currency }}
-  </p>
+<div
+  *ngIf="registrazione"
+  class="card mx-auto"
+  style="max-width: 80%; margin: auto"
+>
+  <div class="card-body">
+    <h2 class="card-title">Dettagli della Registrazione</h2>
 
-  <h3>Evento</h3>
-  <p><strong>Titolo:</strong> {{ registrazione.evento.titolo }}</p>
-  <p><strong>Descrizione:</strong> {{ registrazione.evento.descrizione }}</p>
-  <p>
-    <strong>Data Inizio:</strong> {{ registrazione.evento.dataInizio | date }}
-  </p>
-  <p><strong>Data Fine:</strong> {{ registrazione.evento.dataFine | date }}</p>
-  <p><strong>Luogo:</strong> {{ registrazione.evento.luogo }}</p>
+    <section class="registration-section">
+      <p>
+        <strong>Data di Registrazione:</strong>
+        {{ registrazione.dataRegistrazione | date }}
+      </p>
+      <p>
+        <strong>Spesa totale da saldare:</strong>
+        {{ registrazione.costoTotale | currency }}
+      </p>
+    </section>
 
-  <h3>Personaggio</h3>
-  <div *ngIf="registrazione.personaggio">
-    <p><strong>Nome:</strong> {{ registrazione.personaggio.nome }}</p>
-    <p>
-      <strong>Descrizione:</strong> {{ registrazione.personaggio.descrizione }}
-    </p>
-  </div>
+    <section class="event-section mt-5">
+      <h3><strong>Evento</strong></h3>
+      <p><strong>Titolo:</strong> {{ registrazione.evento.titolo }}</p>
+      <p>
+        <strong>Descrizione:</strong> {{ registrazione.evento.descrizione }}
+      </p>
+      <p>
+        <strong>Data Inizio:</strong>
+        {{ registrazione.evento.dataInizio | date }}
+      </p>
+      <p>
+        <strong>Data Fine:</strong> {{ registrazione.evento.dataFine | date }}
+      </p>
+      <p><strong>Luogo:</strong> {{ registrazione.evento.luogo }}</p>
+    </section>
 
-  <div *ngIf="registrazione.servizi && registrazione.servizi.length > 0">
-    <h4>Servizi associati:</h4>
-    <ul>
-      <li *ngFor="let servizio of registrazione.servizi">
-        <strong>{{ servizio.nome }}</strong
-        >: {{ servizio.descrizione }} (Costo: {{ servizio.costo | currency }})
-      </li>
-    </ul>
+    <section class="character-section mt-5">
+      <h3><strong>Personaggio</strong></h3>
+      <div *ngIf="registrazione.personaggio">
+        <p><strong>Nome:</strong> {{ registrazione.personaggio.nome }}</p>
+        <p>
+          <strong>Descrizione:</strong>
+          {{ registrazione.personaggio.descrizione }}
+        </p>
+      </div>
+    </section>
+
+    <section
+      *ngIf="registrazione.servizi && registrazione.servizi.length > 0"
+      class="services-section mt-5"
+    >
+      <h4><strong>Servizi associati</strong></h4>
+      <ul>
+        <li *ngFor="let servizio of registrazione.servizi">
+          <strong>{{ servizio.nome }}</strong
+          >: {{ servizio.descrizione }} (Costo: {{ servizio.costo | currency }})
+        </li>
+      </ul>
+    </section>
   </div>
 </div>
 
-<div *ngIf="!registrazione">
-  <p>Caricamento in corso...</p>
+<div *ngIf="!registrazione" class="hourglassBackground">
+  <div class="hourglassContainer">
+    <!-- Effetto clessidra per caricamento -->
+    <div class="hourglassCurves"></div>
+    <div class="hourglassCapTop"></div>
+    <div class="hourglassGlassTop"></div>
+    <div class="hourglassSand"></div>
+    <div class="hourglassSandStream"></div>
+    <div class="hourglassCapBottom"></div>
+    <div class="hourglassGlass"></div>
+  </div>
 </div>

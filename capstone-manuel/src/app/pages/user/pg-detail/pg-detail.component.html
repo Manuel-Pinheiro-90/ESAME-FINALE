@@ -1,11 +1,12 @@
-<div *ngIf="personaggio" class="container mt-5">
-  <h2>Dettagli del Personaggio: {{ personaggio.nome }}</h2>
-  <p><strong>Descrizione:</strong> {{ personaggio.descrizione }}</p>
-
-  <!-- Aggiungi eventuali altri dettagli del personaggio qui -->
-  <a routerLink="/user" class="btn btn-primary">Torna al profilo</a>
-</div>
-
-<div *ngIf="!personaggio">
-  <p>Caricamento dettagli del personaggio...</p>
+<div
+  *ngIf="personaggio"
+  class="card mx-auto"
+  style="max-width: 80%; margin: auto"
+>
+  <div class="card-body">
+    <h2 class="card-title">Dettagli del Personaggio: {{ personaggio.nome }}</h2>
+    <p><strong>Descrizione:</strong> {{ personaggio.descrizione }}</p>
+    <!-- Bottone per tornare al profilo -->
+    <a routerLink="/user" class="btn btn-primary">Torna al profilo</a>
+  </div>
 </div>

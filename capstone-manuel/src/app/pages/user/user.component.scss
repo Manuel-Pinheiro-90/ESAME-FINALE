@@ -1,7 +1,7 @@
 /* Stile per il contenitore centrale */
 .card {
   max-width: 50em;
-  margin: 2rem auto; /* Margini per centrare la card */
+  margin: 2rem auto;
   background: linear-gradient(
     180deg,
     rgba(27, 28, 43, 1.61) 19%,
@@ -9,6 +9,23 @@
   );
   border-radius: 10px;
   color: white;
+}
+
+/* Sezioni principali */
+.profile-section, .create-character-section, .events-section {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1.5rem;
+}
+
+/* Correzione del gradiente per i titoli */
+h1, h3, h4, .card-title {
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 25%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 /* Stile per la foto del profilo */
@@ -19,20 +36,6 @@
   border-radius: 50%;
 }
 
-/* Titolo principale del profilo utente */
-.card-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(
-    90deg,
-    rgb(255, 255, 255) 19%,
-    rgb(119, 0, 155) 58%
-  );
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-}
-
 /* Testo delle informazioni utente */
 .card-text {
   font-size: 1.2rem;
@@ -40,31 +43,24 @@
   text-align: left;
 }
 
-/* Pulsanti */
+/* Pulsanti con gradiente e hover */
 .btn {
   font-size: 1.2rem;
   padding: 0.5rem 1.5rem;
   border-radius: 8px;
   border: none;
-  transition: background-color 0.3s ease;
-}
-
-.btn-primary {
-  background: linear-gradient(
-    180deg,
-    rgba(247, 191, 180, 1) 0%,
-    rgba(193, 41, 46, 1) 77%
-  );
+  background: linear-gradient(90deg, rgba(119, 0, 155, 1) 0%, rgb(75, 53, 104) 100%);
   color: white;
+  transition: all 0.3s ease;
 }
 
-.btn-primary:hover {
-  background-color: rgba(193, 41, 46, 0.9);
+.btn:hover {
+  background: linear-gradient(90deg, rgba(255, 105, 180, 1) 0%, rgba(119, 0, 155, 1) 100%);
 }
 
+/* Hover per .btn-info e .btn-danger */
 .btn-info {
   background-color: rgba(87, 160, 250, 1);
-  color: white;
 }
 
 .btn-info:hover {
@@ -73,22 +69,26 @@
 
 .btn-danger {
   background-color: rgba(193, 41, 46, 1);
-  color: white;
 }
 
 .btn-danger:hover {
   background-color: rgba(193, 41, 46, 0.9);
 }
 
-/* Lista dei ruoli e personaggi */
-.list-unstyled li {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
+/* Effetto hover per i list items dei personaggi */
+.personaggio-item {
+  transition: background-color 0.3s ease;
+}
+
+.personaggio-item:hover {
+  background-color: rgba(50, 50, 70, 0.5);
 }
 
 /* Stile per la lista di eventi */
 .list-group-item {
   background-color: transparent;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
   color: white;
   border: 1px solid #30333d;
 }
@@ -97,15 +97,90 @@
   background-color: #1a1b22;
 }
 
-h3, h4 {
-  margin-top: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  background: linear-gradient(
-    90deg,
-    rgb(255, 255, 255) 19%,
-    rgb(119, 0, 155) 58%
-  );
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
+/* Hover su tutti i list items (registrazioni e personaggi) */
+.list-unstyled li, .list-group-item {
+  transition: background-color 0.3s ease;
+}
+
+caricamento
+////////////////////////////////////////////////////////////////////////////////////////////
+
+/* Stile per centrare la piramide nella pagina */
+.text-center {
+
+  align-items: center;
+  height: 100vh; /* Imposta l'altezza della pagina a 100% della viewport */
+}
+
+/* Modifica la dimensione della piramide */
+.pyramid-loader {
+  position: relative;
+  width: 500px; /* Aumenta la larghezza */
+  height: 500px; /* Aumenta l'altezza */
+  display: block;
+  transform-style: preserve-3d;
+  transform: rotateX(-20deg);
+}
+
+/* Rende più grandi le facce della piramide */
+.pyramid-loader .wrapper .side {
+  width: 200px;  /* Aumenta la larghezza delle facce */
+  height: 200px; /* Aumenta l'altezza delle facce */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  transform-origin: center top;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.pyramid-loader .wrapper .side1 {
+  transform: rotateZ(-30deg) rotateY(90deg);
+  background: linear-gradient(to bottom right, #afb4b4, #da00ff);
+}
+
+.pyramid-loader .wrapper .side2 {
+  transform: rotateZ(30deg) rotateY(90deg);
+  background: linear-gradient(to bottom right, #4a56fc, #da00ff);
+}
+
+.pyramid-loader .wrapper .side3 {
+  transform: rotateX(30deg);
+  background: linear-gradient(to bottom right, #4a56fc, #da00ff);
+}
+
+.pyramid-loader .wrapper .side4 {
+  transform: rotateX(-30deg);
+  background: linear-gradient(to bottom right, #afb4b4, #da00ff);
+}
+
+.pyramid-loader .wrapper .shadow {
+  width: 100px;  /* Aumenta la larghezza dell'ombra */
+  height: 100px; /* Aumenta l'altezza dell'ombra */
+  background: #8b5ad5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  transform: rotateX(90deg) translateZ(-40px);
+  filter: blur(12px);
+}
+
+/* Effetto di rotazione */
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotateY(360deg);
+  }
 }
