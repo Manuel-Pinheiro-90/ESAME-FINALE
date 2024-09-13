@@ -1,0 +1,142 @@
+/* Stile per l'introduzione statica */
+.intro-section {
+  background: linear-gradient(180deg, rgba(27, 28, 43, 0.9) 10%, rgba(42, 47, 88, 0.8) 90%);
+  padding: 2rem;
+  border-radius: 15px;
+  color: white;
+  margin-bottom: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.intro-title {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 25%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.intro-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+}
+
+/* Contenitore principale delle card */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Stile per ogni card del personaggio */
+.character-card {
+  background-color: rgba(50, 50, 70, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 1.5rem;
+  color: white;
+  height: 100%; /* Permette alla card di avere la stessa altezza */
+}
+
+/* Effetto hover sulla card */
+.character-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Stile per il nome del personaggio */
+.character-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Stile per la descrizione */
+.description-container p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Pulsanti con effetto hover */
+.toggle-btn, .delete-btn {
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+/* Stile per il pulsante di toggle */
+.toggle-btn {
+  background: linear-gradient(90deg, rgba(119, 0, 155, 1) 0%, rgb(75, 53, 104) 100%);
+  color: white;
+}
+
+/* Hover del pulsante di toggle */
+.toggle-btn:hover {
+  background: linear-gradient(90deg, rgba(255, 105, 180, 1) 0%, rgba(119, 0, 155, 1) 100%);
+}
+
+/* Pulsante di eliminazione */
+.delete-btn {
+  background: linear-gradient(90deg, rgba(193, 41, 46, 1) 0%, rgba(255, 0, 0, 1) 100%);
+  color: white;
+}
+
+/* Hover del pulsante di eliminazione */
+.delete-btn:hover {
+  background: linear-gradient(90deg, rgba(255, 69, 69, 1) 0%, rgba(193, 41, 46, 1) 100%);
+}
+
+/* Media Queries per migliorare la disposizione su schermi più piccoli */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 1.5rem;
+  }
+}
+
+
+
+
+
+.carousel-section {
+  background-color: rgba(27, 28, 43, 0.8);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.carousel .carousel-item {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel img {
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 25%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
