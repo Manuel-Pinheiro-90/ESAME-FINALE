@@ -6,7 +6,13 @@
     <div>
       <strong>{{ personaggio.nome }}</strong>
     </div>
-
+    <!-- Descrizione visibile solo al click -->
+    <div
+      *ngIf="descriptionVisible[personaggio.id]"
+      class="description-container mt-2"
+    >
+      <p>{{ personaggio.descrizione }}</p>
+    </div>
     <!-- Pulsante per mostrare/nascondere la descrizione -->
     <button
       class="btn btn-secondary"
@@ -26,13 +32,5 @@
     >
       Elimina
     </button>
-
-    <!-- Descrizione visibile solo al click -->
-    <div
-      *ngIf="descriptionVisible[personaggio.id]"
-      class="description-container mt-2"
-    >
-      <p>{{ personaggio.descrizione }}</p>
-    </div>
   </li>
 </ul>
