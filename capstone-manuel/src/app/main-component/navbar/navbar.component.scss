@@ -80,7 +80,7 @@ button,
 .btn-outline-danger:hover,
 button:hover,
 .nav-item .nav-link:hover { /* Hover per i link di login e profilo */
-  color: rgba(87, 160, 250, 1); /* Colore per l'effetto hover (azzurro chiaro) */
+  color: rgba(148, 49, 148, 1); /* Colore per l'effetto hover (azzurro chiaro) */
   background-color: transparent; /* Lo sfondo dei bottoni rimane trasparente */
 }
 
@@ -97,7 +97,7 @@ button:hover,
 }
 
 .btn-outline-danger:hover {
-  background-color: rgba(87, 160, 250, 1); /* Sfondo azzurro in hover */
+  background-color: rgb(148, 49, 148); /* Sfondo azzurro in hover */
   color: white; /* Testo bianco in hover */
 }
 

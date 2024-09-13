@@ -171,3 +171,14 @@ h1, h3, h4, .card-title {
   min-width: 100px;
 }
 
+
+.scroll-animation {
+  opacity: 0;
+  transform: translateX(-100px); /* L'elemento inizia fuori schermo a sinistra */
+  transition: all 1s ease-out;
+}
+
+.scroll-animation.show {
+  opacity: 1;
+  transform: translateX(0); /* L'elemento ritorna alla posizione normale */
+}

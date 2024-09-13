@@ -79,18 +79,29 @@
     <!------------------------------------------------Componente principale------------------------------------------------------------->
     <div class="col-11">
       <div class="row px-4 justify-content-center">
-        <h1 class="text-center text-white fw-bolder my-4">LARP HUB</h1>
-
-        <div class="row align-items-center mt-3">
+        <div class="row align-items-center mt-3 mb-5">
           <!------------------------------------------------Prima colonna------------------------------------------------------------->
+
           <div class="col-12 col-md-6">
+            <div class="text-center">
+              <img
+                src="/assets/img/Logo.Brutto.png"
+                alt="Logo LARP HUB"
+                class="img-fluid"
+                style="max-width: 260px; height: auto; margin-bottom: 20px"
+              />
+            </div>
             <h2 class="fw-bolder text-white">
               BENVENUTO IN <span id="fantasy">LARP HUB</span>
             </h2>
             <p class="myTextColor fs-4">
-              Esplora mondi immaginari, crea personaggi unici e partecipa a
-              esperienze LARP indimenticabili. In LARP HUB, il viaggio inizia
-              qui!
+              Benvenuto su LARP HUB, la piattaforma dedicata agli appassionati
+              di LARP in Italia! Qui potrai scoprire e partecipare agli eventi
+              live action role-playing organizzati dalle diverse associazioni su
+              tutto il territorio nazionale. Abbiamo creato uno spazio che rende
+              facile e pratico trovare le avventure che più ti ispirano,
+              permettendoti di esplorare le diverse realtà LARP italiane e
+              unirti a una comunità sempre in crescita.
             </p>
           </div>
           <!------------------------------------------------Fine Prima colonna------------------------------------------------------------->
@@ -101,7 +112,7 @@
               <div class="carousel-container">
                 <div *ngIf="eventi.length > 0">
                   <!-- Evento attuale -->
-                  <div class="card" *ngIf="eventi[currentIndex]">
+                  <div class="card rounded-5" *ngIf="eventi[currentIndex]">
                     <img
                       [src]="
                         eventi[currentIndex].immagineEvento
@@ -109,7 +120,7 @@
                             eventi[currentIndex].immagineEvento
                           : 'assets/img/img-1.png'
                       "
-                      class="card-img-top"
+                      class="card-img-top rounded-5"
                       alt="{{ eventi[currentIndex].titolo }}"
                     />
                     <div class="card-body">
@@ -139,7 +150,7 @@
                           eventi[currentIndex].id
                         ]"
                         class="btn btn-info"
-                        >Visualizza Dettagli</a
+                        >Parti per questo evento!</a
                       >
                     </div>
                   </div>
@@ -153,48 +164,63 @@
 
         <!------------------------------------------------Riga articoli------------------------------------------------------------->
 
-        <div class="row mt-5">
+        <div class="row my-5">
           <!------------------------------------------------colonna 1------------------------------------------------------------->
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-12 col-md-6 col-lg-4 scroll-animation">
             <img
               src="assets/img/pg av.png"
               alt="Crea il tuo personaggio"
               class="img-fluid rounded-5"
             />
-            <h3 class="text-white fw-bolder mt-3">Una piattaforma unica</h3>
+            <h3 class="text-white fw-bolder mt-3">
+              Condividi i Tuoi Personaggi!
+            </h3>
             <p class="myTextColor fs-4">
-              Personalizza il tuo personaggio con abilità uniche, background e
-              equipaggiamenti personalizzati. Unisciti alle avventure con un
-              personaggio unico!
+              <span *ngIf="!showMore1">{{ text1 | slice : 0 : 100 }}...</span>
+              <span *ngIf="showMore1">{{ text1 }}</span>
             </p>
+            <div>
+              <button class="btn btn-info" (click)="toggleText(1)">
+                {{ showMore1 ? "Mostra meno" : "Leggi" }}
+              </button>
+              <a routerLink="/personaggi" class="btn myBtn ms-1">
+                Personaggi
+              </a>
+            </div>
           </div>
 
           <!------------------------------------------------colonna 2------------------------------------------------------------->
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-12 col-md-6 col-lg-4 scroll-animation">
             <img
-              src="assets/img/placeholder-image.jpg"
+              src="assets/img/sfondo.bello.png"
               alt="Campagne epiche"
               class="img-fluid rounded-5"
             />
             <h3 class="text-white fw-bolder mt-3">Eventi Epici</h3>
             <p class="myTextColor fs-4">
-              Trova decine di eventi lontano o vicino a te, quale associazione
-              fa al caso tuo!
+              <span *ngIf="!showMore2">{{ text2 | slice : 0 : 100 }}...</span>
+              <span *ngIf="showMore2">{{ text2 }}</span>
             </p>
+            <button class="btn btn-info" (click)="toggleText(2)">
+              {{ showMore2 ? "Mostra meno" : "Leggi" }}
+            </button>
           </div>
 
           <!------------------------------------------------colonna 3------------------------------------------------------------->
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-12 col-md-6 col-lg-4 scroll-animation">
             <img
-              src="assets/img/placeholder-image.jpg"
+              src="assets/img/sfondo.figo.2.png"
               alt="Eventi dal vivo"
               class="img-fluid rounded-5"
             />
             <h3 class="text-white fw-bolder mt-3">Eventi dal Vivo</h3>
             <p class="myTextColor fs-4">
-              Partecipa a eventi LARP dal vivo e interagisci con giocatori da
-              tutto il mondo, affrontando sfide epiche!
+              <span *ngIf="!showMore3">{{ text3 | slice : 0 : 100 }}...</span>
+              <span *ngIf="showMore3">{{ text3 }}</span>
             </p>
+            <button class="btn btn-info" (click)="toggleText(3)">
+              {{ showMore3 ? "Mostra meno" : "Leggi" }}
+            </button>
           </div>
         </div>
 
@@ -203,38 +229,41 @@
           <div class="col-8 myGradient rounded-5 p-4 fade-in">
             <h3 class="text-white fw-bolder">Comunità</h3>
             <p class="myTextColor fs-4">
-              Unisciti alla nostra comunità, crea nuove amicizie e partecipa a
-              battaglie leggendarie con i tuoi compagni di avventura.
+              Unisciti alla nostra vibrante comunità, crea nuove amicizie con
+              appassionati come te e vivi l'emozione di partecipare a eventi
+              esclusivi. Ogni avventura diventa un'opportunità per connettersi,
+              imparare e divertirsi insieme!
             </p>
           </div>
 
           <div class="col-8 myGradient rounded-5 p-4 mt-5 fade-in">
-            <h3 class="text-white fw-bolder">Eventi Speciali</h3>
+            <h3 class="text-white fw-bolder">Pubblicizza il tuo evento</h3>
             <p class="myTextColor fs-4">
-              Partecipa a eventi speciali organizzati direttamente da noi, dove
-              potrai trovare articoli ed equipaggiamenti in premio per il tuo
-              prossimo personaggio.
+              Vuoi vedere il tuo evento LARP pubblicato su LARP HUB? È
+              semplicissimo! Contatta il nostro staff e inviaci tutti i dettagli
+              necessari: siamo pronti ad aggiungere il tuo evento alla nostra
+              sezione dedicata. Potrai così farlo conoscere a una vasta
+              community di appassionati, garantendo una visibilità senza
+              precedenti. Non perdere l’occasione di far crescere la tua realtà
+              LARP e di attrarre nuovi partecipanti! Siamo qui per supportarti
+              in ogni fase, rendendo la promozione del tuo evento facile e
+              professionale.
             </p>
           </div>
 
           <div class="col-8 myGradient rounded-5 p-4 mt-5 fade-in">
             <h3 class="text-white fw-bolder">Supporto e Assistenza</h3>
             <p class="myTextColor fs-4">
-              Il nostro team è qui per aiutarti. Trova supporto e risposte alle
-              tue domande nella sezione di assistenza.
+              Il nostro team è sempre pronto ad aiutarti! Per qualsiasi dubbio o
+              richiesta di supporto, visita la nostra pagina contatti e inviaci
+              un’email. Saremo lieti di rispondere alle tue domande e fornirti
+              l’assistenza di cui hai bisogno. Siamo qui per garantire che la
+              tua esperienza su LARP HUB sia sempre eccellente!
             </p>
           </div>
         </div>
       </div>
     </div>
     <!------------------------------------------------Fine componente principale ------------------------------------------------------------->
-
-    <div class="container mt-5 text-center">
-      <h1 class="text-white fw-bolder">Sei nella Home</h1>
-      <h2 class="text-white">Benvenuto nella Home</h2>
-      <a routerLink="/personaggi" class="btn myBtn mt-3"
-        >Vedi tutti i personaggi</a
-      >
-    </div>
   </div>
 </div>
