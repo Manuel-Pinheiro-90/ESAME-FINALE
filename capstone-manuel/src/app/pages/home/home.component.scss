@@ -149,3 +149,25 @@ h1, h3, h4, .card-title {
   opacity: 1;
   transform: translateY(0); /* Torna alla posizione originale */
 }
+
+
+.event-carousel {
+  width: 100%;
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.carousel-controls button {
+  min-width: 100px;
+}
+

@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { EventService } from '../../services/event.service';
+import { iEvento } from '../../interface/ievento';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +8,42 @@ import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  constructor(private el: ElementRef) {}
+  eventi: iEvento[] = [];
+  currentIndex: number = 0;
+  autoSlideInterval: any;
+  constructor(private el: ElementRef, private eventService: EventService) {}
 
   ngOnInit(): void {
-    // Puoi inizializzare altre cose se necessario qui
+    this.loadEvents();
+  }
+  loadEvents(): void {
+    this.eventService.getEvents().subscribe(
+      (data) => {
+        this.eventi = data;
+        if (this.eventi.length > 0) {
+          this.currentIndex = 0; // Imposta l'evento corrente al primo evento
+          this.startAutoSlide();
+        }
+      },
+      (error) => {
+        console.error('Errore nel caricamento degli eventi', error);
+      }
+    );
+  }
+
+  startAutoSlide(): void {
+    this.autoSlideInterval = setInterval(() => {
+      this.nextEvent();
+    }, 5000);
+  }
+
+  prevEvent(): void {
+    this.currentIndex =
+      (this.currentIndex > 0 ? this.currentIndex : this.eventi.length) - 1;
+  }
+
+  nextEvent(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.eventi.length;
   }
 
   ngAfterViewInit(): void {

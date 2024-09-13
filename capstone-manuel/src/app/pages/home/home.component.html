@@ -92,22 +92,62 @@
               esperienze LARP indimenticabili. In LARP HUB, il viaggio inizia
               qui!
             </p>
-
-            <button class="mt-2 mb-4 btn myBtn" routerLink="/create-character">
-              Inizia la tua Avventura
-            </button>
           </div>
           <!------------------------------------------------Fine Prima colonna------------------------------------------------------------->
 
           <!------------------------------------------------Seconda colonna------------------------------------------------------------->
           <div class="col-12 col-md-6 d-flex justify-content-center">
-            <!-- Inserire immagine o video -->
-            <img
-              src="assets/img/your-placeholder-image.jpg"
-              alt="Immagine di benvenuto"
-              class="img-fluid rounded-5"
-              style="max-width: 100%"
-            />
+            <div class="event-carousel">
+              <div class="carousel-container">
+                <div *ngIf="eventi.length > 0">
+                  <!-- Evento attuale -->
+                  <div class="card" *ngIf="eventi[currentIndex]">
+                    <img
+                      [src]="
+                        eventi[currentIndex].immagineEvento
+                          ? 'data:image/jpeg;base64,' +
+                            eventi[currentIndex].immagineEvento
+                          : 'assets/img/img-1.png'
+                      "
+                      class="card-img-top"
+                      alt="{{ eventi[currentIndex].titolo }}"
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        {{ eventi[currentIndex].titolo }}
+                      </h5>
+
+                      <p class="card-text">
+                        <small class="text-white">{{
+                          eventi[currentIndex].luogo
+                        }}</small>
+                      </p>
+                      <p class="card-text">
+                        <small class="text-white"
+                          >{{
+                            eventi[currentIndex].dataInizio | date : "short"
+                          }}
+                          -
+                          {{
+                            eventi[currentIndex].dataFine | date : "short"
+                          }}</small
+                        >
+                      </p>
+                      <a
+                        [routerLink]="[
+                          '/events/detail',
+                          eventi[currentIndex].id
+                        ]"
+                        class="btn btn-info"
+                        >Visualizza Dettagli</a
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Navigazione del carosello -->
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
