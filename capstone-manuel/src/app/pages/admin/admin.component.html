@@ -1,63 +1,67 @@
-<div class="container">
-  <h2>Lista degli Utenti</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Ruoli</th>
-        <th>Personaggi</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let utente of utenti">
-        <td>{{ utente.id }}</td>
-        <td>{{ utente.nome }}</td>
-        <td>{{ utente.email }}</td>
-        <td>
-          <ul>
-            <li *ngFor="let ruolo of utente.ruoli">
-              {{ ruolo.nome }}
-              <button
-                class="btn btn-warning btn-sm ms-2"
-                (click)="rimuoviRuolo(utente.id, ruolo.nome)"
-              >
-                Rimuovi
-              </button>
-            </li>
-          </ul>
-        </td>
-        <td>
-          <ul>
-            <li *ngFor="let personaggio of utente.personaggi">
-              {{ personaggio.nome }}
-            </li>
-          </ul>
-        </td>
-        <td>
-          <select
-            [(ngModel)]="ruoliDaAggiungere[utente.id]"
-            class="form-control"
-          >
-            <option value="" disabled>Seleziona un ruolo</option>
-            <option *ngFor="let ruolo of ruoliDisponibili" [value]="ruolo">
-              {{ ruolo }}
-            </option>
-          </select>
-          <button
-            class="btn btn-primary mt-2"
-            (click)="aggiungiRuolo(utente.id)"
-          >
-            Aggiungi Ruolo
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-danger" (click)="deleteUser(utente.id)">
-            Elimina
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="container mt-5 utenti-container">
+  <h2 class="text-center">Lista degli Utenti</h2>
+  <div class="table-responsive">
+    <table class="table table-hover table-striped custom-table">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Ruoli</th>
+          <th>Personaggi</th>
+          <th>Aggiungi Ruolo</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let utente of utenti">
+          <td>{{ utente.id }}</td>
+          <td>{{ utente.nome }}</td>
+          <td>{{ utente.email }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let ruolo of utente.ruoli">
+                {{ ruolo.nome }}
+                <button
+                  class="btn btn-warning btn-sm ms-2"
+                  (click)="rimuoviRuolo(utente.id, ruolo.nome)"
+                >
+                  Rimuovi
+                </button>
+              </li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li *ngFor="let personaggio of utente.personaggi">
+                {{ personaggio.nome }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            <select
+              [(ngModel)]="ruoliDaAggiungere[utente.id]"
+              class="form-control"
+            >
+              <option value="" disabled>Seleziona un ruolo</option>
+              <option *ngFor="let ruolo of ruoliDisponibili" [value]="ruolo">
+                {{ ruolo }}
+              </option>
+            </select>
+            <button
+              class="btn btn-primary mt-2"
+              (click)="aggiungiRuolo(utente.id)"
+            >
+              Aggiungi Ruolo
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteUser(utente.id)">
+              Elimina
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

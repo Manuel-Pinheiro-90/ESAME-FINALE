@@ -1,0 +1,93 @@
+/* Contenitore generale del form */
+.container {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 20, 0.85) 0%,
+    rgba(47, 47, 47, 0.5) 100%
+  );
+  border-radius: 15px;
+  padding: 3rem;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Titolo del form */
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(119, 0, 155, 0.9) 60%
+  );
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Stile per i campi input */
+.form-control {
+  background-color: rgba(27, 28, 43, 0.9);
+  border: 2px solid rgba(119, 0, 155, 0.9);
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  transition: all 0.4s ease;
+  margin-bottom: 1.5rem;
+}
+
+.form-control::placeholder {
+  color: rgba(200, 200, 200, 0.7);
+}
+
+.form-control:focus {
+  background-color: rgba(47, 47, 47, 0.95);
+  border-color: rgba(156, 145, 219, 0.9);
+  outline: none;
+  box-shadow: 0 0 10px rgba(119, 0, 155, 0.7);
+}
+
+/* Pulsanti */
+button {
+  background: linear-gradient(
+    90deg,
+    rgba(156, 145, 219, 0.9) 0%,
+    rgba(119, 0, 155, 0.9) 50%
+  );
+  color: white;
+  border: 2px solid white;
+  padding: 0.7rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+button:disabled {
+  opacity: 0.6;
+}
+
+button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Stile per il pulsante secondario */
+.btn-secondary {
+  background-color: rgba(200, 200, 200, 0.2);
+  color: white;
+  padding: 0.7rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  margin-left: 1rem;
+}
+
+.btn-secondary:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}

@@ -1,35 +1,38 @@
-<div class="container">
-  <h2>Tutte le Registrazioni</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Utente</th>
-        <th>Email</th>
-        <th>Evento</th>
-        <th>Data Registrazione</th>
-        <th>Costo Totale</th>
-        <th>Personaggio</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let registrazione of registrazioni">
-        <td>{{ registrazione.id }}</td>
-        <td>{{ registrazione.utente.nome }}</td>
-        <td>{{ registrazione.utente.email }}</td>
-        <td>{{ registrazione.evento.titolo }}</td>
-        <td>{{ registrazione.dataRegistrazione | date : "short" }}</td>
-        <td>{{ registrazione.costoTotale | currency }}</td>
-        <td>{{ registrazione.personaggio?.nome || "N/A" }}</td>
-        <td>
-          <button
-            class="btn btn-danger"
-            (click)="deleteRegistrazione(registrazione.id)"
-          >
-            Elimina
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="container mt-5 registrations-container">
+  <h2 class="text-center">Tutte le Registrazioni</h2>
+  <div class="table-responsive">
+    <table class="table table-hover table-striped custom-table">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Utente</th>
+          <th>Email</th>
+          <th>Evento</th>
+          <th>Data Registrazione</th>
+          <th>Costo Totale</th>
+          <th>Personaggio</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let registrazione of registrazioni">
+          <td>{{ registrazione.id }}</td>
+          <td>{{ registrazione.utente.nome }}</td>
+          <td>{{ registrazione.utente.email }}</td>
+          <td>{{ registrazione.evento.titolo }}</td>
+          <td>{{ registrazione.dataRegistrazione | date : "short" }}</td>
+          <td>{{ registrazione.costoTotale | currency }}</td>
+          <td>{{ registrazione.personaggio?.nome || "N/A" }}</td>
+          <td>
+            <button
+              class="btn btn-danger delete-btn"
+              (click)="deleteRegistrazione(registrazione.id)"
+            >
+              Elimina
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

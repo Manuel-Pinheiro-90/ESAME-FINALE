@@ -1,26 +1,39 @@
 <div class="container">
   <h2>Crea un nuovo personaggio</h2>
-  <form [formGroup]="createPersonaggioForm" (ngSubmit)="createPersonaggio()">
+  <form
+    [formGroup]="createPersonaggioForm"
+    (ngSubmit)="createPersonaggio()"
+    class="create-personaggio-form"
+  >
+    <!-- Nome del Personaggio -->
     <div class="form-group">
-      <label for="nome">Nome del Personaggio</label>
+      <label for="nome" class="form-label text-white"
+        >Nome del Personaggio</label
+      >
       <input
         id="nome"
         class="form-control"
         formControlName="nome"
         placeholder="Inserisci il nome"
+        required
       />
     </div>
 
+    <!-- Descrizione del Personaggio -->
     <div class="form-group">
-      <label for="descrizione">Descrizione del Personaggio</label>
+      <label for="descrizione" class="form-label text-white"
+        >Descrizione del Personaggio</label
+      >
       <textarea
         id="descrizione"
         class="form-control"
         formControlName="descrizione"
         placeholder="Inserisci la descrizione"
+        required
       ></textarea>
     </div>
 
+    <!-- Pulsante per creare il personaggio -->
     <button
       type="submit"
       class="btn btn-primary"
@@ -28,6 +41,8 @@
     >
       Crea Personaggio
     </button>
+
+    <!-- Pulsante secondario per tornare al profilo -->
     <a routerLink="/user" class="btn btn-secondary ml-2">Torna al profilo</a>
   </form>
 </div>
