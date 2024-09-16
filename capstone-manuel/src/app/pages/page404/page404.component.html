@@ -1,2 +1,15 @@
-<p>page404 works!</p>
-<h1>Se vedi questo sei un fellone</h1>
+<div class="container error-page mt-5 text-center">
+  <h1 class="error-title">Oops! Sei un fellone!</h1>
+  <p class="error-message">
+    La pagina che stai cercando non esiste o è stata rimossa. Torna indietro o
+    esplora il sito!
+  </p>
+
+  <!-- Immagine -->
+  <div class="error-image">
+    <img src="assets/img/no.png" alt="404 Image" class="img-fluid" />
+  </div>
+
+  <!-- Pulsante per tornare alla Home -->
+  <a routerLink="/home" class="btn btn-primary mt-4">Torna alla Home</a>
+</div>
