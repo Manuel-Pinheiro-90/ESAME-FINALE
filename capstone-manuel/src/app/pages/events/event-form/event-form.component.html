@@ -1,55 +1,127 @@
 <div class="container mt-5">
   <h2>{{ isEditMode ? "Modifica Evento" : "Crea un Nuovo Evento" }}</h2>
   <form [formGroup]="eventForm" (ngSubmit)="saveEvent()">
+    <!-- Titolo -->
     <div class="mb-3">
       <label for="titolo" class="form-label">Titolo</label>
       <input
         type="text"
         id="titolo"
         class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            eventForm.get('titolo')?.invalid && eventForm.get('titolo')?.touched
+        }"
         formControlName="titolo"
       />
+      <div
+        *ngIf="
+          eventForm.get('titolo')?.invalid && eventForm.get('titolo')?.touched
+        "
+        class="error-message"
+      >
+        Il titolo è obbligatorio.
+      </div>
     </div>
 
+    <!-- Descrizione -->
     <div class="mb-3">
       <label for="descrizione" class="form-label">Descrizione</label>
       <textarea
         id="descrizione"
         class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            eventForm.get('descrizione')?.invalid &&
+            eventForm.get('descrizione')?.touched
+        }"
         formControlName="descrizione"
       ></textarea>
+      <div
+        *ngIf="
+          eventForm.get('descrizione')?.invalid &&
+          eventForm.get('descrizione')?.touched
+        "
+        class="error-message"
+      >
+        La descrizione è obbligatoria.
+      </div>
     </div>
 
+    <!-- Data Inizio -->
     <div class="mb-3">
       <label for="dataInizio" class="form-label">Data Inizio</label>
       <input
         type="datetime-local"
         id="dataInizio"
         class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            eventForm.get('dataInizio')?.invalid &&
+            eventForm.get('dataInizio')?.touched
+        }"
         formControlName="dataInizio"
       />
+      <div
+        *ngIf="
+          eventForm.get('dataInizio')?.invalid &&
+          eventForm.get('dataInizio')?.touched
+        "
+        class="error-message"
+      >
+        La data di inizio è obbligatoria.
+      </div>
     </div>
 
+    <!-- Data Fine -->
     <div class="mb-3">
       <label for="dataFine" class="form-label">Data Fine</label>
       <input
         type="datetime-local"
         id="dataFine"
         class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            eventForm.get('dataFine')?.invalid &&
+            eventForm.get('dataFine')?.touched
+        }"
         formControlName="dataFine"
       />
+      <div
+        *ngIf="
+          eventForm.get('dataFine')?.invalid &&
+          eventForm.get('dataFine')?.touched
+        "
+        class="error-message"
+      >
+        La data di fine è obbligatoria.
+      </div>
     </div>
 
+    <!-- Luogo -->
     <div class="mb-3">
       <label for="luogo" class="form-label">Luogo</label>
       <input
         type="text"
         id="luogo"
         class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            eventForm.get('luogo')?.invalid && eventForm.get('luogo')?.touched
+        }"
         formControlName="luogo"
       />
+      <div
+        *ngIf="
+          eventForm.get('luogo')?.invalid && eventForm.get('luogo')?.touched
+        "
+        class="error-message"
+      >
+        Il luogo è obbligatorio.
+      </div>
     </div>
 
+    <!-- Numero Partecipanti Max -->
     <div class="mb-3">
       <label for="numeroPartecipantiMax" class="form-label"
         >Numero Partecipanti Max</label
@@ -58,10 +130,25 @@
         type="number"
         id="numeroPartecipantiMax"
         class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            eventForm.get('numeroPartecipantiMax')?.invalid &&
+            eventForm.get('numeroPartecipantiMax')?.touched
+        }"
         formControlName="numeroPartecipantiMax"
       />
+      <div
+        *ngIf="
+          eventForm.get('numeroPartecipantiMax')?.invalid &&
+          eventForm.get('numeroPartecipantiMax')?.touched
+        "
+        class="error-message"
+      >
+        Il numero di partecipanti deve essere almeno 1.
+      </div>
     </div>
 
+    <!-- Immagine Evento -->
     <div class="mb-3">
       <label for="immagineFile" class="form-label">Immagine Evento</label>
       <input
@@ -72,6 +159,7 @@
       />
     </div>
 
+    <!-- Pulsante di submit -->
     <button
       type="submit"
       class="btn btn-primary"

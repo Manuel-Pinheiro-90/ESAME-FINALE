@@ -1,7 +1,7 @@
-<div class="container">
-  <h1 class="text-center m-5 text-light">Registrati</h1>
+<div class="container login-container">
+  <h1 class="text-center m-5">Registrati</h1>
 
-  <form #registerForm="ngForm" (ngSubmit)="register()">
+  <form #registerForm="ngForm" (ngSubmit)="register()" class="login-form">
     <!-- Nome Utente -->
     <div class="form-group">
       <input
@@ -9,11 +9,12 @@
         name="nome"
         [(ngModel)]="newUser.Nome"
         #nome="ngModel"
-        placeholder="Il tuo User name"
+        placeholder="Inserisci il tuo username"
         class="form-control"
         required
+        [ngClass]="{ 'is-invalid': nome.invalid && nome.touched }"
       />
-      <div *ngIf="nome.invalid && nome.touched" class="text-danger">
+      <div *ngIf="nome.invalid && nome.touched" class="error-message">
         Il nome è obbligatorio.
       </div>
     </div>
@@ -25,12 +26,12 @@
         name="email"
         [(ngModel)]="newUser.Email"
         #email="ngModel"
-        placeholder="Email"
+        placeholder="Inserisci la tua email"
         class="form-control mt-3"
         required
-        email
+        [ngClass]="{ 'is-invalid': email.invalid && email.touched }"
       />
-      <div *ngIf="email.invalid && email.touched" class="text-danger">
+      <div *ngIf="email.invalid && email.touched" class="error-message">
         Inserisci un'email valida.
       </div>
     </div>
@@ -42,12 +43,13 @@
         name="password"
         [(ngModel)]="newUser.PasswordHash"
         #password="ngModel"
-        placeholder="Password"
+        placeholder="Inserisci una password"
         class="form-control mt-3"
         required
         minlength="6"
+        [ngClass]="{ 'is-invalid': password.invalid && password.touched }"
       />
-      <div *ngIf="password.invalid && password.touched" class="text-danger">
+      <div *ngIf="password.invalid && password.touched" class="error-message">
         La password deve avere almeno 6 caratteri.
       </div>
     </div>
@@ -59,7 +61,7 @@
         name="confirmPassword"
         [(ngModel)]="confirmPassword"
         #confirmPasswordInput="ngModel"
-        placeholder="Conferma Password"
+        placeholder="Conferma la tua password"
         class="form-control mt-3"
         required
         [ngClass]="{
@@ -68,7 +70,7 @@
       />
       <div
         *ngIf="passwordMismatch && confirmPasswordInput.touched"
-        class="text-danger"
+        class="error-message"
       >
         Le password non corrispondono.
       </div>
@@ -77,7 +79,7 @@
     <!-- Submit Button -->
     <button
       type="submit"
-      class="btn btn-primary mt-3"
+      class="btn btn-primary btn-block mt-4"
       [disabled]="registerForm.invalid || passwordMismatch"
     >
       Registrati

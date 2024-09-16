@@ -1,0 +1,87 @@
+/* Sfondo generale */
+body, .container {
+  background: linear-gradient(180deg, rgba(10, 10, 20, 0.85) 0%, rgba(47, 47, 47, 0.5) 100%);
+  color: white;
+}
+
+/* Contenitore del form */
+.container {
+  background-color: rgba(27, 28, 43, 0.9);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Titolo del form */
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 60%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Etichette dei campi */
+.form-label {
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+/* Campi di input */
+.form-control {
+  background-color: rgba(27, 28, 43, 0.8);
+  border: 2px solid rgba(119, 0, 155, 0.8);
+  color: white;
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  transition: all 0.4s ease;
+}
+
+.form-control:focus {
+  background-color: rgba(47, 47, 47, 0.95);
+  border-color: rgba(156, 145, 219, 0.9);
+  box-shadow: 0 0 10px rgba(119, 0, 155, 0.7);
+  outline: none;
+}
+
+/* Checkbox */
+.form-check-input {
+  background-color: rgba(27, 28, 43, 0.9);
+  border: 2px solid rgba(119, 0, 155, 0.8);
+  transition: all 0.3s ease;
+}
+
+.form-check-input:checked {
+  background-color: rgba(119, 0, 155, 0.9);
+  border-color: rgba(119, 0, 155, 0.9);
+}
+
+/* Pulsante submit */
+button[type="submit"] {
+  background: linear-gradient(90deg, rgba(156, 145, 219, 0.9) 0%, rgba(119, 0, 155, 0.9) 50%);
+  color: white;
+  border: 2px solid white;
+  font-size: 1.2rem;
+  padding: 0.7rem 2rem;
+  border-radius: 10px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

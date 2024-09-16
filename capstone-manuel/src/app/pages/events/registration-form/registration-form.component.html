@@ -13,12 +13,30 @@
       >
         <option value="">Seleziona un personaggio</option>
         <option *ngFor="let personaggio of personaggi" [value]="personaggio.id">
-          {{ personaggio.nome }} - {{ personaggio.descrizione }}
+          {{ personaggio.nome }}
         </option>
       </select>
     </div>
 
     <!-- Selezione Servizi -->
+
+    <!-- Selezione Servizi -->
+    <div class="mb-3">
+      <label class="form-label">Servizi Opzionali</label>
+      <div class="form-check" *ngFor="let servizio of servizi">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [id]="'servizio_' + servizio.id"
+          (change)="onServiceChange(servizio.id, $event)"
+        />
+        <label class="form-check-label" [for]="'servizio_' + servizio.id">
+          {{ servizio.nome }} - {{ servizio.costo | currency : "EUR" }}
+        </label>
+      </div>
+    </div>
+
+    <!--
     <div class="mb-3">
       <label for="serviziIds" class="form-label">Servizi Opzionali</label>
       <select
@@ -32,7 +50,7 @@
         </option>
       </select>
     </div>
-
+-->
     <!-- Inserimento Costo Totale -->
     <div class="mb-3">
       <label for="costoTotale" class="form-label">Tipo Biglietto</label>

@@ -1,0 +1,69 @@
+/* Sfondo generale e layout del form */
+.login-container {
+  background: linear-gradient(180deg, rgba(10, 10, 20, 0.85) 0%, rgba(47, 47, 47, 0.5) 100%);
+  border-radius: 15px;
+  padding: 3rem;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Stile del titolo */
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 60%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Stile degli input */
+.login-form .form-control {
+  background-color: rgba(27, 28, 43, 0.9);
+  border: 2px solid rgba(119, 0, 155, 0.9);
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  transition: all 0.4s ease;
+}
+
+.login-form .form-control::placeholder {
+  color: rgba(200, 200, 200, 0.7);
+}
+
+.login-form .form-control:focus {
+  background-color: rgba(47, 47, 47, 0.95);
+  border-color: rgba(156, 145, 219, 0.9);
+  outline: none;
+  box-shadow: 0 0 10px rgba(119, 0, 155, 0.7);
+}
+
+/* Stile del pulsante */
+button {
+  background: linear-gradient(90deg, rgba(156, 145, 219, 0.9) 0%, rgba(119, 0, 155, 0.9) 50%);
+  color: white;
+  border: 2px solid white;
+  padding: 0.7rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+button:disabled {
+  opacity: 0.6;
+}
+
+button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Messaggi di errore */
+.error-message {
+  color: #f8d7da;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: left;
+}

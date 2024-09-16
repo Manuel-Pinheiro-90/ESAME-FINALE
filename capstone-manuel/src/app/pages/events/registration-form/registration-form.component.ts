@@ -19,6 +19,7 @@ export class RegistrationFormComponent implements OnInit {
   eventoId!: number;
   personaggi: IPersonaggioDTO[] = []; // Elenco dei personaggi
   servizi: IServizioDTO[] = []; // Elenco dei servizi
+  selectedServices: number[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -41,9 +42,9 @@ export class RegistrationFormComponent implements OnInit {
 
     // Inizializza il form
     this.registrazioneForm = this.fb.group({
-      personaggioId: [''], // Campo opzionale per il personaggio
-      serviziIds: [[]], // Campo opzionale per i servizi
-      costoTotale: [30, Validators.required], // Costo obbligatorio
+      personaggioId: [''],
+      serviziIds: [[]],
+      costoTotale: [30, Validators.required],
     });
 
     // Carica personaggi e servizi
@@ -110,5 +111,17 @@ export class RegistrationFormComponent implements OnInit {
         console.error('Errore durante la registrazione:', err);
       },
     });
+  }
+  onServiceChange(servizioId: number, event: Event): void {
+    const inputElement = event.target as HTMLInputElement; // Cast a HTMLInputElement
+    if (inputElement.checked) {
+      this.selectedServices.push(servizioId); // Aggiungi servizio selezionato
+    } else {
+      const index = this.selectedServices.indexOf(servizioId);
+      if (index > -1) {
+        this.selectedServices.splice(index, 1); // Rimuovi servizio deselezionato
+      }
+    }
+    this.registrazioneForm.patchValue({ serviziIds: this.selectedServices });
   }
 }
