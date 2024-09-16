@@ -38,12 +38,11 @@ export class AuthService {
   login(authData: IAuthData): Observable<IAuthResponse> {
     return this.http.post<IAuthResponse>(this.loginUrl, authData).pipe(
       tap((data) => {
+        console.log('Utente autenticato:', data.utente);
         this.authSubject.next(data.utente);
         localStorage.setItem('accessData', JSON.stringify(data));
-        console.log('Utente loggato:', data.utente);
-        this.router.navigate(['/']).then(() => {
-          window.location.reload(); // Questo forza il refresh della navbar
-        });
+        console.log('Dati salvati nel localStorage:', data.utente.ruoli);
+        this.router.navigate(['/']);
       })
     );
   }
@@ -79,22 +78,27 @@ export class AuthService {
     if (this.jwtHelper.isTokenExpired(accessData.token)) return;
     this.authSubject.next(accessData.utente);
     this.autoLogout();
-    console.log(accessData.token);
-    console.log('Utente ripristinato dal localStorage:', accessData.utente);
   }
 
   ///////////////////////////////////////////////////////////////
 
   getRolesFromStorage(): string[] {
-    const accessDataJson = localStorage.getItem('accessData');
-    if (!accessDataJson) return [];
-    const accessData: IAuthResponse = JSON.parse(accessDataJson);
-    return accessData?.utente?.ruoli.map((role) => role.nome) || [];
+    const accessDataJson = this.getAccessData();
+
+    if (
+      accessDataJson &&
+      accessDataJson.utente &&
+      Array.isArray(accessDataJson.utente.ruoli)
+    ) {
+      return accessDataJson.utente.ruoli.map((role) => role.nome);
+    } else {
+      return [];
+    }
   }
 
   hasRole(role: string): boolean {
     const roles = this.getRolesFromStorage();
-    console.log('Ruoli utente dal localStorage:', roles);
+
     return roles.includes(role);
   }
 

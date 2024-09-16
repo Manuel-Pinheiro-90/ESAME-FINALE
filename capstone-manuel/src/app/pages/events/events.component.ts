@@ -3,6 +3,7 @@ import { EventService } from '../../services/event.service';
 import { iEvento } from '../../interface/ievento';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-events',
@@ -14,10 +15,22 @@ export class EventsComponent implements OnInit {
   filteredEvents: iEvento[] = []; //
   routerSubscription!: Subscription;
   searchTerm: string = ''; //
+  isAdmin: boolean = false;
 
-  constructor(private eventService: EventService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private eventService: EventService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.loadEvents();
+    this.authService.user$.subscribe((user) => {
+      if (user) {
+        this.isAdmin = user.ruoli.some((ruolo) => ruolo.nome === 'Admin');
+      } else {
+        this.isAdmin = false;
+      }
+    });
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd && event.url === '/events') {
         this.loadEvents(); // Ricarica gli eventi quando torni sulla pagina degli eventi

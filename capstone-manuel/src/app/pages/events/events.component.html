@@ -1,5 +1,16 @@
-<div class="container mt-5">
-  <div class="search-bar">
+<!-- Introduzione alla sezione degli eventi -->
+<div class="intro-section text-center mb-5">
+  <h1 class="page-title">Eventi in Programma</h1>
+  <p class="page-description">
+    Scopri tutti gli eventi in arrivo e preparati a vivere esperienze epiche.
+    Partecipa, registra il tuo personaggio e preparati a immergerti nel mondo
+    del LARP!
+  </p>
+</div>
+
+<div class="container pt-5 myBg rounded-4">
+  <!-- Barra di ricerca -->
+  <div class="search-bar px-4">
     <input
       type="text"
       class="form-control"
@@ -7,9 +18,11 @@
       [(ngModel)]="searchTerm"
       (input)="filterEvents()"
     />
+    <i class="fas fa-search search-icon"></i>
   </div>
 
-  <div class="row">
+  <!-- Griglia degli eventi -->
+  <div class="row px-4">
     <div class="col-md-4" *ngFor="let evento of filteredEvents">
       <div class="card mb-4">
         <img
@@ -25,30 +38,48 @@
           <h5 class="card-title">{{ evento.titolo }}</h5>
 
           <p class="card-text">
-            <small class="text-muted">{{ evento.luogo }}</small>
+            <small>{{ evento.luogo }}</small>
           </p>
           <p class="card-text">
-            <small class="text-muted"
-              >{{ evento.dataInizio | date : "short" }} -
-              {{ evento.dataFine | date : "short" }}</small
-            >
+            <small>
+              {{ evento.dataInizio | date : "short" }} -
+              {{ evento.dataFine | date : "short" }}
+            </small>
           </p>
 
-          <p>numero registrazioni</p>
-          <p class="card-text">{{ evento.numeroRegistrazioni }}</p>
+          <p class="card-text">
+            Numero registrazioni: {{ evento.numeroRegistrazioni }}
+          </p>
 
-          <a [routerLink]="['registrazione', evento.id]" class="btn btn-primary"
-            >Registrati</a
+          <a [routerLink]="['registrazione', evento.id]" class="btn mx-1 my-1">
+            Registrati
+          </a>
+          <button
+            *ngIf="isAdmin"
+            class="btn mx-1 my-1"
+            (click)="deleteEvent(evento.id!)"
           >
-          <button (click)="deleteEvent(evento.id!)">Cancella</button>
-          <a [routerLink]="['/events/edit', evento.id]">Modifica</a>
-          <a [routerLink]="['detail', evento.id]" class="btn btn-info"
-            >Visualizza Dettagli</a
+            Cancella
+          </button>
+          <a
+            *ngIf="isAdmin"
+            [routerLink]="['/events/edit', evento.id]"
+            class="btn mx-1 my-1"
           >
+            Modifica
+          </a>
+          <a [routerLink]="['detail', evento.id]" class="btn mx-1 my-1">
+            Visualizza Dettagli
+          </a>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<a routerLink="/events/new">Aggiungi Nuovo Evento</a>
+  <!-- Pulsante per aggiungere un nuovo evento -->
+  <div class="mt-4 text-center">
+    <a *ngIf="isAdmin" routerLink="/events/new" class="btn myBtn"
+      >Aggiungi Nuovo Evento</a
+    >
+  </div>
+</div>

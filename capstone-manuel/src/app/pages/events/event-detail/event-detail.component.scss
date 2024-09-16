@@ -1,0 +1,84 @@
+/* Sfondo generale */
+body, .myBg {
+  background: linear-gradient(180deg, rgba(10, 10, 20, 0.85) 0%, rgba(47, 47, 47, 0.5) 100%);
+  color: white;
+}
+
+/* Stile per il contenitore principale */
+.container {
+  padding-top: 2rem;
+}
+
+
+.card {
+  background-color: rgba(27, 28, 43, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+}
+
+
+.card-img-top {
+  border-radius: 15px ;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s ease;
+}
+
+.card-img-top:hover {
+  transform: scale(1.05);
+}
+
+
+.card-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 60%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+
+.card-text {
+  color: #c9cacf;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+
+.card-text strong {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.card-body ul {
+  padding-left: 1.2rem;
+  list-style-type: disc;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+}
+
+
+.card-body ul li {
+  margin-bottom: 0.5rem;
+}
+
+
+.btn-primary {
+  background: linear-gradient(90deg, rgba(156, 145, 219, 0.9) 0%, rgba(119, 0, 155, 0.9) 50%);
+  color: white;
+  border: 2px solid white;
+  font-size: 1.2rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
