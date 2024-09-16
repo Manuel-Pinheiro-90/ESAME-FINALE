@@ -12,87 +12,23 @@
   </p>
 </div>
 
-<div class="carousel-section mt-5 mb-5">
-  <h2 class="text-white text-center mb-4">Inviaci Le tue foto</h2>
-  <div id="characterCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <!-- Primo gruppo di immagini -->
-      <div class="carousel-item active">
-        <div class="row">
-          <div class="col-md-4">
-            <img
-              src="assets/img/pg av.png"
-              class="d-block w-100 rounded"
-              alt="Personaggio 1"
-            />
-          </div>
-          <div class="col-md-4">
-            <img
-              src="assets/img/pg av.png"
-              class="d-block w-100 rounded"
-              alt="Personaggio 2"
-            />
-          </div>
-          <div class="col-md-4">
-            <img
-              src="assets/img/pg av.png"
-              class="d-block w-100 rounded"
-              alt="Personaggio 3"
-            />
+<div class="carousel-section mt-5">
+  <h2 class="text-white text-center mb-4">Galleria Personaggi</h2>
+
+  <ngb-carousel *ngIf="imageGroups.length > 0" [interval]="5000">
+    <ng-template ngbSlide *ngFor="let group of imageGroups">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let img of group">
+          <div class="card character-card">
+            <img [src]="img.url" class="card-img-top rounded" [alt]="img.alt" />
+            <div class="card-body">
+              <h5 class="card-title">{{ img.alt }}</h5>
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- Secondo gruppo di immagini -->
-      <div class="carousel-item">
-        <div class="row">
-          <div class="col-md-4">
-            <img
-              src="assets/img/pg av.png"
-              class="d-block w-100 rounded"
-              alt="Personaggio 4"
-            />
-          </div>
-          <div class="col-md-4">
-            <img
-              src="assets/img/pg av.png"
-              class="d-block w-100 rounded"
-              alt="Personaggio 5"
-            />
-          </div>
-          <div class="col-md-4">
-            <img
-              src="assets/img/pg av.png"
-              class="d-block w-100 rounded"
-              alt="Personaggio 6"
-            />
-          </div>
-        </div>
-      </div>
-
-      <!-- Aggiungi altri gruppi di immagini qui -->
-    </div>
-
-    <!-- Controlli di navigazione del carosello -->
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#characterCarousel"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Precedente</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#characterCarousel"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Successivo</span>
-    </button>
-  </div>
+    </ng-template>
+  </ngb-carousel>
 </div>
 
 <!-- Sezione dei personaggi  -->

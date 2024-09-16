@@ -105,9 +105,6 @@
 }
 
 
-
-
-
 .carousel-section {
   background-color: rgba(27, 28, 43, 0.8);
   padding: 2rem;
@@ -118,17 +115,29 @@
 .carousel .carousel-item {
   display: flex;
   justify-content: center;
+  align-items: center; /* Assicura che il contenuto sia centrato verticalmente */
 }
 
-.carousel img {
+.carousel .carousel-item img {
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  width: 100%; /* Assicura che le immagini si adattino alla card */
+  max-width: 300px; /* Limita la larghezza massima delle immagini */
+  height: auto; /* Mantiene la proporzione delle immagini */
 }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   filter: invert(1);
 }
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%; /* Diminuisci la larghezza dei controlli */
+}
+
+
+
 
 h2 {
   font-size: 2rem;

@@ -12,12 +12,18 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './characters-list.component.scss',
 })
 export class CharactersListComponent implements OnInit {
+  imageGroups: { url: string; alt: string }[][] = [];
+
   personaggi: IPersonaggioDTO[] = [];
   descriptionVisible: { [key: number]: boolean } = {};
+  currentIndex: number = 0;
+  autoSlideInterval: any;
+
   constructor(private pgService: PgService) {}
 
   ngOnInit(): void {
     this.loadPersonaggi();
+    this.loadImages();
   }
 
   loadPersonaggi(): void {
@@ -54,6 +60,27 @@ export class CharactersListComponent implements OnInit {
           );
         },
       });
+    }
+  }
+
+  loadImages(): void {
+    // Immagini statiche per il carosello
+    const images = [
+      { url: 'assets/img/pg av.png', alt: 'Personaggio 1' },
+      { url: 'assets/img/pg av.png', alt: 'Personaggio 2' },
+      { url: 'assets/img/pg av.png', alt: 'Personaggio 3' },
+      { url: 'assets/img/pg av.png', alt: 'Personaggio 4' },
+      { url: 'assets/img/pg av.png', alt: 'Personaggio 5' },
+      { url: 'assets/img/pg av.png', alt: 'Personaggio 6' },
+    ];
+
+    this.createImageGroups(images);
+  }
+
+  createImageGroups(images: { url: string; alt: string }[]): void {
+    const groupSize = 3; // Mostra 3 immagini alla volta
+    for (let i = 0; i < images.length; i += groupSize) {
+      this.imageGroups.push(images.slice(i, i + groupSize));
     }
   }
 }
