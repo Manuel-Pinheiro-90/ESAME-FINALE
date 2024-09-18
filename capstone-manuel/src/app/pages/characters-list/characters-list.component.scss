@@ -39,10 +39,74 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.5s ease, height 0.5s ease;
   padding: 1.5rem;
   color: white;
-  height: 100%; /* Permette alla card di avere la stessa altezza */
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Descrizione nascosta con animazione */
+.description-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, padding 0.5s ease;
+}
+
+/* Stato "espanso" per la card */
+.character-card.expanded .description-container {
+  max-height: 1000px; /* Permette di espandere completamente */
+  padding: 1rem 0;
+}
+
+/* Stato "espanso" per la card */
+.character-card.expanded {
+  position: fixed;
+  top: 5%;
+  left: 10%;
+  width: 80vw;
+  height: 90vh;
+  z-index: 1000;
+  background-color: rgba(50, 50, 70, 0.95);
+  padding: 2rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+  overflow: auto;
+  transition: transform 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+/* Titolo più grande quando la card è espansa */
+.character-card.expanded .character-name {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Descrizione più visibile */
+.character-card.expanded .description-container {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Pulsante per chiudere la card */
+.character-card.expanded .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 69, 69, 1);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.character-card.expanded .close-btn:hover {
+  background-color: rgba(193, 41, 46, 1);
 }
 
 /* Effetto hover sulla card */
@@ -102,9 +166,13 @@
   .card {
     margin-bottom: 1.5rem;
   }
+
+  .character-card.expanded {
+    padding: 1rem;
+  }
 }
 
-
+/* Stile per la sezione del carosello */
 .carousel-section {
   background-color: rgba(27, 28, 43, 0.8);
   padding: 2rem;
@@ -115,15 +183,15 @@
 .carousel .carousel-item {
   display: flex;
   justify-content: center;
-  align-items: center; /* Assicura che il contenuto sia centrato verticalmente */
+  align-items: center;
 }
 
 .carousel .carousel-item img {
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  width: 100%; /* Assicura che le immagini si adattino alla card */
-  max-width: 300px; /* Limita la larghezza massima delle immagini */
-  height: auto; /* Mantiene la proporzione delle immagini */
+  width: 100%;
+  max-width: 300px;
+  height: auto;
 }
 
 .carousel-control-prev-icon,
@@ -133,12 +201,10 @@
 
 .carousel-control-prev,
 .carousel-control-next {
-  width: 5%; /* Diminuisci la larghezza dei controlli */
+  width: 5%;
 }
 
-
-
-
+/* Stile per il titolo h2 */
 h2 {
   font-size: 2rem;
   font-weight: bold;
@@ -149,3 +215,14 @@ h2 {
   margin-bottom: 1rem;
 }
 
+
+/* Per WebKit (Chrome, Safari, ecc.) */
+.character-card.expanded::-webkit-scrollbar {
+  display: none; /* Nascondi la scrollbar */
+}
+
+/* Per altri browser come Firefox */
+.character-card.expanded {
+  -ms-overflow-style: none; /* Internet Explorer e Edge */
+  scrollbar-width: none; /* Firefox */
+}

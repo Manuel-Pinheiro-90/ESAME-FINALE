@@ -18,6 +18,7 @@ export class CharactersListComponent implements OnInit {
   currentIndex: number = 0;
   autoSlideInterval: any;
   isAdmin: boolean = false;
+
   constructor(private pgService: PgService, private authService: AuthService) {}
 
   ngOnInit(): void {

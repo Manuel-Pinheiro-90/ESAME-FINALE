@@ -11,7 +11,7 @@
 </div>
 
 <div class="carousel-section mt-5">
-  <h2 class="text-white text-center mb-4">Galleria Personaggi</h2>
+  <h2 class="text-white text-center mb-4">Le Vostre Foto!</h2>
 
   <ngb-carousel *ngIf="imageGroups.length > 0" [interval]="5000">
     <ng-template ngbSlide *ngFor="let group of imageGroups">
@@ -32,7 +32,10 @@
 <!-- Sezione dei personaggi  -->
 <div class="row">
   <div class="col-md-4 mb-4" *ngFor="let personaggio of personaggi">
-    <div class="card character-card">
+    <div
+      class="card character-card"
+      [class.expanded]="descriptionVisible[personaggio.id]"
+    >
       <div class="card-body">
         <!-- Nome del personaggio -->
         <h5 class="card-title character-name">
