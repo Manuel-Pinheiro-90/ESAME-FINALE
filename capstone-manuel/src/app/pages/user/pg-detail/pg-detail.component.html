@@ -5,7 +5,8 @@
 >
   <div class="card-body">
     <h2 class="card-title">Dettagli del Personaggio: {{ personaggio.nome }}</h2>
-    <p><strong>Descrizione:</strong> {{ personaggio.descrizione }}</p>
+    <p><strong>Descrizione:</strong></p>
+    <div [innerHTML]="personaggio.descrizione | newlinesToBr"></div>
     <!-- Bottone per tornare al profilo -->
     <a routerLink="/user" class="btn btn-primary">Torna al profilo</a>
   </div>

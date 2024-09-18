@@ -7,6 +7,7 @@ import { EventFormComponent } from './event-form/event-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { RegistrationFormComponent } from './registration-form/registration-form
     EventsRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule,
   ],
 })
 export class EventsModule {}

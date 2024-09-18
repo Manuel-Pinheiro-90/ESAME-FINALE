@@ -13,7 +13,12 @@
         />
         <div class="card-body px-5">
           <h5 class="card-title">{{ evento.titolo }}</h5>
-          <p class="card-text">{{ evento.descrizione }}</p>
+
+          <div
+            class="card-text"
+            [innerHTML]="evento.descrizione | newlinesToBr"
+          ></div>
+
           <p class="card-text"><strong>Luogo:</strong> {{ evento.luogo }}</p>
           <p class="card-text">
             <strong>Data Inizio:</strong>

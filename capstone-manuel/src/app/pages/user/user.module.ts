@@ -10,6 +10,7 @@ import { RegisterDetailComponent } from './register-detail/register-detail.compo
 import { PgDetailComponent } from './pg-detail/pg-detail.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaymentComponent } from './payment/payment.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { PaymentComponent } from './payment/payment.component';
     ReactiveFormsModule,
     FormsModule,
     NgbCarouselModule,
+    SharedModule,
   ],
 })
 export class UserModule {}

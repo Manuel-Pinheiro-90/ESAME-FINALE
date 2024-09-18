@@ -44,7 +44,7 @@
           *ngIf="descriptionVisible[personaggio.id]"
           class="description-container mt-2"
         >
-          <p class="card-text">{{ personaggio.descrizione }}</p>
+          <div [innerHTML]="personaggio.descrizione | newlinesToBr"></div>
         </div>
 
         <!-- Pulsante per mostrare/nascondere la descrizione -->
