@@ -11,7 +11,7 @@
           class="card-img-top"
           alt="{{ evento.titolo }}"
         />
-        <div class="card-body">
+        <div class="card-body px-5">
           <h5 class="card-title">{{ evento.titolo }}</h5>
           <p class="card-text">{{ evento.descrizione }}</p>
           <p class="card-text"><strong>Luogo:</strong> {{ evento.luogo }}</p>
@@ -37,8 +37,28 @@
           <a
             [routerLink]="['/events/registrazione', evento.id]"
             class="btn btn-primary"
+            [class.disabled]="
+              evento.numeroRegistrazioni >= evento.numeroPartecipantiMax
+            "
+            [attr.aria-disabled]="
+              evento.numeroRegistrazioni >= evento.numeroPartecipantiMax
+                ? 'true'
+                : null
+            "
+            [ngClass]="{
+              'btn-secondary':
+                evento.numeroRegistrazioni >= evento.numeroPartecipantiMax,
+              'btn-primary':
+                evento.numeroRegistrazioni < evento.numeroPartecipantiMax
+            }"
             >Registrati</a
           >
+          <p
+            *ngIf="evento.numeroRegistrazioni >= evento.numeroPartecipantiMax"
+            class="text-danger"
+          >
+            Evento al completo
+          </p>
         </div>
       </div>
     </div>

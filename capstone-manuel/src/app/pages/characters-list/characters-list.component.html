@@ -2,13 +2,11 @@
 <div class="intro-section">
   <h1 class="intro-title">Condividi e Gestisci i Tuoi Personaggi</h1>
   <p class="intro-text">
-    Benvenuto nella tua area personale di gestione dei personaggi! Qui puoi
-    creare, visualizzare e condividere i tuoi personaggi con la community. Che
+    Qui puoi visualizzare e condividere i tuoi personaggi con la community. Che
     tu sia un veterano o un principiante, ogni personaggio ha una storia da
     raccontare. Esplora i tuoi personaggi, aggiorna le loro descrizioni e
     condividi le tue creazioni con il mondo. Usa il pulsante "Mostra
-    Descrizione" per rivelare i dettagli di ogni personaggio o "Elimina" per
-    rimuovere quelli che non desideri più mantenere.
+    Descrizione" per rivelare i dettagli di ogni personaggio.
   </p>
 </div>
 
@@ -63,6 +61,7 @@
 
         <!-- Pulsante di eliminazione -->
         <button
+          *ngIf="isAdmin"
           class="btn btn-danger delete-btn mt-2 ml-2"
           (click)="deletePersonaggio(personaggio.id)"
         >

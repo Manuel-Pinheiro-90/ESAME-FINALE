@@ -13,17 +13,23 @@ import { AuthService } from '../../services/auth.service';
 })
 export class CharactersListComponent implements OnInit {
   imageGroups: { url: string; alt: string }[][] = [];
-
   personaggi: IPersonaggioDTO[] = [];
   descriptionVisible: { [key: number]: boolean } = {};
   currentIndex: number = 0;
   autoSlideInterval: any;
-
-  constructor(private pgService: PgService) {}
+  isAdmin: boolean = false;
+  constructor(private pgService: PgService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadPersonaggi();
     this.loadImages();
+    this.authService.user$.subscribe((user) => {
+      if (user) {
+        this.isAdmin = user.ruoli.some((ruolo) => ruolo.nome === 'Admin');
+      } else {
+        this.isAdmin = false;
+      }
+    });
   }
 
   loadPersonaggi(): void {

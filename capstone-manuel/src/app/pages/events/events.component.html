@@ -24,7 +24,21 @@
   <!-- Griglia degli eventi -->
   <div class="row px-4">
     <div class="col-md-4" *ngFor="let evento of filteredEvents">
-      <div class="card mb-4">
+      <div class="card mb-4 position-relative">
+        <span
+          *ngIf="evento.numeroRegistrazioni >= evento.numeroPartecipantiMax"
+          class="badge bg-danger pill-al-completo"
+        >
+          Al completo
+        </span>
+        <!-- Pill Posti Disponibili -->
+        <span
+          *ngIf="evento.numeroRegistrazioni < evento.numeroPartecipantiMax"
+          class="badge bg-success pill-posti-liberi"
+        >
+          Posti Disponibili
+        </span>
+
         <img
           [src]="
             evento.immagineEvento
@@ -46,14 +60,35 @@
               {{ evento.dataFine | date : "short" }}
             </small>
           </p>
-
           <p class="card-text">
-            Numero registrazioni: {{ evento.numeroRegistrazioni }}
+            Numero partecipanti massimi: {{ evento.numeroPartecipantiMax }}
           </p>
 
-          <a [routerLink]="['registrazione', evento.id]" class="btn mx-1 my-1">
+          <p class="card-text">
+            Utenti registrati: {{ evento.numeroRegistrazioni }}
+          </p>
+
+          <a
+            [routerLink]="['registrazione', evento.id]"
+            class="btn mx-1 my-1"
+            [class.disabled]="
+              evento.numeroRegistrazioni >= evento.numeroPartecipantiMax
+            "
+            [attr.aria-disabled]="
+              evento.numeroRegistrazioni >= evento.numeroPartecipantiMax
+                ? 'true'
+                : null
+            "
+            [ngClass]="{
+              'btn-secondary':
+                evento.numeroRegistrazioni >= evento.numeroPartecipantiMax,
+              'btn-primary':
+                evento.numeroRegistrazioni < evento.numeroPartecipantiMax
+            }"
+          >
             Registrati
           </a>
+
           <button
             *ngIf="isAdmin"
             class="btn mx-1 my-1"
