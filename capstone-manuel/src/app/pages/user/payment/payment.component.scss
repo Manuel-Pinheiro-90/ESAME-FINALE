@@ -1,0 +1,55 @@
+/* Stile generale */
+.payment-instructions {
+  background: linear-gradient(180deg, rgba(10, 10, 20, 0.85), rgba(47, 47, 47, 0.5));
+  color: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(119, 0, 155, 0.9));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.page-description,
+.iban-info,
+.receipt-info {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.payment-method {
+  background-color: rgba(27, 28, 43, 0.8);
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Pulsante PayPal */
+.btn-primary {
+  background: linear-gradient(90deg, rgba(156, 145, 219, 0.9), rgba(119, 0, 155, 0.9));
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.text-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: underline;
+}
+
+.text-link:hover {
+  color: rgba(255, 255, 255, 1);
+}

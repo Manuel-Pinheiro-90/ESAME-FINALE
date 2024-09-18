@@ -5,6 +5,7 @@ import { CharactersListComponent } from './pages/characters-list/characters-list
 import { AuthGuard } from './pages/auth/guard/auth.guard';
 import { AdminGuard } from './pages/auth/guard/admin.guard';
 import { NotAuthorizedComponent } from './pages/not-authorized/not-authorized.component';
+import { ContactsComponent } from './pages/contacts/contacts.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,7 @@ const routes: Routes = [
     path: 'not-authorized',
     component: NotAuthorizedComponent,
   },
+  { path: 'contacts', component: ContactsComponent },
 
   {
     path: '**',

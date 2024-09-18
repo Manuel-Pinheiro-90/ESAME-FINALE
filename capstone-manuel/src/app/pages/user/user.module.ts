@@ -9,6 +9,7 @@ import { CreatePersonaggioComponent } from './create-personaggio/create-personag
 import { RegisterDetailComponent } from './register-detail/register-detail.component';
 import { PgDetailComponent } from './pg-detail/pg-detail.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
     CreatePersonaggioComponent,
     RegisterDetailComponent,
     PgDetailComponent,
+    PaymentComponent,
   ],
   imports: [
     CommonModule,

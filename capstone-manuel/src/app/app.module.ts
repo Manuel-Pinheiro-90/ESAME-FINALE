@@ -13,9 +13,10 @@ import { AuthInterceptor } from './pages/auth/auth.interceptor';
 import { Page404Component } from './pages/page404/page404.component';
 import { CharactersListComponent } from './pages/characters-list/characters-list.component';
 import { NotAuthorizedComponent } from './pages/not-authorized/not-authorized.component';
+import { ContactsComponent } from './pages/contacts/contacts.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, FooterComponent, Page404Component, CharactersListComponent, NotAuthorizedComponent],
+  declarations: [AppComponent, NavbarComponent, FooterComponent, Page404Component, CharactersListComponent, NotAuthorizedComponent, ContactsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

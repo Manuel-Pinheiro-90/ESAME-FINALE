@@ -73,6 +73,11 @@
       <h3>
         <strong>Eventi a cui {{ user.name }} è iscritto</strong>
       </h3>
+      <div class="text-center">
+        <a routerLink="/user/pagamento" class="btn btn-primary">
+          Procedi al pagamento
+        </a>
+      </div>
       <div *ngIf="user.registrazioni && user.registrazioni.length > 0">
         <ul class="list-group">
           <li
