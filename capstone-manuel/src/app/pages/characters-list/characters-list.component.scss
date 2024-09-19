@@ -1,5 +1,5 @@
-/* Stile per l'introduzione statica */
-.intro-section {
+/* Stile per l'introduzione statica e la sezione carosello */
+.intro-section, .carousel-section {
   background: linear-gradient(180deg, rgba(27, 28, 43, 0.9) 10%, rgba(42, 47, 88, 0.8) 90%);
   padding: 2rem;
   border-radius: 15px;
@@ -9,7 +9,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.intro-title {
+.intro-title, h2 {
   font-size: 2rem;
   font-weight: bold;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 50%);
@@ -26,14 +26,12 @@
   margin-bottom: 1.5rem;
 }
 
-/* Contenitore principale delle card */
 .row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-/* Stile per ogni card del personaggio */
 .character-card {
   background-color: rgba(50, 50, 70, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -44,24 +42,9 @@
   color: white;
   height: 100%;
   position: relative;
-  z-index: 1;
   overflow: hidden;
 }
 
-/* Descrizione nascosta con animazione */
-.description-container {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease-in-out, padding 0.5s ease;
-}
-
-/* Stato "espanso" per la card */
-.character-card.expanded .description-container {
-  max-height: 1000px; /* Permette di espandere completamente */
-  padding: 1rem 0;
-}
-
-/* Stato "espanso" per la card */
 .character-card.expanded {
   position: fixed;
   top: 5%;
@@ -73,49 +56,31 @@
   padding: 2rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
   overflow: auto;
-  transition: transform 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
 }
 
-/* Titolo più grande quando la card è espansa */
 .character-card.expanded .character-name {
   font-size: 2rem;
   text-align: center;
   margin-bottom: 2rem;
 }
 
-/* Descrizione più visibile */
 .character-card.expanded .description-container {
   font-size: 1.3rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Pulsante per chiudere la card */
-.character-card.expanded .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(255, 69, 69, 1);
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+.description-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, padding 0.5s ease;
 }
 
-.character-card.expanded .close-btn:hover {
-  background-color: rgba(193, 41, 46, 1);
+.character-card.expanded .description-container {
+  max-height: 1000px;
+  padding: 1rem 0;
 }
 
-/* Effetto hover sulla card */
-.character-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-}
-
-/* Stile per il nome del personaggio */
 .character-name {
   font-size: 1.5rem;
   font-weight: bold;
@@ -123,13 +88,11 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Stile per la descrizione */
 .description-container p {
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* Pulsanti con effetto hover */
 .toggle-btn, .delete-btn {
   font-size: 1rem;
   padding: 0.5rem 1.5rem;
@@ -139,103 +102,33 @@
   margin-top: 0.5rem;
 }
 
-/* Stile per il pulsante di toggle */
 .toggle-btn {
   background: linear-gradient(90deg, rgba(119, 0, 155, 1) 0%, rgb(75, 53, 104) 100%);
   color: white;
 }
 
-/* Hover del pulsante di toggle */
 .toggle-btn:hover {
   background: linear-gradient(90deg, rgba(255, 105, 180, 1) 0%, rgba(119, 0, 155, 1) 100%);
 }
 
-/* Pulsante di eliminazione */
 .delete-btn {
   background: linear-gradient(90deg, rgba(193, 41, 46, 1) 0%, rgba(255, 0, 0, 1) 100%);
   color: white;
 }
 
-/* Hover del pulsante di eliminazione */
 .delete-btn:hover {
   background: linear-gradient(90deg, rgba(255, 69, 69, 1) 0%, rgba(193, 41, 46, 1) 100%);
 }
 
-/* Media Queries per migliorare la disposizione su schermi più piccoli */
-@media (max-width: 768px) {
-  .card {
-    margin-bottom: 1.5rem;
-  }
-
-  .character-card.expanded {
-    padding: 1rem;
-  }
+.character-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
 }
 
-/* Stile per la sezione del carosello */
-.carousel-section {
-  background-color: rgba(27, 28, 43, 0.8);
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.carousel .carousel-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.carousel .carousel-item img {
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  width: 100%;
-  max-width: 300px;
-  height: auto;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  filter: invert(1);
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-  width: 5%;
-}
-
-/* Stile per il titolo h2 */
-h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 50%);
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  margin-bottom: 1rem;
-}
-
-
-/* Per WebKit (Chrome, Safari, ecc.) */
-.character-card.expanded::-webkit-scrollbar {
-  display: none; /* Nascondi la scrollbar */
-}
-
-/* Per altri browser come Firefox */
-.character-card.expanded {
-  -ms-overflow-style: none; /* Internet Explorer e Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-
-/* Barra di ricerca migliorata */
 .search-bar {
   position: relative;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem; /* Aumenta il margine per dare più spazio sotto */
-  max-width: 600px; /* Limita la larghezza massima della barra di ricerca */
-  margin-left: auto;
-  margin-right: auto;
+  margin: 2.5rem auto;
+  max-width: 600px;
 }
 
 .search-bar input {
@@ -247,7 +140,7 @@ h2 {
   border-radius: 30px;
   width: 100%;
   transition: all 0.4s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Aggiunta ombra per evidenziare la barra */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .search-bar input::placeholder {
@@ -259,13 +152,12 @@ h2 {
   background-color: rgba(47, 47, 47, 0.95);
   border-color: rgba(156, 145, 219, 0.9);
   outline: none;
-  box-shadow: 0 0 15px rgba(119, 0, 155, 0.7); /* Aumentato per enfatizzare il focus */
+  box-shadow: 0 0 15px rgba(119, 0, 155, 0.7);
 }
 
-/* Stile per l'icona di ricerca */
 .search-bar .search-icon {
   position: absolute;
-  right: 20px; /* Aumenta lo spazio a destra per un look più bilanciato */
+  right: 20px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 1.5rem;
@@ -273,28 +165,31 @@ h2 {
   pointer-events: none;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .search-bar {
-    max-width: 90%; /* Più flessibilità sui dispositivi mobili */
+    max-width: 90%;
   }
 
   .search-bar input {
-    font-size: 1rem; /* Leggermente più piccolo su schermi più piccoli */
+    font-size: 1rem;
   }
 
   .search-bar .search-icon {
-    right: 15px; /* Aggiustato per mobile */
+    right: 15px;
+  }
+
+  .character-card.expanded {
+    padding: 1rem;
   }
 }
 
 @media (max-width: 576px) {
   .search-bar input {
     font-size: 0.9rem;
-    padding: 10px 15px; /* Ridotto padding per adattarsi ai dispositivi più piccoli */
+    padding: 10px 15px;
   }
 
   .search-bar .search-icon {
-    right: 12px; /* Più vicino al bordo su schermi molto piccoli */
+    right: 12px;
   }
 }
