@@ -59,15 +59,7 @@
             >Personaggi</a
           >
         </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/contacts"
-            routerLinkActive="active-link"
-            aria-label="Vai alla pagina degli eventi"
-            >Contatti</a
-          >
-        </li>
+
         <!--info drop-->
         <li
           class="nav-item dropdown"
@@ -80,7 +72,7 @@
             aria-expanded="false"
             aria-label="Menu Admin"
           >
-            Info
+            Informazioni
           </a>
           <ul class="dropdown-menu" [class.show]="activeDropdown === 'info'">
             <li>
@@ -95,13 +87,22 @@
             <li>
               <a
                 class="dropdown-item"
-                routerLink="/admin/registrazioni"
+                routerLink="/photo"
                 routerLinkActive="active-link"
                 aria-label="Vai alla pagina delle registrazioni"
                 >Foto</a
               >
             </li>
             <li><hr class="dropdown-divider" /></li>
+            <li class="nav-item">
+              <a
+                class="dropdown-item"
+                routerLink="/contacts"
+                routerLinkActive="active-link"
+                aria-label="Vai alla pagina degli eventi"
+                >Contatti</a
+              >
+            </li>
           </ul>
         </li>
         <!-- Admin Dropdown (shown only if the user is Admin) -->

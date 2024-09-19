@@ -16,6 +16,7 @@ import { NotAuthorizedComponent } from './pages/not-authorized/not-authorized.co
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { SharedModule } from './shared/shared.module';
 import { InfoComponent } from './pages/info/info.component';
+import { PhotoComponent } from './pages/photo/photo.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { InfoComponent } from './pages/info/info.component';
     NotAuthorizedComponent,
     ContactsComponent,
     InfoComponent,
+    PhotoComponent,
   ],
   imports: [
     BrowserModule,

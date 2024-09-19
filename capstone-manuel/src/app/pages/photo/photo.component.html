@@ -1,0 +1,15 @@
+<div class="photo-gallery mt-5">
+  <div class="photo" *ngFor="let img of images" (click)="openImage(img)">
+    <img [src]="img.src" [alt]="img.alt" />
+  </div>
+</div>
+
+<!-- Modal per visualizzare l'immagine ingrandita -->
+<div class="modal" id="imageModal" *ngIf="selectedImage" (click)="closeImage()">
+  <span class="close">&times;</span>
+  <img
+    class="modal-content"
+    [src]="selectedImage.src"
+    [alt]="selectedImage.alt"
+  />
+</div>
