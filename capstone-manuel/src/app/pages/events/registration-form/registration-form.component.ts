@@ -101,14 +101,14 @@ export class RegistrationFormComponent implements OnInit {
     this.registrazionesvc.createRegistration(registrazione).subscribe({
       next: () => {
         console.log('Registrazione avvenuta con successo');
-        this.router
-          .navigateByUrl('/events', { skipLocationChange: true }) //
-          .then(() => {
-            this.router.navigate(['/events']); // Reindirizza alla pagina degli eventi
-          });
+        this.router.navigate(['/events']);
       },
       error: (err) => {
-        console.error('Errore durante la registrazione:', err);
+        if (err.status === 400) {
+          alert('Sei già registrato a questo evento.');
+        } else {
+          console.error('Errore durante la registrazione:', err);
+        }
       },
     });
   }

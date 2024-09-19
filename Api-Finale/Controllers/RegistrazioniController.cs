@@ -200,6 +200,19 @@ namespace Api_Finale.Controllers
                 return Unauthorized(new { Message = "Utente non autenticato." });
             }
 
+
+            // Controlla se l'utente è già registrato a questo evento
+            var esisteRegistrazione = await _context.Registrazioni
+                .AnyAsync(r => r.UtenteId == int.Parse(userId) && r.EventoId == registrazioneDto.EventoId);
+
+            if (esisteRegistrazione)
+            {
+                return BadRequest(new { Message = "Sei già registrato a questo evento." });
+            }
+            ////////
+
+
+
             var registrazione = new Registrazione
             {
                 DataRegistrazione = DateTime.Now, ///ho modificato questo controllare se funziona
