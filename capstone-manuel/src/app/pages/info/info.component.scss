@@ -1,0 +1,186 @@
+/* Sfondo generale e sezioni */
+.myBg {
+  background: linear-gradient(180deg, rgba(10, 10, 20, 0.85) 0%, rgba(47, 47, 47, 0.5) 100%);
+}
+
+.myGradient {
+  background: linear-gradient(180deg, rgba(27, 28, 43, 0.6) 19%, rgba(16, 17, 26, 0.6) 77%);
+  padding: 2rem;
+}
+
+/* Testo */
+.myTextColor {
+  color: #c9cacf;
+}
+
+#fantasy {
+  background: linear-gradient(90deg, rgba(132, 161, 216, 0.9) 0%, rgba(119, 0, 155, 0.9) 50%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 1.5em;
+}
+
+/* Pulsanti */
+.myBtn, .btn-primary, .btn-danger, .btn-info {
+  background: linear-gradient(90deg, rgba(156, 145, 219, 0.9) 0%, rgba(119, 0, 155, 0.9) 50%);
+  color: white;
+  border: 2px solid white;
+  font-size: 1.8rem;
+  transition: opacity 0.3s ease;
+}
+
+.myBtn:hover, .btn-primary:hover, .btn-danger:hover, .btn-info:hover {
+  opacity: 0.5;
+}
+
+/* Immagini */
+img.rounded-5 {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+img.rounded-5:hover {
+  transform: scale(1.05);
+}
+
+/* Card */
+.card {
+  max-width: 50em;
+  margin: 2rem auto;
+  background-color: rgba(27, 28, 43, 0.8);
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Titoli */
+h1, h3, h4, .card-title {
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 60%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* List items */
+.list-group-item {
+  background-color: transparent;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: white;
+  border: 1px solid #30333d;
+}
+
+.list-group-item:hover {
+  background-color: #1a1b22;
+}
+
+.list-unstyled li, .list-group-item {
+  transition: background-color 0.3s ease;
+}
+
+/* Container */
+.container-fluid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.col-11 {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+.row {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Immagini con dimensioni uniformi */
+.scroll-animation img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Sezione divisoria con immagine */
+.divider-section {
+  background-image: url('/assets/img/emp (2).jpg');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  margin: 3rem 0;
+  position: relative;
+}
+
+.divider-section .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.divider-section .content {
+  position: relative;
+  color: white;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Animazioni */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.6s ease-out, transform 1.6s ease-out;
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-animation {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.scroll-animation.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .card {
+    max-width: 90%;
+    padding: 1rem;
+  }
+
+  .myBtn {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn {
+    font-size: 1rem;
+  }
+
+  .card-body img {
+    width: 120px;
+    height: 120px;
+  }
+}

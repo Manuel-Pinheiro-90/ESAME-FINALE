@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit {
   isDropdownOpen: boolean = false;
   isAdmin: boolean = false;
   isCollapsed: boolean = true;
+  activeDropdown: string | null = null;
   constructor(
     public authService: AuthService,
     private router: Router,
@@ -55,12 +56,7 @@ export class NavbarComponent implements OnInit {
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
   }
-
-  openDropdown() {
-    this.isDropdownOpen = true;
-  }
-
-  closeDropdown() {
-    this.isDropdownOpen = false;
+  setActiveDropdown(dropdown: string | null): void {
+    this.activeDropdown = dropdown; // Imposta il dropdown attivo
   }
 }
