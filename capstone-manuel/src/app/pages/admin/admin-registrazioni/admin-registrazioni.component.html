@@ -8,6 +8,7 @@
           <th>Utente</th>
           <th>Email</th>
           <th>Evento</th>
+          <th>Data inizio evento</th>
           <th>Data Registrazione</th>
           <th>Costo Totale</th>
           <th>Personaggio</th>
@@ -20,6 +21,7 @@
           <td>{{ registrazione.utente.nome }}</td>
           <td>{{ registrazione.utente.email }}</td>
           <td>{{ registrazione.evento.titolo }}</td>
+          <td>{{ registrazione.evento.dataInizio | date : "short" }}</td>
           <td>{{ registrazione.dataRegistrazione | date : "short" }}</td>
           <td>{{ registrazione.costoTotale | currency }}</td>
           <td>{{ registrazione.personaggio?.nome || "N/A" }}</td>

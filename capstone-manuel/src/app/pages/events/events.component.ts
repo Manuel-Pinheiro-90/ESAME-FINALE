@@ -66,10 +66,14 @@ export class EventsComponent implements OnInit {
 
   filterEvents(): void {
     if (this.searchTerm) {
-      this.filteredEvents = this.eventi.filter((evento) =>
-        evento.titolo
-          .toLowerCase()
-          .includes(this.searchTerm.toLocaleLowerCase())
+      this.filteredEvents = this.eventi.filter(
+        (evento) =>
+          evento.titolo
+            .toLowerCase()
+            .includes(this.searchTerm.toLocaleLowerCase()) ||
+          evento.luogo
+            .toLowerCase()
+            .includes(this.searchTerm.toLocaleLowerCase())
       ); //
     } else {
       this.filteredEvents = [...this.eventi];

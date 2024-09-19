@@ -19,7 +19,11 @@ export class AdminRegistrazioniComponent implements OnInit {
   loadRegistrazioni(): void {
     this.registrationService.getAllRegistrazioni().subscribe({
       next: (data: IRegistrazioneDettagliDTO[]) => {
-        this.registrazioni = data;
+        this.registrazioni = data.sort((a, b) => {
+          const dataInizioA = new Date(a.evento.dataInizio).getTime();
+          const dataInizioB = new Date(b.evento.dataInizio).getTime();
+          return dataInizioA - dataInizioB; // Ordine crescente (dalla più vicina alla più lontana)
+        });
       },
       error: (err) => {
         console.error('Errore nel recuperare le registrazioni:', err);

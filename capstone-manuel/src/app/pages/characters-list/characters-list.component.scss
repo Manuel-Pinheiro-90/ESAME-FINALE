@@ -12,7 +12,7 @@
 .intro-title {
   font-size: 2rem;
   font-weight: bold;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 25%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 50%);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
@@ -208,7 +208,7 @@
 h2 {
   font-size: 2rem;
   font-weight: bold;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 25%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(119, 0, 155, 0.9) 50%);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
@@ -225,4 +225,76 @@ h2 {
 .character-card.expanded {
   -ms-overflow-style: none; /* Internet Explorer e Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+
+/* Barra di ricerca migliorata */
+.search-bar {
+  position: relative;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem; /* Aumenta il margine per dare più spazio sotto */
+  max-width: 600px; /* Limita la larghezza massima della barra di ricerca */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-bar input {
+  background-color: rgba(27, 28, 43, 0.9);
+  border: 2px solid rgba(119, 0, 155, 0.9);
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  width: 100%;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Aggiunta ombra per evidenziare la barra */
+}
+
+.search-bar input::placeholder {
+  color: #c9cacf;
+  font-style: italic;
+}
+
+.search-bar input:focus {
+  background-color: rgba(47, 47, 47, 0.95);
+  border-color: rgba(156, 145, 219, 0.9);
+  outline: none;
+  box-shadow: 0 0 15px rgba(119, 0, 155, 0.7); /* Aumentato per enfatizzare il focus */
+}
+
+/* Stile per l'icona di ricerca */
+.search-bar .search-icon {
+  position: absolute;
+  right: 20px; /* Aumenta lo spazio a destra per un look più bilanciato */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .search-bar {
+    max-width: 90%; /* Più flessibilità sui dispositivi mobili */
+  }
+
+  .search-bar input {
+    font-size: 1rem; /* Leggermente più piccolo su schermi più piccoli */
+  }
+
+  .search-bar .search-icon {
+    right: 15px; /* Aggiustato per mobile */
+  }
+}
+
+@media (max-width: 576px) {
+  .search-bar input {
+    font-size: 0.9rem;
+    padding: 10px 15px; /* Ridotto padding per adattarsi ai dispositivi più piccoli */
+  }
+
+  .search-bar .search-icon {
+    right: 12px; /* Più vicino al bordo su schermi molto piccoli */
+  }
 }

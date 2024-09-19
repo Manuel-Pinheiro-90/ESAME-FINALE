@@ -18,7 +18,8 @@ export class CharactersListComponent implements OnInit {
   currentIndex: number = 0;
   autoSlideInterval: any;
   isAdmin: boolean = false;
-
+  filteredPg: IPersonaggioDTO[] = []; //
+  searchTerm: string = '';
   constructor(private pgService: PgService, private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -37,6 +38,7 @@ export class CharactersListComponent implements OnInit {
     this.pgService.getAllPersonaggi().subscribe({
       next: (personaggi: IPersonaggioDTO[]) => {
         this.personaggi = personaggi;
+        this.filteredPg = [...this.personaggi];
         this.personaggi.forEach((p) => {
           //
           this.descriptionVisible[p.id] = false;
@@ -73,9 +75,9 @@ export class CharactersListComponent implements OnInit {
   loadImages(): void {
     // Immagini statiche per il carosello
     const images = [
-      { url: 'assets/img/pg av.png', alt: 'Personaggio 1' },
-      { url: 'assets/img/pg av.png', alt: 'Personaggio 2' },
-      { url: 'assets/img/pg av.png', alt: 'Personaggio 3' },
+      { url: 'assets/img/riv.png', alt: 'Albrand' },
+      { url: 'assets/img/riv2.png', alt: 'Vega' },
+      { url: 'assets/img/riv3.png', alt: 'Varis' },
       { url: 'assets/img/pg av.png', alt: 'Personaggio 4' },
       { url: 'assets/img/pg av.png', alt: 'Personaggio 5' },
       { url: 'assets/img/pg av.png', alt: 'Personaggio 6' },
@@ -88,6 +90,18 @@ export class CharactersListComponent implements OnInit {
     const groupSize = 3; // Mostra 3 immagini alla volta
     for (let i = 0; i < images.length; i += groupSize) {
       this.imageGroups.push(images.slice(i, i + groupSize));
+    }
+  }
+
+  filterPg(): void {
+    if (this.searchTerm) {
+      this.filteredPg = this.personaggi.filter((personaggio) =>
+        personaggio.nome
+          .toLowerCase()
+          .includes(this.searchTerm.toLocaleLowerCase())
+      ); //
+    } else {
+      this.filteredPg = [...this.personaggi];
     }
   }
 }

@@ -29,9 +29,21 @@
   </ngb-carousel>
 </div>
 
+<!-- Barra di ricerca -->
+<div class="search-bar px-4">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Cerca per nome..."
+    [(ngModel)]="searchTerm"
+    (input)="filterPg()"
+  />
+  <i class="fas fa-search search-icon"></i>
+</div>
+
 <!-- Sezione dei personaggi  -->
 <div class="row">
-  <div class="col-md-4 mb-4" *ngFor="let personaggio of personaggi">
+  <div class="col-md-4 mb-4" *ngFor="let personaggio of filteredPg">
     <div
       class="card character-card"
       [class.expanded]="descriptionVisible[personaggio.id]"
