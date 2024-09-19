@@ -70,9 +70,10 @@
 .navbar-nav .nav-link,
 .btn-outline-danger,
 button,
-.nav-item .nav-link { /* Aggiorno il selettore per includere i link di login e profilo */
-  color: white; /* Colore uniforme per link e pulsanti */
+.nav-item .nav-link {
+  color: white;
   transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Transizione uniforme */
+  font-size: 1.5rem;
 }
 
 /* Hover effect  */
