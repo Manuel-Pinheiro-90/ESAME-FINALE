@@ -230,6 +230,28 @@ namespace Api_Finale.Controllers
 
             return NoContent();
         }
+        ///
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        [HttpGet("personaggi-con-utenti")]
+        public async Task<ActionResult<IEnumerable<PersonaggioConUtenteDTO>>> GetPersonaggiConUtente()
+        {
+            // Recupera i personaggi con i dettagli dell'utente associato
+            var personaggiConUtenti = await _context.Personaggi
+                .Include(p => p.Utente)  
+                .Select(p => new PersonaggioConUtenteDTO
+                {
+                    Id = p.Id,
+                    Nome = p.Nome,
+                    Descrizione = p.Descrizione,
+                    CreatoreNome = p.Utente.Nome,     
+                    CreatoreFoto = p.Utente.Foto      
+                })
+                .ToListAsync();
+
+            return Ok(personaggiConUtenti);
+        }
+
+
 
 
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -49,6 +49,21 @@
       [class.expanded]="descriptionVisible[personaggio.id]"
     >
       <div class="card-body">
+        <div class="creator-info d-flex align-items-center mb-2">
+          <img
+            [src]="
+              personaggio.creatoreFoto
+                ? 'data:image/jpeg;base64,' + personaggio.creatoreFoto
+                : 'assets/img/avatar.jpg'
+            "
+            alt="Foto di {{ personaggio.creatoreNome }}"
+            class="creator-image rounded-circle"
+            width="40"
+            height="40"
+          />
+          <span class="ml-2">{{ personaggio.creatoreNome }}</span>
+        </div>
+
         <!-- Nome del personaggio -->
         <h5 class="card-title character-name">
           <strong>{{ personaggio.nome }}</strong>
