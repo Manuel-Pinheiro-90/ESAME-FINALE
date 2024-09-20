@@ -10,7 +10,7 @@
   </p>
 </div>
 
-<div class="carousel-section mt-5">
+<div class="carousel-section mt-5 intro-section">
   <h2 class="text-white text-center mb-4">Le Vostre Foto!</h2>
 
   <ngb-carousel *ngIf="imageGroups.length > 0" [interval]="5000">
@@ -42,13 +42,28 @@
 </div>
 
 <!-- Sezione dei personaggi  -->
-<div class="row">
+<div class="row intro-section">
   <div class="col-md-4 mb-4" *ngFor="let personaggio of filteredPg">
     <div
       class="card character-card"
       [class.expanded]="descriptionVisible[personaggio.id]"
     >
       <div class="card-body">
+        <div class="creator-info d-flex align-items-center mb-2">
+          <img
+            [src]="
+              personaggio.creatoreFoto
+                ? 'data:image/jpeg;base64,' + personaggio.creatoreFoto
+                : 'assets/img/avatar.jpg'
+            "
+            alt="Foto di {{ personaggio.creatoreNome }}"
+            class="creator-image rounded-circle"
+            width="40"
+            height="40"
+          />
+          <span class="ml-2">{{ personaggio.creatoreNome }}</span>
+        </div>
+
         <!-- Nome del personaggio -->
         <h5 class="card-title character-name">
           <strong>{{ personaggio.nome }}</strong>

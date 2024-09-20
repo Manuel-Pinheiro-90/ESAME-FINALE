@@ -15,6 +15,8 @@ import { CharactersListComponent } from './pages/characters-list/characters-list
 import { NotAuthorizedComponent } from './pages/not-authorized/not-authorized.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { SharedModule } from './shared/shared.module';
+import { InfoComponent } from './pages/info/info.component';
+import { PhotoComponent } from './pages/photo/photo.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { SharedModule } from './shared/shared.module';
     CharactersListComponent,
     NotAuthorizedComponent,
     ContactsComponent,
+    InfoComponent,
+    PhotoComponent,
   ],
   imports: [
     BrowserModule,

@@ -59,21 +59,57 @@
             >Personaggi</a
           >
         </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/contacts"
-            routerLinkActive="active-link"
-            aria-label="Vai alla pagina degli eventi"
-            >Contatti</a
-          >
-        </li>
 
+        <!--info drop-->
+        <li
+          class="nav-item dropdown"
+          (mouseenter)="setActiveDropdown('info')"
+          (mouseleave)="setActiveDropdown(null)"
+        >
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            aria-expanded="false"
+            aria-label="Menu Admin"
+          >
+            Informazioni
+          </a>
+          <ul class="dropdown-menu" [class.show]="activeDropdown === 'info'">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/info"
+                routerLinkActive="active-link"
+                aria-label="Vai alla pagina Admin"
+                >che cos'è il Larp?</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/photo"
+                routerLinkActive="active-link"
+                aria-label="Vai alla pagina delle registrazioni"
+                >Foto</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li class="nav-item">
+              <a
+                class="dropdown-item"
+                routerLink="/contacts"
+                routerLinkActive="active-link"
+                aria-label="Vai alla pagina degli eventi"
+                >Contatti</a
+              >
+            </li>
+          </ul>
+        </li>
         <!-- Admin Dropdown (shown only if the user is Admin) -->
         <li
           class="nav-item dropdown"
-          (mouseenter)="openDropdown()"
-          (mouseleave)="closeDropdown()"
+          (mouseenter)="setActiveDropdown('admin')"
+          (mouseleave)="setActiveDropdown(null)"
           *ngIf="isAdmin"
         >
           <a
@@ -84,7 +120,7 @@
           >
             Area Admin
           </a>
-          <ul class="dropdown-menu" [class.show]="isDropdownOpen">
+          <ul class="dropdown-menu" [class.show]="activeDropdown === 'admin'">
             <li>
               <a
                 class="dropdown-item"

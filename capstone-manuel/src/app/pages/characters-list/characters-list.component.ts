@@ -5,6 +5,7 @@ import { PgService } from '../../services/pg.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IUtenteDTO } from '../../interface/iutente-dto';
 import { AuthService } from '../../services/auth.service';
+import { IPersonaggioConUtenteDTO } from '../../interface/i-personaggio-con-utente-dto';
 
 @Component({
   selector: 'app-characters-list',
@@ -13,12 +14,12 @@ import { AuthService } from '../../services/auth.service';
 })
 export class CharactersListComponent implements OnInit {
   imageGroups: { url: string; alt: string }[][] = [];
-  personaggi: IPersonaggioDTO[] = [];
+  personaggi: IPersonaggioConUtenteDTO[] = [];
   descriptionVisible: { [key: number]: boolean } = {};
   currentIndex: number = 0;
   autoSlideInterval: any;
   isAdmin: boolean = false;
-  filteredPg: IPersonaggioDTO[] = []; //
+  filteredPg: IPersonaggioConUtenteDTO[] = []; //
   searchTerm: string = '';
   constructor(private pgService: PgService, private authService: AuthService) {}
 
@@ -35,8 +36,8 @@ export class CharactersListComponent implements OnInit {
   }
 
   loadPersonaggi(): void {
-    this.pgService.getAllPersonaggi().subscribe({
-      next: (personaggi: IPersonaggioDTO[]) => {
+    this.pgService.getPersonaggiConUtente().subscribe({
+      next: (personaggi: IPersonaggioConUtenteDTO[]) => {
         this.personaggi = personaggi;
         this.filteredPg = [...this.personaggi];
         this.personaggi.forEach((p) => {
