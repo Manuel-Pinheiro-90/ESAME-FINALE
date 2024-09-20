@@ -61,6 +61,7 @@ export class CharactersListComponent implements OnInit {
       this.pgService.deletePersonaggio(id).subscribe({
         next: () => {
           this.personaggi = this.personaggi.filter((p) => p.id !== id);
+          this.filteredPg = this.filteredPg.filter((p) => p.id !== id);
           console.log('Personaggio eliminato con successo');
         },
         error: (err: HttpErrorResponse) => {
@@ -96,10 +97,14 @@ export class CharactersListComponent implements OnInit {
 
   filterPg(): void {
     if (this.searchTerm) {
-      this.filteredPg = this.personaggi.filter((personaggio) =>
-        personaggio.nome
-          .toLowerCase()
-          .includes(this.searchTerm.toLocaleLowerCase())
+      this.filteredPg = this.personaggi.filter(
+        (personaggio) =>
+          personaggio.nome
+            .toLowerCase()
+            .includes(this.searchTerm.toLocaleLowerCase()) ||
+          personaggio.creatoreNome
+            .toLowerCase()
+            .includes(this.searchTerm.toLocaleLowerCase())
       ); //
     } else {
       this.filteredPg = [...this.personaggi];
