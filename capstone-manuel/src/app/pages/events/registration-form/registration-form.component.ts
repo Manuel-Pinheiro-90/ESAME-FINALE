@@ -8,6 +8,7 @@ import { PgService } from '../../../services/pg.service';
 import { IPersonaggioDTO } from '../../../interface/i-personaggio-dto';
 import { IServizioDTO } from '../../../interface/i-servizio-dto';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { EventService } from '../../../services/event.service';
 
 @Component({
   selector: 'app-registration-form',
@@ -28,6 +29,7 @@ export class RegistrationFormComponent implements OnInit {
     private route: ActivatedRoute,
     private servicesvc: ServiceService,
     private pgService: PgService,
+    private eventService: EventService,
     private http: HttpClient
   ) {}
 
@@ -100,8 +102,11 @@ export class RegistrationFormComponent implements OnInit {
 
     this.registrazionesvc.createRegistration(registrazione).subscribe({
       next: () => {
-        console.log('Registrazione avvenuta con successo');
-        this.router.navigate(['/events']);
+        // Aggiorna l'evento nel BehaviorSubject
+        this.eventService.getEvent(this.eventoId).subscribe((updatedEvent) => {
+          this.eventService.updateEventInSubject(updatedEvent); // Aggiorna l'evento nel BehaviorSubject
+          this.router.navigate(['/events']);
+        });
       },
       error: (err) => {
         if (err.status === 400) {
@@ -113,7 +118,7 @@ export class RegistrationFormComponent implements OnInit {
     });
   }
   onServiceChange(servizioId: number, event: Event): void {
-    const inputElement = event.target as HTMLInputElement; // Cast a HTMLInputElement
+    const inputElement = event.target as HTMLInputElement;
     if (inputElement.checked) {
       this.selectedServices.push(servizioId); // Aggiungi servizio selezionato
     } else {

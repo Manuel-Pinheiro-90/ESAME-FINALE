@@ -25,6 +25,7 @@
   <div class="row px-4">
     <div class="col-md-4" *ngFor="let evento of filteredEvents">
       <div class="card mb-4 position-relative">
+        <!-- Pill Posti  -->
         <span
           *ngIf="evento.numeroRegistrazioni >= evento.numeroPartecipantiMax"
           class="badge bg-danger pill-al-completo"
@@ -47,6 +48,7 @@
           "
           class="card-img-top"
           alt="{{ evento.titolo }}"
+          loading="lazy"
         />
         <div class="card-body">
           <h5 class="card-title">{{ evento.titolo }}</h5>

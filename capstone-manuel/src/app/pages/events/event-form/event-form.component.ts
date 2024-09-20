@@ -80,11 +80,17 @@ export class EventFormComponent implements OnInit {
 
     if (this.isEditMode && this.eventId) {
       this.EventService.updateEvent(this.eventId, event).subscribe(() => {
-        this.router.navigate(['/events']);
+        // Ricarica l'evento aggiornato e naviga alla lista degli eventi
+        this.EventService.getEvent(this.eventId!).subscribe(() => {
+          this.router.navigate(['/events']);
+        });
       });
     } else {
       this.EventService.createEvent(event).subscribe(() => {
-        this.router.navigate(['/events']);
+        // Forza il caricamento dell'intera lista di eventi dopo la creazione
+        this.EventService.getEvents().subscribe(() => {
+          this.router.navigate(['/events']);
+        });
       });
     }
   }

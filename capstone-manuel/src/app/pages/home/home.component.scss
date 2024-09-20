@@ -50,19 +50,19 @@
   );
   color: white;
   border: 2px solid white; /* Bordo bianco */
-  font-size: 1.8rem; /* Dimensione del testo del pulsante */
-  transition: opacity 0.3s ease; /* Transizione per l'effetto hover */
+  font-size: 1.8rem;
+  transition: opacity 0.3s ease;
 }
 
 /* Effetto hover per i pulsanti */
 .myBtn:hover, .btn-primary:hover, .btn-danger:hover, .btn-info:hover {
-  opacity: 0.5; /* Riduce l'opacità al passaggio del mouse */
+  opacity: 0.5;
 }
 
 /* Stile per le immagini */
 img.rounded-5 {
-  border-radius: 10px; /* Arrotonda gli angoli delle immagini */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Aggiunge un'ombra leggera */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Sezioni principali (come profilo, eventi, ecc.) */

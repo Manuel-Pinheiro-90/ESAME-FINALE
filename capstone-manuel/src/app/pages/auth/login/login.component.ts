@@ -26,17 +26,16 @@ export class LoginComponent {
     if (this.authData.userName && this.authData.password) {
       this.authSvc.login(this.authData).subscribe({
         next: () => {
-          this.loginError = false; // Nascondi errore se il login ha successo
+          this.loginError = false;
           this.router.navigate(['home']);
         },
         error: (err) => {
-          this.loginError = true; // Mostra il messaggio di errore in caso di fallimento
+          this.loginError = true;
           this.errorMessage = 'Nome utente o password errati. Riprova.';
-          console.error('Errore di login:', err); // Log dell'errore
+          console.error('Errore di login:', err);
         },
       });
     } else {
-      // Se uno dei campi è vuoto, attiva il messaggio di errore
       this.loginError = true;
       this.errorMessage = 'Per favore, inserisci username e password.';
     }
