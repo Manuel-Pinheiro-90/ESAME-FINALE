@@ -11,7 +11,7 @@
         public int NumeroPartecipantiMax { get; set; }
         public string? ImmagineEvento { get; set; }
 
-        // Aggiungi il conteggio delle registrazioni
+        //  conteggio delle registrazioni
         public int NumeroRegistrazioni { get; set; }
         // Conteggio dei documenti e personaggi
         public int NumeroDocumenti { get; set; }

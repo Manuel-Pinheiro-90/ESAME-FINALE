@@ -15,7 +15,7 @@ namespace Api_Finale.Models
         [Required]
         public decimal CostoTotale { get; set; }
 
-        // Relazione con Utente
+       
         [Required]
         public int UtenteId { get; set; }
         [ForeignKey("UtenteId")]

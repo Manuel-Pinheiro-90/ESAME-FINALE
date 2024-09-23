@@ -156,12 +156,12 @@ public async Task<IActionResult> DeleteDocumento(int id)
             }
 
             var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
-            var fileType = "application/pdf";  // Puoi specificare il tipo di file, ad esempio PDF
+            var fileType = "application/pdf";  //  specificare il tipo di file, PDF
 
             return File(fileBytes, fileType, Path.GetFileName(filePath));
         }
 
-        // Metodo per verificare se un documento esiste
+        //  verificare se un documento esiste
         private bool DocumentoExists(int id)
         {
             return _context.Documenti.Any(d => d.Id == id);

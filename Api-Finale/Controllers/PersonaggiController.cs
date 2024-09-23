@@ -218,7 +218,7 @@ namespace Api_Finale.Controllers
             }
 
             // Controlla se l'utente loggato è l'admin o il proprietario del personaggio
-            var isAdmin = User.IsInRole("Admin"); // Verifica se l'utente ha il ruolo "Admin"
+            var isAdmin = User.IsInRole("Admin"); 
             if (!isAdmin && personaggio.UtenteId != int.Parse(userId))
             {
                 return Unauthorized(new { Message = "Non sei autorizzato a eliminare questo personaggio." });

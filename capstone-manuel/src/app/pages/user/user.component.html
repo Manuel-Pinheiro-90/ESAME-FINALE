@@ -117,7 +117,9 @@
             >
             <button
               class="btn btn-danger"
-              (click)="deleteRegistrazione(registrazione.id)"
+              (click)="
+                deleteRegistrazione(registrazione.id, registrazione.evento.id)
+              "
             >
               Elimina
             </button>

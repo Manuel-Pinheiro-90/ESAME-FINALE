@@ -28,7 +28,7 @@ namespace Api_Finale.Controllers
         {
             var eventi = await _context.Eventi
                 .Include(e => e.Registrazioni)
-                .ThenInclude(r => r.Utente)  // Includi gli utenti associati alle registrazioni
+                .ThenInclude(r => r.Utente)  //  utenti associati alle registrazioni
                 .Include(e => e.Documenti)
                 .Include(e => e.Personaggi)
                 .Select(e => new EventoDTO
@@ -44,7 +44,7 @@ namespace Api_Finale.Controllers
                     NumeroRegistrazioni = e.Registrazioni.Count(),
                     NumeroDocumenti = e.Documenti.Count(),
                     NumeroPersonaggi = e.Personaggi.Count(),
-                    // Aggiungi i nomi degli utenti registrati
+                    //  nomi degli utenti registrati
                     NomiUtentiRegistrati = e.Registrazioni.Select(r => r.Utente.Nome).ToList()
                 })
                 .ToListAsync();
@@ -58,7 +58,7 @@ namespace Api_Finale.Controllers
         {
             var evento = await _context.Eventi
                 .Include(e => e.Registrazioni)
-                .ThenInclude(r => r.Utente)  // Includi gli utenti associati alle registrazioni
+                .ThenInclude(r => r.Utente)  // gli utenti associati alle registrazioni
                 .Include(e => e.Documenti)
                 .Include(e => e.Personaggi)
                 .Where(e => e.Id == id)
@@ -110,7 +110,7 @@ namespace Api_Finale.Controllers
 
 
             };
-            // Se un'immagine è stata caricata, converti l'immagine in Base64 e salvala nel modello
+            // Se un'immagine è stata caricata, converte l'immagine in Base64 e salvala nel modello
             if (eventoDTO.ImmagineFile != null && eventoDTO.ImmagineFile.Length > 0)
             {
                 using (var ms = new MemoryStream())

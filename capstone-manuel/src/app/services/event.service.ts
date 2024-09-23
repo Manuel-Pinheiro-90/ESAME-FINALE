@@ -130,6 +130,6 @@ export class EventService {
     const events = this.eventSubject.value.map((event) =>
       event.id === updatedEvent.id ? updatedEvent : event
     );
-    this.eventSubject.next(events);
+    this.eventSubject.next([...events]);
   }
 }

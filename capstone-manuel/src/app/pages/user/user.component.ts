@@ -7,6 +7,7 @@ import { IUtenteDTO } from '../../interface/iutente-dto';
 import { IUserProfile } from '../../interface/i-user-profile';
 import { RegistraionService } from '../../services/registraion.service';
 import { PgService } from '../../services/pg.service';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-user',
@@ -21,7 +22,8 @@ export class UserComponent implements OnInit {
     private userService: UserService,
     private Regsvc: RegistraionService,
     private pgService: PgService,
-    private authService: AuthService
+    private authService: AuthService,
+    private eventService: EventService
   ) {}
 
   ngOnInit(): void {
@@ -57,12 +59,18 @@ export class UserComponent implements OnInit {
   }
 
   //////////////////////////////////////////////////////
-  deleteRegistrazione(registrazioneId: number): void {
+  deleteRegistrazione(registrazioneId: number, eventoId: number): void {
     if (confirm('sei sicuro di  voler eliminare questa registrazione?')) {
       this.Regsvc.deleteRegistrazione(registrazioneId).subscribe({
         next: () => {
           this.getUserProfile();
           alert('Registrazione eliminata con successo');
+          this.getUserProfile();
+
+          // Aggiorna l'evento nel BehaviorSubject
+          this.eventService.getEvent(eventoId).subscribe((updatedEvent) => {
+            this.eventService.updateEventInSubject(updatedEvent);
+          });
         },
         error: (err) => {
           console.error(
@@ -74,4 +82,3 @@ export class UserComponent implements OnInit {
     }
   }
 }
-//

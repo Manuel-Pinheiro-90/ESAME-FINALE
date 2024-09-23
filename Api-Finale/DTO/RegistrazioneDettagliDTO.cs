@@ -21,6 +21,6 @@
             public List<ServizioDTO> Servizi { get; set; }
         }
 
-        // Se ci sono altre classi DTO, puoi aggiungerle qui
+        
     }
 }
