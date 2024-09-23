@@ -77,12 +77,13 @@ export class CharactersListComponent implements OnInit {
   loadImages(): void {
     // Immagini statiche per il carosello
     const images = [
-      { url: 'assets/img/riv.png', alt: 'Albrand' },
-      { url: 'assets/img/riv2.png', alt: 'Vega' },
-      { url: 'assets/img/riv3.png', alt: 'Varis' },
-      { url: 'assets/img/pg av.png', alt: 'Personaggio 4' },
-      { url: 'assets/img/pg av.png', alt: 'Personaggio 5' },
-      { url: 'assets/img/pg av.png', alt: 'Personaggio 6' },
+      { url: 'assets/img/foto-sezione-f/2.jpg', alt: 'Albrand' },
+      { url: 'assets/img/foto-sezione-f/5.jpg', alt: 'Vega' },
+      { url: 'assets/img/foto-sezione-f/Av1.jpg', alt: 'Rob' },
+      { url: 'assets/img/foto-sezione-f/7.jpg', alt: 'Varis' },
+      { url: 'assets/img/foto-sezione-f/8.jpg', alt: 'Mirio' },
+
+      { url: 'assets/img/foto-sezione-f/av2.jpg', alt: 'Arcantis' },
     ];
 
     this.createImageGroups(images);
