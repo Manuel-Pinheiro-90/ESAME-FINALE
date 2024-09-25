@@ -5,11 +5,11 @@
 </div>
 
 <!-- Modal per visualizzare l'immagine ingrandita -->
-<div class="modal" id="imageModal" *ngIf="selectedImage" (click)="closeImage()">
+<div class="modal" *ngIf="selectedImage" (click)="closeImage()">
   <span class="close">&times;</span>
   <img
     class="modal-content"
-    [src]="selectedImage.src"
-    [alt]="selectedImage.alt"
+    [src]="selectedImage?.src"
+    [alt]="selectedImage?.alt"
   />
 </div>

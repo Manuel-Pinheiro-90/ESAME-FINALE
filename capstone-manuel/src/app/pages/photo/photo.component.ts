@@ -3,13 +3,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-photo',
   templateUrl: './photo.component.html',
-  styleUrl: './photo.component.scss',
+  styleUrls: ['./photo.component.scss'],
 })
 export class PhotoComponent {
   images = [
     { src: 'assets/img/emp (1).jpg', alt: 'Foto 1' },
     { src: 'assets/img/ork.jpg', alt: 'Foto 2' },
-
     { src: 'assets/img/emp (2).jpg', alt: 'Foto 5' },
     { src: 'assets/img/foto-sezione-f/1.jpg', alt: 'Foto evento' },
     { src: 'assets/img/foto-sezione-f/2.jpg', alt: 'Foto evento' },
@@ -34,21 +33,16 @@ export class PhotoComponent {
     { src: 'assets/img/foto-sezione-f/21.jpg', alt: 'Foto evento' },
     { src: 'assets/img/foto-sezione-f/22.jpg', alt: 'Foto evento' },
     { src: 'assets/img/foto-sezione-f/23.jpg', alt: 'Foto evento' },
-
     { src: 'assets/img/foto-sezione-f/25.jpg', alt: 'Foto evento' },
-
-    // Aggiungi altre immagini qui
   ];
 
   selectedImage: any = null;
 
   openImage(image: any): void {
     this.selectedImage = image;
-    document.getElementById('imageModal')!.style.display = 'flex';
   }
 
   closeImage(): void {
     this.selectedImage = null;
-    document.getElementById('imageModal')!.style.display = 'none';
   }
 }
