@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Seleziona solo gli elementi con la classe .fade-in
     const fadeInElements = this.el.nativeElement.querySelectorAll('.fade-in');
     const scrollElements =
-      this.el.nativeElement.querySelectorAll('.scroll-animation');
+      this.el.nativeElement.querySelectorAll('.scroll-animation'); //eliminare il queryselectorall  dopo capstone
     const observerOptions = {
       threshold: 0.4, // L'elemento deve essere visibile almeno per il 50%
     };
