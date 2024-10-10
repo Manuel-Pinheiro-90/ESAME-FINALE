@@ -16,7 +16,7 @@ export class InfoComponent implements OnInit {
   }
 
   checkScroll(): void {
-    const elements = document.querySelectorAll('.scroll-animation, .fade-in'); //eliminare il queryselectorall  dopo capstone
+    const elements = document.querySelectorAll('.scroll-animation, .fade-in'); //eliminare il queryselectorall
     const windowHeight = window.innerHeight;
 
     elements.forEach((element: any) => {
