@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { EventService } from '../../services/event.service';
 import { iEvento } from '../../interface/ievento';
 
@@ -8,6 +15,10 @@ import { iEvento } from '../../interface/ievento';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, AfterViewInit {
+  // Seleziona gli elementi con la classe fade-in
+  @ViewChildren('fadeIn') fadeInElements!: QueryList<ElementRef>;
+  // Seleziona gli elementi con la classe scroll-animation
+  @ViewChildren('scrollAnimation') scrollElements!: QueryList<ElementRef>;
   eventi: iEvento[] = [];
   currentIndex: number = 0;
   autoSlideInterval: any;
@@ -59,12 +70,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Seleziona solo gli elementi con la classe .fade-in
-    const fadeInElements = this.el.nativeElement.querySelectorAll('.fade-in');
-    const scrollElements =
-      this.el.nativeElement.querySelectorAll('.scroll-animation'); //eliminare il queryselectorall  dopo capstone
     const observerOptions = {
-      threshold: 0.4, // L'elemento deve essere visibile almeno per il 50%
+      threshold: 0.4,
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -76,13 +83,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
       });
     }, observerOptions);
 
-    // Attiva l'osservatore solo sugli elementi con la classe .fade-in
-    fadeInElements.forEach((element: any) => {
-      observer.observe(element);
-    });
-    scrollElements.forEach((element: any) => {
-      observer.observe(element);
-    });
+    // Usa Angular QueryList per iterare sugli elementi osservati
+    this.fadeInElements.forEach((element) =>
+      observer.observe(element.nativeElement)
+    );
+    this.scrollElements.forEach((element) =>
+      observer.observe(element.nativeElement)
+    );
   }
 
   toggleText(section: number): void {
