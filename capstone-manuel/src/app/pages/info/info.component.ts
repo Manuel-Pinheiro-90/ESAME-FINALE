@@ -1,29 +1,41 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
   styleUrl: './info.component.scss',
 })
-export class InfoComponent implements OnInit {
-  ngOnInit(): void {
-    this.checkScroll();
-  }
+export class InfoComponent implements AfterViewInit {
+  @ViewChildren('fadeIn') fadeInElements!: QueryList<ElementRef>;
+  // Seleziona gli elementi con la classe scroll-animation
+  @ViewChildren('scrollAnimation') scrollElements!: QueryList<ElementRef>;
 
-  @HostListener('window:scroll', [])
-  onWindowScroll(): void {
-    this.checkScroll();
-  }
+  constructor(private el: ElementRef) {}
 
-  checkScroll(): void {
-    const elements = document.querySelectorAll('.scroll-animation, .fade-in'); //eliminare il queryselectorall
-    const windowHeight = window.innerHeight;
+  ngAfterViewInit(): void {
+    const observerOptions = { threshold: 0.4 };
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
 
-    elements.forEach((element: any) => {
-      const elementTop = element.getBoundingClientRect().top;
-      if (elementTop < windowHeight - 50) {
-        element.classList.add('show');
-      }
-    });
+    this.fadeInElements.forEach((element) =>
+      observer.observe(element.nativeElement)
+    );
+    this.scrollElements.forEach((element) =>
+      observer.observe(element.nativeElement)
+    );
   }
 }
