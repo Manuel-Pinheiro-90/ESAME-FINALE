@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full', /// Reindirizza alla home
+    pathMatch: 'full', //// Reindirizza alla home
   },
   {
     path: 'auth',
