@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () =>
-      import('./pages/auth/auth.module').then((m) => m.AuthModule), ////rendere la home la pagina di arrivo e mettere l'auth in navbar
+      import('./pages/auth/auth.module').then((m) => m.AuthModule), /////rendere la home la pagina di arrivo e mettere l'auth in navbar
   },
   {
     path: 'home',
